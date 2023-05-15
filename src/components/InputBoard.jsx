@@ -59,6 +59,12 @@ function InputBoard() {
     handleChange('crypto', e.target.value);
   };
 
+  const addTotalAmount = (e) => {
+    e.preventDefault();
+    const newAmount = values.amount + +e.target.value;
+    handleChange('amount', newAmount);
+  };
+
   return (
     <div className="inputBoardContainer">
       <InputBoardTitle values={values} />
@@ -79,6 +85,20 @@ function InputBoard() {
         value={values.amount}
         onChange={handleAmountChange}
       />
+      <div className="addButtons">
+        <button value={5000} onClick={addTotalAmount}>
+          5000원
+        </button>
+        <button value={10000} onClick={addTotalAmount}>
+          10000원
+        </button>
+        <button value={50000} onClick={addTotalAmount}>
+          50000원
+        </button>
+        <button value={100000} onClick={addTotalAmount}>
+          100000원
+        </button>
+      </div>
       <select name="crypto" value={values.crypto} onChange={handleCryptoChange}>
         <option value="Bitcoin">BitCoin</option>
         <option value="Ethereum">Ethereum</option>
