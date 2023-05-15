@@ -36,6 +36,10 @@ function InputBoard() {
     handleChange(e.target.name, e.target.value);
   };
 
+  const handleCryptoChange = (e) => {
+    handleChange('crypto', e.target.value);
+  };
+
   return (
     <div className="inputBoardContainer">
       <div className="inputBoardTitle">
@@ -47,7 +51,7 @@ function InputBoard() {
         <p>
           <span>{values.amount}원</span>으로
           <br />
-          <span>Bitcoin</span>을 샀다면,
+          <span>{values.crypto}</span>을 샀다면,
         </p>
       </div>
       <ReactDatePicker
@@ -67,6 +71,12 @@ function InputBoard() {
         value={values.amount}
         onChange={handleAmountChange}
       />
+      <select name="crypto" value={values.crypto} onChange={handleCryptoChange}>
+        <option value="Bitcoin">BitCoin</option>
+        <option value="Ethereum">Ethereum</option>
+        <option value="Tether">Tether</option>
+        <option value="Dogecoin">Dogecoin</option>
+      </select>
     </div>
   );
 }
