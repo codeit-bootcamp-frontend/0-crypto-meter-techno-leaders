@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
-import { formatDate } from '/src/formatDate';
+import InputBoardTitle from '/src/components/InputBoardTitle';
 
 // react-datepicker 캘린더 드롭다운 기본 css 모듈
 import 'react-datepicker/dist/react-datepicker.css';
@@ -20,25 +20,6 @@ const DEFAULT_VALUES = {
   amount: 15000,
   crypto: 'Bitcoin',
 };
-
-function InputBoardTitle({ values }) {
-  const { selectedDate, amount, crypto } = values;
-
-  return (
-    <div className="inputBoardTitle">
-      <p>
-        내가 만약
-        <br />
-        <span>{formatDate(selectedDate)}</span>에
-      </p>
-      <p>
-        <span>{amount}원</span>으로
-        <br />
-        <span>{crypto}</span>을 샀다면,
-      </p>
-    </div>
-  );
-}
 
 function InputBoard() {
   const [values, setValues] = useState(DEFAULT_VALUES);
