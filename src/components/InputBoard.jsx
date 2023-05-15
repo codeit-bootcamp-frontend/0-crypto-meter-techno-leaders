@@ -74,16 +74,16 @@ function InputBoard() {
         />
         <div className="addButtons">
           <button value={5000} onClick={addTotalAmount}>
-            5000원
+            5,000원
           </button>
           <button value={10000} onClick={addTotalAmount}>
-            10000원
+            10,000원
           </button>
           <button value={50000} onClick={addTotalAmount}>
-            50000원
+            50,000원
           </button>
           <button value={100000} onClick={addTotalAmount}>
-            100000원
+            100,000원
           </button>
         </div>
         <select
