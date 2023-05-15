@@ -1,7 +1,11 @@
-import './App.css';
+import MarketPriceTable from '/src/components/MarketPriceTable_api.jsx';
 
 function App() {
-  return <h1>dfhskf</h1>;
+  return (
+    <>
+      <MarketPriceTable />
+    </>
+  );
 }
 
 export default App;
