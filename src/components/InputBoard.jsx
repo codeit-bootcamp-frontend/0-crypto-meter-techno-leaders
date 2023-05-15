@@ -21,6 +21,25 @@ const DEFAULT_VALUES = {
   crypto: 'Bitcoin',
 };
 
+function InputBoardTitle({ values }) {
+  const { selectedDate, amount, crypto } = values;
+
+  return (
+    <div className="inputBoardTitle">
+      <p>
+        내가 만약
+        <br />
+        <span>{formatDate(selectedDate)}</span>에
+      </p>
+      <p>
+        <span>{amount}원</span>으로
+        <br />
+        <span>{crypto}</span>을 샀다면,
+      </p>
+    </div>
+  );
+}
+
 function InputBoard() {
   const [values, setValues] = useState(DEFAULT_VALUES);
 
@@ -42,18 +61,7 @@ function InputBoard() {
 
   return (
     <div className="inputBoardContainer">
-      <div className="inputBoardTitle">
-        <p>
-          내가 만약
-          <br />
-          <span>{formatDate(values.selectedDate)}</span>에
-        </p>
-        <p>
-          <span>{values.amount}원</span>으로
-          <br />
-          <span>{values.crypto}</span>을 샀다면,
-        </p>
-      </div>
+      <InputBoardTitle values={values} />
       <ReactDatePicker
         name="selectedDate"
         locale={'ko'}
