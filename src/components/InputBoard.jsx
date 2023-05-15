@@ -32,6 +32,10 @@ function InputBoard() {
     handleChange('selectedDate', date);
   };
 
+  const handleAmountChange = (e) => {
+    handleChange(e.target.name, e.target.value);
+  };
+
   return (
     <div className="inputBoardContainer">
       <div className="inputBoardTitle">
@@ -41,7 +45,7 @@ function InputBoard() {
           <span>{formatDate(values.selectedDate)}</span>에
         </p>
         <p>
-          <span>15000원</span>으로
+          <span>{values.amount}원</span>으로
           <br />
           <span>Bitcoin</span>을 샀다면,
         </p>
@@ -56,6 +60,12 @@ function InputBoard() {
         dropdownMode="select"
         dateFormat="yyyy년 MM월 dd일"
         dateFormatCalendar="yyyy MMMM"
+      />
+      <input
+        name="amount"
+        type="number"
+        value={values.amount}
+        onChange={handleAmountChange}
       />
     </div>
   );
