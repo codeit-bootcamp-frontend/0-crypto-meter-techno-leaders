@@ -28,16 +28,10 @@ function InputBoard() {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
-  const handleDateChange = (date) => {
-    handleChange('selectedDate', date);
-  };
-
-  const handleAmountChange = (e) => {
-    handleChange(e.target.name, e.target.value);
-  };
-
-  const handleCryptoChange = (e) => {
-    handleChange('crypto', e.target.value);
+  const handleInputChange = (e) => {
+    e.target
+      ? handleChange(e.target.name, e.target.value)
+      : handleChange('selectedDate', e);
   };
 
   const addTotalAmount = (e) => {
@@ -59,7 +53,7 @@ function InputBoard() {
           name="selectedDate"
           locale={'ko'}
           selected={values.selectedDate}
-          onChange={handleDateChange}
+          onChange={handleInputChange}
           showMonthDropdown
           showYearDropdown
           dropdownMode="select"
@@ -70,7 +64,7 @@ function InputBoard() {
           name="amount"
           type="number"
           value={values.amount}
-          onChange={handleAmountChange}
+          onChange={handleInputChange}
         />
         <div className="addButtons">
           <button value={5000} onClick={addTotalAmount}>
@@ -89,7 +83,7 @@ function InputBoard() {
         <select
           name="crypto"
           value={values.crypto}
-          onChange={handleCryptoChange}
+          onChange={handleInputChange}
         >
           <option value="Bitcoin">BitCoin</option>
           <option value="Ethereum">Ethereum</option>
