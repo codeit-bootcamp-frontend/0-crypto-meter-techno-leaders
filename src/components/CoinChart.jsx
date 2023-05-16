@@ -46,12 +46,15 @@ ChartJS.register(
         const ctx = chart.ctx;
         const activePoint = chart.tooltip._active[0];
         const x = activePoint.element.x;
+        const y = activePoint.element.y;
         const topY = chart.scales.y.top;
         const bottomY = chart.scales.y.bottom;
         ctx.save();
         ctx.beginPath();
         ctx.setLineDash([5, 5]);
         ctx.moveTo(x, topY);
+        ctx.lineTo(x, y - 5);
+        ctx.moveTo(x, y + 5);
         ctx.lineTo(x, bottomY);
         ctx.lineWidth = 1;
         ctx.strokeStyle = '#262A38';
@@ -64,7 +67,7 @@ ChartJS.register(
 
 const getChartData = (canvas, data) => {
   const ctx = canvas.getContext('2d');
-  const gradient = ctx.createLinearGradient(0, 0, 0, 411); // x0, y0, x1, y1 => 반응형이면 동적으로 height 값 prop으로 가져와야 할 듯
+  const gradient = ctx.createLinearGradient(0, 0, 0, 411);
   gradient.addColorStop(0, 'rgba(0, 166, 97, 0.3)');
   gradient.addColorStop(0.5, 'rgba(9, 177, 76, 0.3)');
   gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
@@ -92,9 +95,17 @@ const options = {
     title: {
       display: false,
     },
+    tooltip: {
+      // position: 'topPosition',
+      displayColors: false,
+      callbacks: {
+        label: function (tooltipItem) {
+          return `￦${tooltipItem.formattedValue}`;
+        },
+      },
+    },
   },
-  intersection: {
-    mode: 'index',
+  interaction: {
     intersect: false,
   },
   scales: {
