@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import restoreIcon from '../../assets/images/restore.svg';
+import restoreIcon from '/src/assets/images/restore.svg';
 import Button from './Button';
-import LogoWithName from './LogoWithName';
+import Logo from './Logo';
 
 function GNB() {
   const handleRestoreClick = useCallback(() => {
@@ -9,7 +9,7 @@ function GNB() {
     // inputBoard, mainBoard 초기화 로직 들어갈 곳
   }, []);
 
-  const handleSelectChanage = useCallback((e) => {
+  const handleCurrencyChange = useCallback((e) => {
     console.log(e.target.value);
     // e.target.value 값으로 화폐단위 state 변경 로직 들어갈 곳
   }, []);
@@ -22,13 +22,18 @@ function GNB() {
   return (
     <div
       style={{
+        backgroundColor: '#F5F8F9',
+        padding: '0 57px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         height: '100px',
+        position: 'relative',
+        boxSizing: 'border-box',
+        margin: 0,
       }}
     >
-      <LogoWithName />
+      <Logo />
       <div
         className="button-container"
         style={{
@@ -43,20 +48,22 @@ function GNB() {
           name="다시 계산하기"
         />
         <select
-          onChange={handleSelectChanage}
+          onChange={handleCurrencyChange}
           style={{
             height: '40px',
             width: '90px',
+            backgroundColor: 'transparent',
+            border: '1px solid #CED2DD',
             borderRadius: '15px',
             paddingLeft: '15px',
           }}
         >
-          <option value="won">원 (₩)</option>
-          <option value="dollar">USD ($)</option>
+          <option value="krw">원 (₩)</option>
+          <option value="usd">USD ($)</option>
         </select>
         <Button
           handleClick={handleHistoryClick}
-          propStyle={{ width: '1000px' }}
+          propStyle={{ width: '81px' }}
           name="검색 기록"
         />
       </div>
