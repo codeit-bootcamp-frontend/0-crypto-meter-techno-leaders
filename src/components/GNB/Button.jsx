@@ -11,10 +11,28 @@ const buttonStyle = {
   backgroundColor: 'transparent',
 };
 
-function Button({ handleClick, name, propStyle, source = null }) {
+const clickedButtonStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: '10px',
+  height: '40px',
+  width: '126px',
+  border: '1px solid #00A661',
+  borderRadius: '15px',
+  cursor: 'pointer',
+  backgroundColor: '#DAF1E5',
+  color: '#00A661',
+};
+
+function Button({ isClicked, handleClick, name, propStyle, source = null }) {
   return (
     <button
-      style={propStyle ? { ...buttonStyle, ...propStyle } : buttonStyle}
+      style={
+        isClicked
+          ? { ...clickedButtonStyle, ...propStyle }
+          : { ...buttonStyle, ...propStyle }
+      }
       onClick={handleClick}
     >
       {source ? <img src={source} /> : undefined}
