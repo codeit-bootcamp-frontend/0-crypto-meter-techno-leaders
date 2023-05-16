@@ -1,7 +1,13 @@
-import './App.css';
+import React from 'react';
+import '/src/App.css';
+import InputBoard from '/src/components/InputBoard';
 
 function App() {
-  return <h1>dfhskf</h1>;
+  return (
+    <React.StrictMode>
+      <InputBoard />
+    </React.StrictMode>
+  );
 }
 
 export default App;
