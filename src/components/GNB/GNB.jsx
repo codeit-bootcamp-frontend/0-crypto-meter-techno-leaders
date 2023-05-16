@@ -74,7 +74,7 @@ function GNB() {
         />
         <HistoryModal
           isOpen={isOpen}
-          handleNotClicked={setIsClicked}
+          handleUnclicked={setIsClicked}
           handleModalOpen={setIsOpen}
         />
       </div>
