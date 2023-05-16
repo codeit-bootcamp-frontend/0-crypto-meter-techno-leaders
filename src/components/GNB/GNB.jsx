@@ -1,9 +1,13 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import restoreIcon from '/src/assets/images/restore.svg';
 import Button from './Button';
 import Logo from './Logo';
+import HistoryModal from './HistoryModal';
 
 function GNB() {
+  const [isClicked, setIsClicked] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
   const handleRestoreClick = useCallback(() => {
     console.log('다시 계산하기 버튼 클릭');
     // inputBoard, mainBoard 초기화 로직 들어갈 곳
@@ -16,7 +20,8 @@ function GNB() {
 
   const handleHistoryClick = useCallback(() => {
     console.log('검색 기록 버튼 클릭');
-    // search history modal 띄워줄 로직 들어갈 곳
+    setIsClicked(true);
+    setIsOpen(true);
   }, []);
 
   return (
@@ -64,7 +69,13 @@ function GNB() {
         <Button
           handleClick={handleHistoryClick}
           propStyle={{ width: '81px' }}
+          isClicked={isClicked}
           name="검색 기록"
+        />
+        <HistoryModal
+          isOpen={isOpen}
+          handleNotClicked={setIsClicked}
+          handleModalOpen={setIsOpen}
         />
       </div>
     </div>
