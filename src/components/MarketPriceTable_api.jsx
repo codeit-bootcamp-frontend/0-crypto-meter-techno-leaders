@@ -11,6 +11,15 @@ import '/src/components/MarketPriceTable.css';
 import clsx from 'clsx';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#00A661',
+    },
+  },
+});
 
 function CustomPagination() {
   const apiRef = useGridApiContext();
@@ -18,27 +27,27 @@ function CustomPagination() {
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
 
   return (
-    <Pagination
-      style={{ margin: '3rem auto 0', color: 'red' }}
-      color="primary"
-      // variant="outlined"
-      shape="rounded"
-      page={page + 1}
-      count={pageCount}
-      // @ts-expect-error
-      renderItem={(props2) => (
-        <PaginationItem
-          {...props2}
-          disableRipple
-          style={{
-            fontSize: '1.4rem',
-            fontFamily: 'Pretendard',
-            fontWeight: 500,
-          }}
-        />
-      )}
-      onChange={(event, value) => apiRef.current.setPage(value - 1)}
-    />
+    <ThemeProvider theme={customTheme}>
+      <Pagination
+        style={{ margin: '3rem auto 0' }}
+        color="primary"
+        shape="rounded"
+        page={page + 1}
+        count={pageCount}
+        renderItem={(props2) => (
+          <PaginationItem
+            {...props2}
+            disableRipple
+            style={{
+              fontSize: '1.4rem',
+              fontFamily: 'Pretendard',
+              fontWeight: 500,
+            }}
+          />
+        )}
+        onChange={(event, value) => apiRef.current.setPage(value - 1)}
+      />
+    </ThemeProvider>
   );
 }
 
