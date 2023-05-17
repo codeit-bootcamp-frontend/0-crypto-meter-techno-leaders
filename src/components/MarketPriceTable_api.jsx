@@ -111,6 +111,10 @@ function MarketPriceTable() {
     return Currency === 'krw' ? '￦' : '$';
   };
 
+  const changeCurrency = () => {
+    vsCurrency === 'krw' ? setVsCurrency('usd') : setVsCurrency('krw');
+  };
+
   const formattedCurrency = (value) => {
     return getCurrency() + value.toLocaleString();
   };
@@ -240,22 +244,20 @@ function MarketPriceTable() {
 
   return (
     <div className="body">
+      <button style={{ fontSize: '2rem' }} onClick={changeCurrency}>
+        {vsCurrency === 'krw' ? '원화' : '달러'}
+      </button>
       <div className="market-price-table">
         <h2 className="market-price-table-title">전체 암호화폐 시세</h2>
-        <button
-          onClick={() => {
-            Currency === 'krw' ? setCurrency('usd') : setCurrency('krw');
-          }}
-        >
-          통화변경
-        </button>
         <DataGrid
           style={{
             border: 'none',
             borderRadius: '0',
             borderTop: '1px solid #161c2f',
           }}
-          rows={marketData}
+          rows={
+            vsCurrency === 'krw' ? marketData?.krw || [] : marketData?.usd || []
+          }
           columns={columns}
           initialState={{
             pagination: {
@@ -272,7 +274,7 @@ function MarketPriceTable() {
           rowHeight={80}
           headerHeight={20}
           onPaginationModelChange={handlePageChange}
-          />
+        />
       </div>
     </div>
   );
