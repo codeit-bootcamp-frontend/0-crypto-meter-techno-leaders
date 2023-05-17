@@ -6,7 +6,6 @@ import HistoryModal from './HistoryModal';
 
 function GNB() {
   const [isClicked, setIsClicked] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleRestoreClick = useCallback(() => {
     console.log('다시 계산하기 버튼 클릭');
@@ -21,7 +20,6 @@ function GNB() {
   const handleHistoryClick = useCallback(() => {
     console.log('검색 기록 버튼 클릭');
     setIsClicked(true);
-    setIsOpen(true);
   }, []);
 
   return (
@@ -72,11 +70,7 @@ function GNB() {
           isClicked={isClicked}
           name="검색 기록"
         />
-        <HistoryModal
-          isOpen={isOpen}
-          handleUnclicked={setIsClicked}
-          handleModalOpen={setIsOpen}
-        />
+        <HistoryModal isOpen={isClicked} handleModalOpen={setIsClicked} />
       </div>
     </div>
   );

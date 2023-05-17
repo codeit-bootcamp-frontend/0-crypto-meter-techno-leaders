@@ -24,10 +24,9 @@ const modalStyle = {
   },
 };
 
-function HistoryModal({ isOpen, handleUnclicked, handleModalOpen }) {
+function HistoryModal({ isOpen, handleModalOpen }) {
   const handleModalClose = useCallback(() => {
     handleModalOpen(false);
-    handleUnclicked(false);
   }, []);
 
   return (
