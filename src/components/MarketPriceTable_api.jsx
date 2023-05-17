@@ -12,15 +12,15 @@ import clsx from 'clsx';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 
-function getPriceChangePercentageDiv(params) {
-  const value = params.value.toFixed(2);
+function getPriceChangePercentageDiv(value) {
+  const slicedValue = value.toFixed(2);
   const combinedClassName = clsx('price-change-percentage', {
-    ['negative']: value < 0,
-    ['positive']: value > 0,
+    ['negative']: slicedValue < 0,
+    ['positive']: slicedValue > 0,
   });
   return (
     <div className={combinedClassName}>
-      <span>{value}</span>
+      <span>{slicedValue}</span>
     </div>
   );
 }
