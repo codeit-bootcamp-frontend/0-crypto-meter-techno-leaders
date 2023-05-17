@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-function convetToChartData(data) {
+function convertToChartData(data) {
   const chartData = [];
   data.forEach((elem) => {
     const formattedDate = millisecondsToDate(elem[0]);
@@ -81,7 +81,7 @@ const getChartData = (canvas, data) => {
         borderWidth: 2,
         pointHoverBackgroundColor: '#00A661',
         pointHoverBorderWidth: 3,
-        data: convetToChartData(data),
+        data: convertToChartData(data),
       },
     ],
   };
