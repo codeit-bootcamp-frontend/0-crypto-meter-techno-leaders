@@ -116,7 +116,10 @@ function MarketPriceTable() {
   };
 
   const formattedCurrency = (value) => {
-    return getCurrency() + value.toLocaleString();
+    return (
+      getCurrency() +
+      value.toLocaleString(undefined, { maximumFractionDigits: 10 })
+    );
   };
 
   const handlePageChange = async (params) => {
