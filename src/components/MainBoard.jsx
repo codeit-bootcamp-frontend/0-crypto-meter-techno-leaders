@@ -10,6 +10,16 @@ const DEFAULT_VALUES = {
   crypto: 'Bitcoin',
 };
 
+function formatDate(date, setHour = false) {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+
+  const formattedDate = `${year}년 ${month}월 ${day}일`;
+
+  return setHour ? `${formattedDate} ${hour}시` : formattedDate;
+}
 function MainBoard({
   values = DEFAULT_VALUES,
   currency = 'krw',
