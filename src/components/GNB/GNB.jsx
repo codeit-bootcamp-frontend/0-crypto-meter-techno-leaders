@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import restoreIcon from '/src/assets/images/restore.svg';
-import Button from './Button';
-import Logo from './Logo';
-import HistoryModal from './HistoryModal';
+import Button from '/src/components/GNB/Button';
+import Logo from '/src/components/GNB/Logo';
+import HistoryModal from '/src/components/GNB/HistoryModal';
 
 function GNB() {
   const [isClicked, setIsClicked] = useState(false);
