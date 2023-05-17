@@ -165,7 +165,9 @@ function MarketPriceTable() {
       align: 'right',
       headerClassName: 'custom-header',
       renderCell: (params) => (
-        <span className="coin-price">{formattedCurrency(params.value)}</span>
+        <span className="coin-price">
+          {params.value && formattedCurrency(params.value)}
+        </span>
       ),
     },
     {
@@ -177,7 +179,9 @@ function MarketPriceTable() {
       align: 'right',
       headerClassName: 'custom-header',
       renderCell: (params) => (
-        <span className="market-cap">{formattedCurrency(params.value)}</span>
+        <span className="market-cap">
+          {params.value && formattedCurrency(params.value)}
+        </span>
       ),
     },
     {
@@ -191,7 +195,7 @@ function MarketPriceTable() {
       renderCell: (params) => (
         <div className="total-volume-container">
           <span className="total-volume">
-            {formattedCurrency(params.value)}
+            {params.value && formattedCurrency(params.value)}
           </span>
           <div className="coin-total-volume-container">
             {formattedCoinTotalVolume(
@@ -212,7 +216,10 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: getPriceChangePercentageDiv,
+      renderCell: (params) =>
+        params.value
+          ? getPriceChangePercentageDiv(params.value)
+          : getPriceChangePercentageDiv(0),
     },
     {
       field: 'price_change_percentage_24h_in_currency',
@@ -223,7 +230,10 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: getPriceChangePercentageDiv,
+      renderCell: (params) =>
+        params.value
+          ? getPriceChangePercentageDiv(params.value)
+          : getPriceChangePercentageDiv(0),
     },
     {
       field: 'price_change_percentage_7d_in_currency',
@@ -234,7 +244,10 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: getPriceChangePercentageDiv,
+      renderCell: (params) =>
+        params.value
+          ? getPriceChangePercentageDiv(params.value)
+          : getPriceChangePercentageDiv(0),
     },
   ];
 
