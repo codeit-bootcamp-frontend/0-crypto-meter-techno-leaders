@@ -6,13 +6,10 @@ import clsx from 'clsx';
 
 function getPriceChangePercentageDiv(params) {
   const value = params.value.toFixed(2);
-  let cellClassName = '';
-  if (value < 0) {
-    cellClassName = 'negative';
-  } else if (value > 0) {
-    cellClassName = 'positive';
-  }
-  const combinedClassName = clsx('price-change-percentage', cellClassName);
+  const combinedClassName = clsx('price-change-percentage', {
+    ['negative']: value < 0,
+    ['positive']: value > 0,
+  });
   return (
     <div className={combinedClassName}>
       <span>{value}</span>
@@ -22,7 +19,7 @@ function getPriceChangePercentageDiv(params) {
 
 function MarketPriceTable() {
   const [marketData, setMarketData] = useState([]);
-  const [vsCurrency, setVsCurrency] = useState('krw');
+  const [Currency, setCurrency] = useState('krw');
 
   const formattedCoinTotalVolume = (totalVolume, currentPrice, symbol) => {
     const coinTotalVolume = totalVolume / currentPrice;
@@ -37,7 +34,7 @@ function MarketPriceTable() {
   };
 
   const getCurrency = () => {
-    return vsCurrency === 'krw' ? '￦' : '$';
+    return Currency === 'krw' ? '￦' : '$';
   };
 
   const formattedCurrency = (value) => {
@@ -155,10 +152,10 @@ function MarketPriceTable() {
   ];
 
   const fetchData = useCallback(
-    async (vsCurrency) => {
+    async (Currency) => {
       try {
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vsCurrency}&order=market_cap_desc&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${Currency}&order=market_cap_desc&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
         );
         const data = await response.json();
         const formattedData = data.map((item, index) => ({
@@ -170,12 +167,12 @@ function MarketPriceTable() {
         console.error(error);
       }
     },
-    [vsCurrency]
+    [Currency]
   );
 
   useEffect(() => {
-    fetchData(vsCurrency);
-  }, [vsCurrency]);
+    fetchData(Currency);
+  }, [Currency]);
 
   return (
     <div className="body">
@@ -183,7 +180,7 @@ function MarketPriceTable() {
         <h2 className="market-price-table-title">전체 암호화폐 시세</h2>
         <button
           onClick={() => {
-            vsCurrency === 'krw' ? setVsCurrency('usd') : setVsCurrency('krw');
+            Currency === 'krw' ? setCurrency('usd') : setCurrency('krw');
           }}
         >
           통화변경
