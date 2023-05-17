@@ -5,7 +5,7 @@ import Logo from '/src/components/GNB/Logo';
 import HistoryModal from '/src/components/GNB/HistoryModal';
 
 function GNB() {
-  const [isClicked, setIsClicked] = useState(false);
+  const [isSearchLogVisible, setisSearchLogVisible] = useState(false);
 
   const handleRestoreClick = useCallback(() => {
     console.log('다시 계산하기 버튼 클릭');
@@ -19,7 +19,7 @@ function GNB() {
 
   const handleHistoryClick = useCallback(() => {
     console.log('검색 기록 버튼 클릭');
-    setIsClicked(true);
+    setisSearchLogVisible(true);
   }, []);
 
   return (
@@ -67,10 +67,13 @@ function GNB() {
         <Button
           handleClick={handleHistoryClick}
           propStyle={{ width: '81px' }}
-          isClicked={isClicked}
+          isSearchLogVisible={isSearchLogVisible}
           name="검색 기록"
         />
-        <HistoryModal isOpen={isClicked} handleModalOpen={setIsClicked} />
+        <HistoryModal
+          isOpen={isSearchLogVisible}
+          handleModalOpen={setisSearchLogVisible}
+        />
       </div>
     </div>
   );

@@ -25,11 +25,17 @@ const activeButtonStyle = {
   color: '#00A661',
 };
 
-function Button({ isClicked, handleClick, name, propStyle, source = null }) {
+function Button({
+  isSearchLogVisible,
+  handleClick,
+  name,
+  propStyle,
+  source = null,
+}) {
   return (
     <button
       style={
-        isClicked
+        isSearchLogVisible
           ? { ...activeButtonStyle, ...propStyle }
           : { ...buttonStyle, ...propStyle }
       }
