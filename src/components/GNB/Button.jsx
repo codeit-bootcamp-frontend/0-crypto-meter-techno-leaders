@@ -11,7 +11,7 @@ const buttonStyle = {
   backgroundColor: 'transparent',
 };
 
-const clickedButtonStyle = {
+const activeButtonStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -30,7 +30,7 @@ function Button({ isClicked, handleClick, name, propStyle, source = null }) {
     <button
       style={
         isClicked
-          ? { ...clickedButtonStyle, ...propStyle }
+          ? { ...activeButtonStyle, ...propStyle }
           : { ...buttonStyle, ...propStyle }
       }
       onClick={handleClick}
