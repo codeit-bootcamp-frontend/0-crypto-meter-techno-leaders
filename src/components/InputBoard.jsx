@@ -28,10 +28,12 @@ function InputBoard() {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
+  const handleDateChange = (date) => {
+    handleChange('selectedDate', date);
+  };
+
   const handleInputChange = (e) => {
-    e.target
-      ? handleChange(e.target.name, e.target.value)
-      : handleChange('selectedDate', e);
+    handleChange(e.target.name, e.target.value);
   };
 
   const addTotalAmount = (e) => {
@@ -53,7 +55,7 @@ function InputBoard() {
           name="selectedDate"
           locale={'ko'}
           selected={values.selectedDate}
-          onChange={handleInputChange}
+          onChange={handleDateChange}
           showMonthDropdown
           showYearDropdown
           dropdownMode="select"
