@@ -57,7 +57,7 @@ function getPriceChangePercentageDiv(value) {
 
 function MarketPriceTable() {
   const [marketData, setMarketData] = useState([]);
-  const [Currency, setCurrency] = useState('krw');
+  const [currency, setCurrency] = useState('krw');
   const nextPage = useRef(1);
 
   const fetchDataFromApi = async (page) => {
@@ -108,11 +108,11 @@ function MarketPriceTable() {
   };
 
   const getCurrency = () => {
-    return Currency === 'krw' ? '￦' : '$';
+    return currency === 'krw' ? '￦' : '$';
   };
 
   const changeCurrency = () => {
-    vsCurrency === 'krw' ? setVsCurrency('usd') : setVsCurrency('krw');
+    currency === 'krw' ? setCurrency('usd') : setCurrency('krw');
   };
 
   const formattedCurrency = (value) => {
@@ -261,7 +261,7 @@ function MarketPriceTable() {
   return (
     <div className="body">
       <button style={{ fontSize: '2rem' }} onClick={changeCurrency}>
-        {vsCurrency === 'krw' ? '원화' : '달러'}
+        {currency === 'krw' ? '원화' : '달러'}
       </button>
       <div className="market-price-table">
         <h2 className="market-price-table-title">전체 암호화폐 시세</h2>
@@ -272,7 +272,7 @@ function MarketPriceTable() {
             borderTop: '1px solid #161c2f',
           }}
           rows={
-            vsCurrency === 'krw' ? marketData?.krw || [] : marketData?.usd || []
+            currency === 'krw' ? marketData?.krw || [] : marketData?.usd || []
           }
           columns={columns}
           initialState={{
