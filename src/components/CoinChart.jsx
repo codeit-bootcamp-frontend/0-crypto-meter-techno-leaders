@@ -53,7 +53,7 @@ ChartJS.register(
         ctx.beginPath();
         ctx.setLineDash([5, 5]);
         ctx.moveTo(x, topY);
-        ctx.lineTo(x, y - 5);
+        ctx.lineTo(x, y - 50);
         ctx.moveTo(x, y + 5);
         ctx.lineTo(x, bottomY);
         ctx.lineWidth = 1;
@@ -96,7 +96,7 @@ const options = {
       display: false,
     },
     tooltip: {
-      // position: 'topPosition',
+      yAlign: 'bottom',
       displayColors: false,
       callbacks: {
         label: function (tooltipItem) {
