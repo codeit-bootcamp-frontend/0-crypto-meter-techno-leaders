@@ -1,0 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.mainboard-wrapper {
+  width: 137.9rem;
+  background-color: #ffffff;
+  border-radius: 2.5rem;
+}
+
+.chart-wrapper {
+  aspect-ratio: 2;
+  width: 91rem;
+}
