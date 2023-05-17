@@ -8,6 +8,8 @@ const DEFAULT_VALUES = {
   selectedDate: PREV_DATE,
   amount: 15000,
   crypto: 'Bitcoin',
+  thumb:
+    'https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png?1547033579',
 };
 
 function formatDate(date, setHour = false) {
