@@ -12,6 +12,36 @@ import clsx from 'clsx';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 
+function CustomPagination() {
+  const apiRef = useGridApiContext();
+  const page = useGridSelector(apiRef, gridPageSelector);
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+
+  return (
+    <Pagination
+      style={{ margin: '3rem auto 0', color: 'red' }}
+      color="primary"
+      // variant="outlined"
+      shape="rounded"
+      page={page + 1}
+      count={pageCount}
+      // @ts-expect-error
+      renderItem={(props2) => (
+        <PaginationItem
+          {...props2}
+          disableRipple
+          style={{
+            fontSize: '1.4rem',
+            fontFamily: 'Pretendard',
+            fontWeight: 500,
+          }}
+        />
+      )}
+      onChange={(event, value) => apiRef.current.setPage(value - 1)}
+    />
+  );
+}
+
 function getPriceChangePercentageDiv(value) {
   const slicedValue = value.toFixed(2);
   const combinedClassName = clsx('price-change-percentage', {
@@ -28,6 +58,42 @@ function getPriceChangePercentageDiv(value) {
 function MarketPriceTable() {
   const [marketData, setMarketData] = useState([]);
   const [Currency, setCurrency] = useState('krw');
+  const nextPage = useRef(1);
+
+  const fetchDataFromApi = async (page) => {
+    try {
+      const response1 = await fetch(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=250&page=${page}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
+      );
+      const response2 = await fetch(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=${page}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
+      );
+      const data1 = await response1.json();
+      const data2 = await response2.json();
+      const formattedData1 = data1.map((item, index) => ({
+        ...item,
+        id: marketData.krw ? index + marketData.krw.length + 1 : index + 1,
+      }));
+      const formattedData2 = data2.map((item, index) => ({
+        ...item,
+        id: marketData.krw ? index + marketData.krw.length + 1 : index + 1,
+      }));
+
+      marketData.length === 0
+        ? setMarketData({
+            krw: formattedData1,
+            usd: formattedData2,
+          })
+        : setMarketData({
+            krw: [...marketData.krw].concat(formattedData1),
+            usd: [...marketData.usd].concat(formattedData2),
+          });
+
+      nextPage.current += 1;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const formattedCoinTotalVolume = (totalVolume, currentPrice, symbol) => {
     const coinTotalVolume = totalVolume / currentPrice;
@@ -47,6 +113,15 @@ function MarketPriceTable() {
 
   const formattedCurrency = (value) => {
     return getCurrency() + value.toLocaleString();
+  };
+
+  const handlePageChange = async (params) => {
+    const { page, pageSize } = params;
+    const currentPage = page + 1;
+    const lastPage = Math.ceil(marketData.krw.length / pageSize);
+    if (currentPage === lastPage) {
+      await fetchDataFromApi(nextPage.current);
+    }
   };
 
   const columns = [
@@ -159,28 +234,9 @@ function MarketPriceTable() {
     },
   ];
 
-  const fetchData = useCallback(
-    async (Currency) => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${Currency}&order=market_cap_desc&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
-        );
-        const data = await response.json();
-        const formattedData = data.map((item, index) => ({
-          ...item,
-          id: index + 1,
-        }));
-        setMarketData(formattedData);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [Currency]
-  );
-
   useEffect(() => {
-    fetchData(Currency);
-  }, [Currency]);
+    fetchDataFromApi(nextPage.current);
+  }, []);
 
   return (
     <div className="body">
@@ -208,12 +264,15 @@ function MarketPriceTable() {
               },
             },
           }}
-          pageSizeOptions={[5]}
+          slots={{
+            pagination: CustomPagination,
+          }}
           checkboxSelection={false}
           disableRowSelectionOnClick={true}
           rowHeight={80}
           headerHeight={20}
-        />
+          onPaginationModelChange={handlePageChange}
+          />
       </div>
     </div>
   );
