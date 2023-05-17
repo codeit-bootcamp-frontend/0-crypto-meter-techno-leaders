@@ -20,6 +20,19 @@ function formatDate(date, setHour = false) {
 
   return setHour ? `${formattedDate} ${hour}시` : formattedDate;
 }
+
+function formatResultPrice(amount, currency) {
+  if (currency === 'krw') {
+    return amount + '원';
+  } else {
+    return '$' + amount;
+  }
+}
+
+function calculateResultPrice(amount, prevMPrice, todayMPrice) {
+  return ((amount / prevMPrice) * todayMPrice).toFixed(2);
+}
+
 function MainBoard({
   values = DEFAULT_VALUES,
   currency = 'krw',
