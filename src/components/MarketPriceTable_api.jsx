@@ -1,8 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  gridPageCountSelector,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from '@mui/x-data-grid';
 import '/src/components/MarketPriceTable.css';
 import clsx from 'clsx';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
 
 function getPriceChangePercentageDiv(params) {
   const value = params.value.toFixed(2);
