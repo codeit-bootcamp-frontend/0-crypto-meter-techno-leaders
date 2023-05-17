@@ -15,7 +15,6 @@
     "@mui/material": "^5.13.0",
     "@mui/x-data-grid": "^6.4.0",
     "@mui/x-data-grid-generator": "^6.4.0",
-    "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
