@@ -1,5 +1,4 @@
 import CoinChart from '/src/components/CoinChart';
-import coinPrices from '/src/assets/coins_bitcoin_marketcharts.json';
 import '/src/components/MainBoard.css';
 import Divider from '/src/components/Divider';
 import kakaotalk from '/src/assets/images/kakaotalk.svg';
@@ -12,6 +11,7 @@ const DEFAULT_VALUES = {
   selectedDate: PREV_DATE,
   amount: 15000,
   crypto: 'Bitcoin',
+  id: 'bitcoin',
   small:
     'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579',
 };
@@ -84,16 +84,11 @@ function MainBoard({
             입니다.
           </h1>
           <p className="base-date">
-            (
-            {formatDate(
-              new Date(coinPrices.prices[coinPrices.prices.length - 1][0]),
-              true
-            )}{' '}
-            기준)
+            ({formatDate(new Date('2023-5-12 09:00'), true)} 기준)
           </p>
         </div>
         <div className="chart-wrapper">
-          <CoinChart data={coinPrices.prices} fluctuation={fluctuation} />
+          <CoinChart coinId={values.id} fluctuation={fluctuation} />
         </div>
       </div>
     </>

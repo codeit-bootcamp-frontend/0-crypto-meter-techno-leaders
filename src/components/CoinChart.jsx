@@ -11,6 +11,11 @@ import {
 } from 'chart.js';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import coinYearData from '/src/assets/coins_bitcoin_marketcharts.json';
+import coinMonthData from '/src/assets/coins_bitcoin_marketcharts_month.json';
+import coinWeekData from '/src/assets/coins_bitcoin_marketcharts_week.json';
+import coinDayData from '/src/assets/coins_bitcoin_marketcharts_day.json';
+
 import ChipBox from '/src/components/ChipBox';
 
 function convertToChartData(data) {
@@ -145,8 +150,19 @@ const options = {
   },
 };
 
-function CoinChart({ data, fluctuation = 'increase' }) {
+function CoinChart({ coinId, fluctuation = 'increase' }) {
   const [selectedPeriod, setSelectedPeriod] = useState('year');
+  let data;
+  if (selectedPeriod === 'year' || selectedPeriod === 'all') {
+    data = coinYearData.prices;
+  } else if (selectedPeriod === 'month') {
+    data = coinMonthData.prices;
+  } else if (selectedPeriod === 'week') {
+    data = coinWeekData.prices;
+  } else if (selectedPeriod === 'day') {
+    data = coinDayData.prices;
+  }
+
   const values = ['all', 'year', 'month', 'week', 'day'];
   const names = ['전체', '1년', '1달', '1주', '1일'];
   const canvas = document.createElement('canvas');
