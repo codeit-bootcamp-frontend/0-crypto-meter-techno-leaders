@@ -52,14 +52,17 @@ function CustomPagination() {
 }
 
 function getPriceChangePercentageDiv(value) {
-  const slicedValue = value.toFixed(2);
-  const combinedClassName = clsx('price-change-percentage', {
-    ['negative']: slicedValue < 0,
-    ['positive']: slicedValue > 0,
-  });
+  const priceChangePercentage = value !== null ? value.toFixed(2) : '-';
+  const combinedClassName =
+    value !== null ? (value < 0 ? 'negative' : 'positive') : '';
+
   return (
-    <div className={combinedClassName}>
-      <span>{slicedValue}%</span>
+    <div className={`price-change-percentage ${combinedClassName}`}>
+      {priceChangePercentage !== '-' ? (
+        <span>{priceChangePercentage}%</span>
+      ) : (
+        <span>{priceChangePercentage}</span>
+      )}
     </div>
   );
 }
@@ -228,10 +231,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) =>
-        params.value
-          ? getPriceChangePercentageDiv(params.value)
-          : getPriceChangePercentageDiv(0),
+      renderCell: (params) => getPriceChangePercentageDiv(params.value),
     },
     {
       field: 'price_change_percentage_24h_in_currency',
@@ -242,10 +242,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) =>
-        params.value
-          ? getPriceChangePercentageDiv(params.value)
-          : getPriceChangePercentageDiv(0),
+      renderCell: (params) => getPriceChangePercentageDiv(params.value),
     },
     {
       field: 'price_change_percentage_7d_in_currency',
@@ -256,10 +253,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) =>
-        params.value
-          ? getPriceChangePercentageDiv(params.value)
-          : getPriceChangePercentageDiv(0),
+      renderCell: (params) => getPriceChangePercentageDiv(params.value),
     },
   ];
 
