@@ -65,21 +65,30 @@ ChartJS.register(
   }
 );
 
-const getChartData = (canvas, data) => {
+const getChartData = (canvas, data, fluctuation) => {
+  console.log(fluctuation);
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createLinearGradient(0, 0, 0, 411);
-  gradient.addColorStop(0, 'rgba(0, 166, 97, 0.3)');
-  gradient.addColorStop(0.5, 'rgba(9, 177, 76, 0.3)');
-  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  if (fluctuation === 'increase') {
+    gradient.addColorStop(0, 'rgba(0, 166, 97, 0.5)');
+    gradient.addColorStop(0.5, 'rgba(9, 177, 76, 0.5)');
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  } else {
+    gradient.addColorStop(0, 'rgba(253, 73, 61, 1)');
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  }
+  const chartBoarderColor = fluctuation === 'increase' ? '#00A661' : '#FD493D';
+  const pointBackgroundColor =
+    fluctuation === 'increase' ? '#00A661' : '#FD493D';
   return {
     datasets: [
       {
         pointRadius: 0,
         fill: true,
         backgroundColor: gradient,
-        borderColor: '#00A661',
+        borderColor: chartBoarderColor,
         borderWidth: 2,
-        pointHoverBackgroundColor: '#00A661',
+        pointHoverBackgroundColor: pointBackgroundColor,
         pointHoverBorderWidth: 3,
         data: convertToChartData(data),
       },
@@ -135,9 +144,9 @@ const options = {
   },
 };
 
-function CoinChart({ data }) {
+function CoinChart({ data, fluctuation = 'increase' }) {
   const canvas = document.createElement('canvas');
-  const chartData = getChartData(canvas, data);
+  const chartData = getChartData(canvas, data, fluctuation);
   return <Line data={chartData} options={options} />;
 }
 
