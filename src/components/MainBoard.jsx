@@ -2,6 +2,9 @@ import CoinChart from '/src/components/CoinChart';
 import coinPrices from '/src/assets/coins_bitcoin_marketcharts.json';
 import '/src/components/MainBoard.css';
 import Divider from '/src/components/Divider';
+import kakaotalk from '/src/assets/images/kakaotalk.svg';
+import facebook from '/src/assets/images/facebook.svg';
+import share from '/src/assets/images/share.svg';
 
 const PREV_DATE = new Date('2022-05-12');
 
@@ -51,9 +54,22 @@ function MainBoard({
   return (
     <>
       <div className="mainboard-wrapper">
-        <div className="crypto-info">
-          <img src={values.thumb} />
-          <span className="crypto-name">{values.crypto}</span>
+        <div className="top-area">
+          <div className="crypto-info">
+            <img src={values.thumb} />
+            <span className="crypto-name">{values.crypto}</span>
+          </div>
+          <div className="share-link-container">
+            <a href="#">
+              <img src={kakaotalk} />
+            </a>
+            <a href="#">
+              <img src={facebook} />
+            </a>
+            <a href="#">
+              <img src={share} />
+            </a>
+          </div>
         </div>
         <Divider />
         <div className="title-wrapper">

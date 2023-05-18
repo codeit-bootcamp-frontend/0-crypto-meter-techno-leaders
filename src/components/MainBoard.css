@@ -10,11 +10,22 @@
   padding: 3.6rem 4.8rem 8rem;
 }
 
+.top-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3.2rem;
+}
+
 .crypto-info {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 3.2rem;
+}
+
+.share-link-container {
+  display: flex;
+  gap: 2rem;
 }
 
 .title-wrapper {
