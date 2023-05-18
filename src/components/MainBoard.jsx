@@ -43,8 +43,8 @@ function MainBoard({
   values = DEFAULT_VALUES,
   currency = 'krw',
   prevCurrency = 38327701.66106745,
+  todayCurrency = 35916698.02103988,
 }) {
-  const todayCurrency = coinPrices.prices[coinPrices.prices.length - 1][1];
   const resultPrice = calculateResultPrice(
     values.amount,
     prevCurrency,
