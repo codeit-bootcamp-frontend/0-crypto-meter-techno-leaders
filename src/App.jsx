@@ -1,7 +1,8 @@
 import './App.css';
+import GNB from './components/GNB/GNB';
 
 function App() {
-  return <h1>dfhskf</h1>;
+  return <GNB />;
 }
 
 export default App;
