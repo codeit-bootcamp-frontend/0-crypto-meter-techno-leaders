@@ -1,6 +1,12 @@
 function HistoryItem({ datas }) {
-  const { purchaseDate, investment, coinName, currentDate, currentValue } =
-    datas;
+  const {
+    purchaseDate,
+    investment,
+    coinName,
+    coinLogoURL,
+    currentDate,
+    currentValue,
+  } = datas;
 
   return (
     <li
@@ -14,10 +20,7 @@ function HistoryItem({ datas }) {
       }}
     >
       <div className="coin-logo">
-        <img
-          style={{ width: '28px', height: '28px' }}
-          src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
-        />
+        <img style={{ width: '28px', height: '28px' }} src={coinLogoURL} />
       </div>
       <div style={{ height: '39px', display: 'flex', flexDirection: 'column' }}>
         <div>

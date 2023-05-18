@@ -16,6 +16,8 @@ const datas = {
   purchaseDate: dateString(2020, 1, 30),
   investment: 10000,
   coinName: 'bitcoin',
+  coinLogoURL:
+    'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
   currentDate: dateString(2023, 5, 18),
   currentValue: 30000,
 };
