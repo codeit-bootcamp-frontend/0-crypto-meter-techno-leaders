@@ -59,7 +59,7 @@ function getPriceChangePercentageDiv(value) {
   });
   return (
     <div className={combinedClassName}>
-      <span>{slicedValue}</span>
+      <span>{slicedValue}%</span>
     </div>
   );
 }
