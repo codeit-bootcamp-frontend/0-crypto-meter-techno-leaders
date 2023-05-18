@@ -149,7 +149,6 @@ function CoinChart({ data, fluctuation = 'increase' }) {
   const [selectedPeriod, setSelectedPeriod] = useState('year');
   const values = ['all', 'year', 'month', 'week', 'day'];
   const names = ['전체', '1년', '1달', '1주', '1일'];
-
   const canvas = document.createElement('canvas');
   const chartData = getChartData(canvas, data, fluctuation);
   return (

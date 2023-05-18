@@ -1,9 +1,17 @@
 import '/src/components/Chip.css';
 
-function Chip({ value = '1year', name = '1년', onClick, active = false }) {
+function Chip({ value = 'year', name = '1년', onClick, active = false }) {
   const activeClass = active ? 'active' : '';
 
-  return <button className={`chip-button ${activeClass}`}>{name}</button>;
+  const handleClick = () => {
+    onClick(value);
+  };
+
+  return (
+    <button className={`chip-button ${activeClass}`} onClick={handleClick}>
+      {name}
+    </button>
+  );
 }
 
 export default Chip;

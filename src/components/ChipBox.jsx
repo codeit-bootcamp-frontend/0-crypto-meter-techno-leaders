@@ -4,13 +4,15 @@ import Chip from './Chip';
 function ChipBox({ values, names, activeValue, onChange }) {
   return (
     <div className="chips-container">
-      {values.map((value, i) =>
-        value === activeValue ? (
-          <Chip key={value} value={value} name={names[i]} active />
-        ) : (
-          <Chip key={value} value={value} name={names[i]} />
-        )
-      )}
+      {values.map((value, i) => (
+        <Chip
+          key={value}
+          value={value}
+          name={names[i]}
+          onClick={onChange}
+          active={value === activeValue}
+        />
+      ))}
     </div>
   );
 }

@@ -6,6 +6,7 @@
   background-color: #e7e9f0;
   color: #848898;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .active {
