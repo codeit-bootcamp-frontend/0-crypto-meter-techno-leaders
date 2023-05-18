@@ -12,8 +12,8 @@ const DEFAULT_VALUES = {
   selectedDate: PREV_DATE,
   amount: 15000,
   crypto: 'Bitcoin',
-  thumb:
-    'https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png?1547033579',
+  small:
+    'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579',
 };
 
 function formatDate(date, setHour = false) {
@@ -56,7 +56,7 @@ function MainBoard({
       <div className="mainboard-wrapper">
         <div className="top-area">
           <div className="crypto-info">
-            <img src={values.thumb} />
+            <img className="crypto-image" src={values.small} />
             <span className="crypto-name">{values.crypto}</span>
           </div>
           <div className="share-link-container">

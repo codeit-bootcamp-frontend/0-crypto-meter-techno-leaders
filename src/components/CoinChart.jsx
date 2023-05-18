@@ -9,7 +9,9 @@ import {
   Filler,
   Legend,
 } from 'chart.js';
+import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import ChipBox from '/src/components/ChipBox';
 
 function convertToChartData(data) {
   const chartData = [];
@@ -66,7 +68,6 @@ ChartJS.register(
 );
 
 const getChartData = (canvas, data, fluctuation) => {
-  console.log(fluctuation);
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createLinearGradient(0, 0, 0, 411);
   if (fluctuation === 'increase') {
@@ -145,9 +146,23 @@ const options = {
 };
 
 function CoinChart({ data, fluctuation = 'increase' }) {
+  const [selectedPeriod, setSelectedPeriod] = useState('year');
+  const values = ['all', 'year', 'month', 'week', 'day'];
+  const names = ['전체', '1년', '1달', '1주', '1일'];
+
   const canvas = document.createElement('canvas');
   const chartData = getChartData(canvas, data, fluctuation);
-  return <Line data={chartData} options={options} />;
+  return (
+    <>
+      <ChipBox
+        values={values}
+        names={names}
+        activeValue={selectedPeriod}
+        onChange={setSelectedPeriod}
+      />
+      <Line data={chartData} options={options} />;
+    </>
+  );
 }
 
 export default CoinChart;
