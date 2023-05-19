@@ -53,17 +53,23 @@ function CustomPagination() {
 }
 
 function PriceChangePercentage({ value }) {
-  const priceChangePercentage = value !== null ? value.toFixed(2) : '-';
-  const combinedClassName =
-    value !== null ? (value < 0 ? 'negative' : 'positive') : '';
+  const roundedValue = Math.round(value * 100) / 100;
+  const priceChangePercentage = value !== null ? `${roundedValue}%` : '-';
+  let combinedClassName = '';
+
+  if (value !== null) {
+    if (roundedValue < 0) {
+      combinedClassName = 'negative';
+    } else if (roundedValue > 0) {
+      combinedClassName = 'positive';
+    } else {
+      combinedClassName = 'zero';
+    }
+  }
 
   return (
     <div className={`price-change-percentage ${combinedClassName}`}>
-      {priceChangePercentage !== '-' ? (
-        <span>{priceChangePercentage}%</span>
-      ) : (
-        <span>{priceChangePercentage}</span>
-      )}
+      <span>{priceChangePercentage}</span>
     </div>
   );
 }
