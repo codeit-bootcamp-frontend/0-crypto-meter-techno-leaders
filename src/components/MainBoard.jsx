@@ -5,12 +5,13 @@ import { formatDate } from '/src/formatDate';
 import kakaotalk from '/src/assets/images/kakaotalk.svg';
 import facebook from '/src/assets/images/facebook.svg';
 import share from '/src/assets/images/share.svg';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 const PREV_DATE = new Date('2022-05-12');
 
 const DEFAULT_VALUES = {
   selectedDate: PREV_DATE,
-  amount: 15000,
+  investment: 15000,
   name: 'Bitcoin',
   id: 'bitcoin',
   imageUrl:
@@ -28,33 +29,66 @@ function formatTimeStampNow() {
   return `${year}년 ${month}월 ${day}일 9시 기준`;
 }
 
-function formatResultPrice(amount, currency) {
+function formatResultPrice(price, currency) {
   if (currency === 'krw') {
-    return amount + '원';
+    return price + '원';
   } else {
-    return '$' + amount;
+    return '$' + price;
   }
 }
 
-function calculateResultPrice(amount, prevMPrice, todayMPrice) {
-  return ((amount / prevMPrice) * todayMPrice).toFixed(2);
+function calculateResultPrices(
+  investment,
+  currency,
+  prevKrw,
+  todayKrw,
+  prevUsd,
+  todayUsd
+) {
+  const resultPricesByCurrency = [];
+  let purchasedCoinCnt;
+
+  if (currency === 'krw') {
+    purchasedCoinCnt = investment / prevKrw;
+  } else {
+    purchasedCoinCnt = investment / prevUsd;
+  }
+
+  resultPricesByCurrency.push(+(purchasedCoinCnt * todayKrw).toFixed(2));
+  resultPricesByCurrency.push(+(purchasedCoinCnt * todayUsd).toFixed(2));
+
+  return resultPricesByCurrency;
 }
+
+const priceIndexMapper = {
+  krw: 0,
+  usd: 1,
+};
 
 function MainBoard({
   values = DEFAULT_VALUES,
-  currency = 'krw',
-  prevCurrency = 38327701.66106745,
-  todayCurrency = 35916698.02103988,
+  prevKrw = 38327701.66106745,
+  todayKrw = 35837757.44617293,
+  prevUsd = 28913.48836365432,
+  todayUsd = 26842.95249471792,
 }) {
-  const resultPrice = calculateResultPrice(
-    values.amount,
-    prevCurrency,
-    todayCurrency
+  const currency = useCurrency();
+  const resultPrices = calculateResultPrices(
+    values.investment,
+    currency,
+    prevKrw,
+    todayKrw,
+    prevUsd,
+    todayUsd
   );
-  const fluctuation = resultPrice - values.amount > 0 ? 'increase' : 'decrease';
+  const fluctuation =
+    resultPrices[priceIndexMapper[currency]] - values.investment > 0
+      ? 'increase'
+      : 'decrease';
+
   return (
     <>
-      <div className="mainboard-wrapper">
+      <div className="mainboard-container">
         <div className="top-area">
           <div className="crypto-info">
             <img className="crypto-image" src={values.imageUrl} />
@@ -67,21 +101,24 @@ function MainBoard({
           </div>
         </div>
         <Divider />
-        <div className="title-wrapper">
+        <div className="title-container">
           <h1 className="precondition">
             {formatDate(values.selectedDate)}에{' '}
-            {formatResultPrice(values.amount, currency)}으로 샀다면 오늘
+            {formatResultPrice(values.investment, currency)}으로 샀다면 오늘
           </h1>
           <h1 className="result">
             <span className={`${fluctuation}-emphasize`}>
-              {formatResultPrice(resultPrice, currency)}
+              {formatResultPrice(
+                resultPrices[priceIndexMapper[currency]],
+                currency
+              )}
             </span>{' '}
             입니다.
           </h1>
           <p className="base-date">({formatTimeStampNow()})</p>
         </div>
-        <div className="chart-wrapper">
-          <CoinChart coinId={values.id} fluctuation={fluctuation} />
+        <div className="chart-container">
+          <CoinChart id={values.id} fluctuation={fluctuation} />
         </div>
       </div>
     </>

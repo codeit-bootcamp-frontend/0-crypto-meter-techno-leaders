@@ -3,7 +3,7 @@
   margin: 0;
 }
 
-.mainboard-wrapper {
+.mainboard-container {
   max-width: 137.9rem;
   background-color: #ffffff;
   border-radius: 2.5rem;
@@ -32,7 +32,7 @@
   cursor: pointer;
 }
 
-.title-wrapper {
+.title-container {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -73,7 +73,7 @@
   font-weight: bold;
 }
 
-.chart-wrapper {
+.chart-container {
   aspect-ratio: 2;
   max-width: 91rem;
 }
