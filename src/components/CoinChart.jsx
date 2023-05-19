@@ -18,23 +18,31 @@ import coinDayData from '/src/assets/coins_bitcoin_marketcharts_day.json';
 
 import ChipBox from '/src/components/ChipBox';
 
-function convertToChartData(data) {
+function convertToChartData(data, period = 'year') {
   const chartData = [];
   data.forEach((elem) => {
-    const formattedDate = millisecondsToDate(elem[0]);
+    const formattedDate = millisecondsToDate(elem[0], period);
     const price = Math.round(elem[1]);
     chartData.push({ x: formattedDate, y: price });
   });
   return chartData;
 }
 
-function millisecondsToDate(milliseconds) {
+function millisecondsToDate(milliseconds, type = 'year') {
   const date = new Date(milliseconds);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const formattedDate = `${year}년 ${month}월 ${day}일`;
-  return formattedDate;
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
+
+  if (type === 'year' || type === 'month') {
+    return `${year}년 ${month}월 ${day}일`;
+  } else if (type === 'week') {
+    return `${year}년 ${month}월 ${day}일 ${hour}시`;
+  } else {
+    return `${hour}:${minutes}`;
+  }
 }
 
 ChartJS.register(
@@ -72,7 +80,7 @@ ChartJS.register(
   }
 );
 
-const getChartData = (canvas, data, fluctuation) => {
+const getChartData = (canvas, data, fluctuation, period = 'year') => {
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createLinearGradient(0, 0, 0, 411);
   if (fluctuation === 'increase') {
@@ -96,58 +104,70 @@ const getChartData = (canvas, data, fluctuation) => {
         borderWidth: 2,
         pointHoverBackgroundColor: pointBackgroundColor,
         pointHoverBorderWidth: 3,
-        data: convertToChartData(data),
+        data: convertToChartData(data, period),
       },
     ],
   };
 };
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: false,
-    },
-    title: {
-      display: false,
-    },
-    tooltip: {
-      yAlign: 'bottom',
-      displayColors: false,
-      callbacks: {
-        label: function (tooltipItem) {
-          return `￦${tooltipItem.formattedValue}`;
+const options = (period = 'year') => {
+  return {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: false,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        yAlign: 'bottom',
+        displayColors: false,
+        callbacks: {
+          label: function (tooltipItem) {
+            return `￦${tooltipItem.formattedValue}`;
+          },
         },
       },
     },
-  },
-  interaction: {
-    intersect: false,
-  },
-  scales: {
-    x: {
-      grid: {
-        drawOnChartArea: false,
+    interaction: {
+      intersect: false,
+    },
+    scales: {
+      x: {
+        grid: {
+          drawOnChartArea: false,
+        },
+        ticks: {
+          maxTicksLimit: 4,
+          callback: function (index) {
+            const label = this.getLabelForValue(index);
+            if (period === 'year') {
+              if (label.slice(-3) === ' 1일') {
+                return label.slice(0, -3);
+              }
+            } else if (period === 'month') {
+              if (index !== 0 && index % 3 === 0) return label;
+            } else if (period === 'week') {
+              if (label.slice(-3) === ' 0시') {
+                return label.slice(0, -3);
+              }
+            } else {
+              if (index !== 0 && index % 57 === 0) return label;
+            }
+          },
+        },
       },
-      ticks: {
-        maxTicksLimit: 4,
-        callback: function (value) {
-          const label = this.getLabelForValue(value);
-          if (label.slice(-3) === ' 1일') {
-            return label.slice(0, -3);
-          }
+      y: {
+        ticks: {
+          callback: function (value) {
+            const label = this.getLabelForValue(value);
+            const deletedComma = label.replaceAll(',', '');
+            return `${deletedComma.slice(0, 1)},${deletedComma.slice(1, 4)}만`;
+          },
         },
       },
     },
-    y: {
-      ticks: {
-        callback: function (value) {
-          const label = this.getLabelForValue(value);
-          const deletedComma = label.replaceAll(',', '');
-          return `${deletedComma.slice(0, 1)},${deletedComma.slice(1, 4)}만`;
-        },
-      },
-    },
-  },
+  };
 };
 
 function CoinChart({ coinId, fluctuation = 'increase' }) {
@@ -160,13 +180,13 @@ function CoinChart({ coinId, fluctuation = 'increase' }) {
   } else if (selectedPeriod === 'week') {
     data = coinWeekData.prices;
   } else if (selectedPeriod === 'day') {
-    data = coinDayData.prices;
+    data = coinDayData.prices.slice(0, coinDayData.prices.length - 1);
   }
 
   const values = ['all', 'year', 'month', 'week', 'day'];
   const names = ['전체', '1년', '1달', '1주', '1일'];
   const canvas = document.createElement('canvas');
-  const chartData = getChartData(canvas, data, fluctuation);
+  const chartData = getChartData(canvas, data, fluctuation, selectedPeriod);
   return (
     <>
       <ChipBox
@@ -175,7 +195,7 @@ function CoinChart({ coinId, fluctuation = 'increase' }) {
         activeValue={selectedPeriod}
         onChange={setSelectedPeriod}
       />
-      <Line data={chartData} options={options} />;
+      <Line data={chartData} options={options(selectedPeriod)} />;
     </>
   );
 }
