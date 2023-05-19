@@ -1,6 +1,7 @@
 import CoinChart from '/src/components/CoinChart';
 import '/src/components/MainBoard.css';
 import Divider from '/src/components/Divider';
+import { formatDate } from '/src/formatDate';
 import kakaotalk from '/src/assets/images/kakaotalk.svg';
 import facebook from '/src/assets/images/facebook.svg';
 import share from '/src/assets/images/share.svg';
@@ -10,21 +11,21 @@ const PREV_DATE = new Date('2022-05-12');
 const DEFAULT_VALUES = {
   selectedDate: PREV_DATE,
   amount: 15000,
-  crypto: 'Bitcoin',
+  name: 'Bitcoin',
   id: 'bitcoin',
-  small:
+  imageUrl:
     'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579',
 };
 
-function formatDate(date, setHour = false) {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
+function formatTimeStampNow() {
+  const today = new Date();
+  const oneDay = 24 * 60 * 60 * 1000;
+  const timeStamp = today.getHours() < 9 ? new Date(today - oneDay) : today;
+  const year = timeStamp.getFullYear();
+  const month = timeStamp.getMonth() + 1;
+  const day = timeStamp.getDate();
 
-  const formattedDate = `${year}년 ${month}월 ${day}일`;
-
-  return setHour ? `${formattedDate} ${hour}시` : formattedDate;
+  return `${year}년 ${month}월 ${day}일 9시 기준`;
 }
 
 function formatResultPrice(amount, currency) {
@@ -56,19 +57,13 @@ function MainBoard({
       <div className="mainboard-wrapper">
         <div className="top-area">
           <div className="crypto-info">
-            <img className="crypto-image" src={values.small} />
-            <span className="crypto-name">{values.crypto}</span>
+            <img className="crypto-image" src={values.imageUrl} />
+            <span className="crypto-name">{values.name}</span>
           </div>
           <div className="share-link-container">
-            <a href="#">
-              <img src={kakaotalk} />
-            </a>
-            <a href="#">
-              <img src={facebook} />
-            </a>
-            <a href="#">
-              <img src={share} />
-            </a>
+            <img src={kakaotalk} />
+            <img src={facebook} />
+            <img src={share} />
           </div>
         </div>
         <Divider />
@@ -83,9 +78,7 @@ function MainBoard({
             </span>{' '}
             입니다.
           </h1>
-          <p className="base-date">
-            ({formatDate(new Date('2023-5-12 09:00'), true)} 기준)
-          </p>
+          <p className="base-date">({formatTimeStampNow()})</p>
         </div>
         <div className="chart-wrapper">
           <CoinChart coinId={values.id} fluctuation={fluctuation} />

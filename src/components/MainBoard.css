@@ -28,6 +28,10 @@
   gap: 2rem;
 }
 
+.share-link-container > img {
+  cursor: pointer;
+}
+
 .title-wrapper {
   display: flex;
   flex-direction: column;
