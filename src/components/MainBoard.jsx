@@ -118,7 +118,11 @@ function MainBoard({
           <p className="base-date">({formatTimeStampNow()})</p>
         </div>
         <div className="chart-container">
-          <CoinChart id={values.id} fluctuation={fluctuation} />
+          <CoinChart
+            id={values.id}
+            currency={currency}
+            fluctuation={fluctuation}
+          />
         </div>
       </div>
     </>

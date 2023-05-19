@@ -18,11 +18,17 @@ import coinWeekData from '/src/assets/coins_bitcoin_marketcharts_week.json';
 import coinDayData from '/src/assets/coins_bitcoin_marketcharts_day.json';
 import ChipBox from '/src/components/ChipBox';
 
-function convertToChartData(data, period = 'year') {
+function convertToChartData(data, currency, period) {
   const chartData = [];
   data.forEach((elem) => {
     const formattedDate = millisecondsToDate(elem[0], period);
-    const price = Math.round(elem[1]);
+    let price;
+    if (currency === 'krw') {
+      price = Math.round(elem[1]);
+    } else if (currency === 'usd') {
+      price = +elem[1].toFixed(2);
+    }
+
     chartData.push({ x: formattedDate, y: price });
   });
   return chartData;
@@ -101,7 +107,7 @@ ChartJS.register(
   }
 );
 
-const getChartData = (canvas, data, fluctuation, period = 'year') => {
+const getChartData = (canvas, data, currency, fluctuation, period = 'year') => {
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createLinearGradient(0, 0, 0, 411);
   if (fluctuation === 'increase') {
@@ -125,13 +131,13 @@ const getChartData = (canvas, data, fluctuation, period = 'year') => {
         borderWidth: 2,
         pointHoverBackgroundColor: pointBackgroundColor,
         pointHoverBorderWidth: 3,
-        data: convertToChartData(data, period),
+        data: convertToChartData(data, currency, period),
       },
     ],
   };
 };
 
-const options = (period) => {
+const options = (period, currency) => {
   return {
     responsive: true,
     plugins: {
@@ -146,7 +152,9 @@ const options = (period) => {
         displayColors: false,
         callbacks: {
           label: function (tooltipItem) {
-            return `￦${tooltipItem.formattedValue}`;
+            if (currency === 'krw') return `￦${tooltipItem.formattedValue}`;
+            else if (currency === 'usd')
+              return `$${tooltipItem.formattedValue}`;
           },
         },
         titleColor: '#A2A7B7',
@@ -194,11 +202,17 @@ const options = (period) => {
 const values = ['all', 'year', 'month', 'week', 'day'];
 const names = ['전체', '1년', '1달', '1주', '1일'];
 
-function CoinChart({ id, fluctuation }) {
+function CoinChart({ id, currency, fluctuation }) {
   const [selectedPeriod, setSelectedPeriod] = useState('year');
   const canvas = document.createElement('canvas');
   const data = getCoinData(selectedPeriod);
-  const chartData = getChartData(canvas, data, fluctuation, selectedPeriod);
+  const chartData = getChartData(
+    canvas,
+    data,
+    currency,
+    fluctuation,
+    selectedPeriod
+  );
   return (
     <>
       <ChipBox
@@ -207,7 +221,7 @@ function CoinChart({ id, fluctuation }) {
         activeValue={selectedPeriod}
         onChange={setSelectedPeriod}
       />
-      <Line data={chartData} options={options(selectedPeriod)} />
+      <Line data={chartData} options={options(selectedPeriod, currency)} />
     </>
   );
 }
