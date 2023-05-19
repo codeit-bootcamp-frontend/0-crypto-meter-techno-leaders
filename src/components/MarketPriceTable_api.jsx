@@ -52,7 +52,7 @@ function CustomPagination() {
   );
 }
 
-function PriceChangePercentageDiv({ value }) {
+function PriceChangePercentage({ value }) {
   const priceChangePercentage = value !== null ? value.toFixed(2) : '-';
   const combinedClassName =
     value !== null ? (value < 0 ? 'negative' : 'positive') : '';
@@ -135,6 +135,7 @@ function MarketPriceTable() {
     const { page, pageSize } = params;
     const currentPage = page + 1;
     const lastPage = Math.ceil(marketData.krw.length / pageSize);
+    console.log();
     if (currentPage === lastPage) {
       try {
         await Promise.all([
@@ -263,7 +264,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) => PriceChangePercentageDiv(params),
+      renderCell: (params) => PriceChangePercentage(params),
     },
     {
       field: 'price_change_percentage_24h_in_currency',
@@ -274,7 +275,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) => PriceChangePercentageDiv(params),
+      renderCell: (params) => PriceChangePercentage(params),
     },
     {
       field: 'price_change_percentage_7d_in_currency',
@@ -285,7 +286,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) => PriceChangePercentageDiv(params),
+      renderCell: (params) => PriceChangePercentage(params),
     },
   ];
 
@@ -302,9 +303,7 @@ function MarketPriceTable() {
             borderRadius: '0',
             borderTop: '1px solid #161c2f',
           }}
-          rows={
-            currency === 'krw' ? marketData?.krw || [] : marketData?.usd || []
-          }
+          rows={(marketData && marketData[currency]) || []}
           columns={columns}
           initialState={{
             pagination: {
