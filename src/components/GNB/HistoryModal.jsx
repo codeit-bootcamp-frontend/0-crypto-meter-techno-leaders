@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
 import Modal from 'react-modal';
 import Button from './Button';
-import HistoryList from './HistoryList';
-import HistoryItem from './HistoryItem';
+import HistoryList from '/src/components/GNB/HistoryList';
+import HistoryItem from '/src/components/GNB/HistoryItem';
 
 const dateString = (years, months, days) => {
   const newDate = new Date(years, months, days);
   const year = newDate.getFullYear();
-  const month = newDate.getMonth();
+  const month = newDate.getMonth() - 1;
   const day = newDate.getDate();
   return `${year}년 ${month}월 ${day}일`;
 };
 
 const datas = {
-  purchaseDate: dateString(2020, 1, 30),
+  purchaseDate: dateString(2020, 1, 28),
   investment: 10000,
   coinName: 'bitcoin',
   coinLogoURL:
