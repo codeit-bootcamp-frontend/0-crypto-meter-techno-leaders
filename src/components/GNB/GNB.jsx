@@ -3,9 +3,12 @@ import restoreIcon from '/src/assets/images/restore.svg';
 import Button from '/src/components/GNB/Button';
 import Logo from '/src/components/GNB/Logo';
 import HistoryModal from '/src/components/GNB/HistoryModal';
+import { useCurrency, useSetCurrency } from '../../contexts/CurrencyContext';
 
 function GNB() {
   const [isSearchLogVisible, setisSearchLogVisible] = useState(false);
+  const currency = useCurrency();
+  const setCurrency = useSetCurrency();
 
   const handleRestoreClick = useCallback(() => {
     console.log('다시 계산하기 버튼 클릭');
@@ -13,14 +16,14 @@ function GNB() {
   }, []);
 
   const handleCurrencyChange = useCallback((e) => {
-    console.log(e.target.value);
-    // e.target.value 값으로 화폐단위 state 변경 로직 들어갈 곳
+    setCurrency(e.target.value);
   }, []);
 
   const handleHistoryClick = useCallback(() => {
-    console.log('검색 기록 버튼 클릭');
     setisSearchLogVisible(true);
   }, []);
+
+  console.log(currency); // currency state가 잘 변화하는지 확인하려고 잠시 넣었고, 이후 변경 예정입니다.
 
   return (
     <div
@@ -51,6 +54,7 @@ function GNB() {
           name="다시 계산하기"
         />
         <select
+          value={currency}
           onChange={handleCurrencyChange}
           style={{
             height: '40px',

@@ -1,7 +1,13 @@
 import './App.css';
+import GNB from './components/GNB/GNB';
+import { CurrencyProvider } from './contexts/CurrencyContext';
 
 function App() {
-  return <h1>dfhskf</h1>;
+  return (
+    <CurrencyProvider value={'krw'}>
+      <GNB />
+    </CurrencyProvider>
+  );
 }
 
 export default App;
