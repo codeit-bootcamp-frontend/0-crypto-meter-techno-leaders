@@ -8,10 +8,11 @@ import {
   useGridSelector,
 } from '@mui/x-data-grid';
 import '/src/components/MarketPriceTable.css';
-import clsx from 'clsx';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const apiKey = import.meta.env.VITE_COINGECKO_KEY;
 
 const customTheme = createTheme({
   palette: {
@@ -51,7 +52,7 @@ function CustomPagination() {
   );
 }
 
-function getPriceChangePercentageDiv(value) {
+function PriceChangePercentageDiv({ value }) {
   const priceChangePercentage = value !== null ? value.toFixed(2) : '-';
   const combinedClassName =
     value !== null ? (value < 0 ? 'negative' : 'positive') : '';
@@ -68,42 +69,82 @@ function getPriceChangePercentageDiv(value) {
 }
 
 function MarketPriceTable() {
-  const [marketData, setMarketData] = useState([]);
+  const [marketData, setMarketData] = useState(null);
   const [currency, setCurrency] = useState('krw');
   const nextPage = useRef(1);
 
-  const fetchDataFromApi = async (page) => {
+  const fetchMarketData = async (page, currency) => {
     try {
-      const response1 = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=240&page=${page}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
+      const response = await fetch(
+        `https://pro-api.coingecko.com/api/v3/coins/markets?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&order=market_cap_desc&per_page=240&page=${page}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
       );
-      const response2 = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=240&page=${page}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
-      );
-      const data1 = await response1.json();
-      const data2 = await response2.json();
-      const formattedData1 = data1.map((item, index) => ({
-        ...item,
-        id: marketData.krw ? index + marketData.krw.length + 1 : index + 1,
-      }));
-      const formattedData2 = data2.map((item, index) => ({
-        ...item,
-        id: marketData.krw ? index + marketData.krw.length + 1 : index + 1,
-      }));
-
-      marketData.length === 0
-        ? setMarketData({
-            krw: formattedData1,
-            usd: formattedData2,
-          })
-        : setMarketData({
-            krw: [...marketData.krw].concat(formattedData1),
-            usd: [...marketData.usd].concat(formattedData2),
-          });
-
-      nextPage.current += 1;
+      const data = await response.json();
+      return data;
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const formatMarketData = (data, currency) => {
+    const startIndex =
+      marketData && marketData[currency] ? marketData[currency].length : 0;
+    return data.map((item, index) => ({
+      ...item,
+      id: startIndex + index + 1,
+    }));
+  };
+
+  const updateMarketData = (newData, currency, prevMarketData) => {
+    const updatedData = { ...prevMarketData };
+    if (updatedData[currency] === undefined) {
+      updatedData[currency] = newData;
+    } else {
+      updatedData[currency] = [...updatedData[currency], ...newData];
+    }
+    return updatedData;
+  };
+
+  const fetchAndUpdateMarketData = async (page, currency) => {
+    try {
+      const data = await fetchMarketData(page, currency);
+      const formattedData = formatMarketData(data, currency);
+      setMarketData((prevMarketData) =>
+        updateMarketData(formattedData, currency, prevMarketData)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        await fetchAndUpdateMarketData(nextPage.current, 'krw');
+        await fetchAndUpdateMarketData(nextPage.current, 'usd');
+        nextPage.current += 1;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
+
+  const handlePageChange = async (params) => {
+    const { page, pageSize } = params;
+    const currentPage = page + 1;
+    const lastPage = Math.ceil(marketData.krw.length / pageSize);
+    if (currentPage === lastPage) {
+      try {
+        await Promise.all([
+          fetchAndUpdateMarketData(nextPage.current, 'krw'),
+          fetchAndUpdateMarketData(nextPage.current, 'usd'),
+        ]);
+        nextPage.current += 1;
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -132,15 +173,6 @@ function MarketPriceTable() {
       getCurrency() +
       value.toLocaleString(undefined, { maximumFractionDigits: 10 })
     );
-  };
-
-  const handlePageChange = async (params) => {
-    const { page, pageSize } = params;
-    const currentPage = page + 1;
-    const lastPage = Math.ceil(marketData.krw.length / pageSize);
-    if (currentPage === lastPage) {
-      await fetchDataFromApi(nextPage.current);
-    }
   };
 
   const columns = [
@@ -231,7 +263,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) => getPriceChangePercentageDiv(params.value),
+      renderCell: (params) => PriceChangePercentageDiv(params),
     },
     {
       field: 'price_change_percentage_24h_in_currency',
@@ -242,7 +274,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) => getPriceChangePercentageDiv(params.value),
+      renderCell: (params) => PriceChangePercentageDiv(params),
     },
     {
       field: 'price_change_percentage_7d_in_currency',
@@ -253,13 +285,9 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: (params) => getPriceChangePercentageDiv(params.value),
+      renderCell: (params) => PriceChangePercentageDiv(params),
     },
   ];
-
-  useEffect(() => {
-    fetchDataFromApi(nextPage.current);
-  }, []);
 
   return (
     <div className="body">
