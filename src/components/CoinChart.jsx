@@ -34,14 +34,20 @@ function millisecondsToDate(milliseconds, type = 'year') {
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const hour = date.getHours();
-  const minutes = date.getMinutes();
+  const amPm = hour < 12 ? '오전' : '오후';
+  const minutes =
+    date.getMinutes() < 10
+      ? '0' + String(date.getMinutes())
+      : date.getMinutes();
 
-  if (type === 'year' || type === 'month') {
+  if (type === 'all' || type === 'year' || type === 'month') {
     return `${year}년 ${month}월 ${day}일`;
   } else if (type === 'week') {
-    return `${year}년 ${month}월 ${day}일 ${hour}시`;
+    return `${year}년 ${month}월 ${day}일 ${amPm} ${
+      (hour % 13) + Math.floor(hour / 13)
+    }시`;
   } else {
-    return `${hour}:${minutes}`;
+    return `${amPm} ${(hour % 13) + Math.floor(hour / 13)}:${minutes}`;
   }
 }
 
@@ -146,10 +152,10 @@ const options = (period = 'year') => {
                 return label.slice(0, -3);
               }
             } else if (period === 'month') {
-              if (index !== 0 && index % 3 === 0) return label;
+              if (index !== 0 && index % 4 === 0) return label;
             } else if (period === 'week') {
               if (label.slice(-3) === ' 0시') {
-                return label.slice(0, -3);
+                return label.slice(0, -6);
               }
             } else {
               if (index !== 0 && index % 57 === 0) return label;
