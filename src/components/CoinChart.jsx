@@ -147,7 +147,7 @@ const options = (period = 'year') => {
           maxTicksLimit: 4,
           callback: function (index) {
             const label = this.getLabelForValue(index);
-            if (period === 'year') {
+            if (period === 'all' || period === 'year') {
               if (label.slice(-3) === ' 1일') {
                 return label.slice(0, -3);
               }
@@ -158,7 +158,7 @@ const options = (period = 'year') => {
                 return label.slice(0, -6);
               }
             } else {
-              if (index !== 0 && index % 57 === 0) return label;
+              if (index > 30) return label.slice(0, -3) + '시';
             }
           },
         },
