@@ -11,6 +11,7 @@ import '/src/components/MarketPriceTable.css';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import defaultImg from '/src/assets/no-image.jpg';
 
 const apiKey = import.meta.env.VITE_COINGECKO_KEY;
 
@@ -53,18 +54,34 @@ function CustomPagination() {
 }
 
 function PriceChangePercentage({ value }) {
+  if (value === null) {
+    return (
+      <div className="price-change-percentage">
+        <span>-</span>
+      </div>
+    );
+  }
+
   const roundedValue = Math.round(value * 100) / 100;
-  const priceChangePercentage = value !== null ? `${roundedValue}%` : '-';
   let combinedClassName = '';
 
-  if (value !== null) {
-    if (roundedValue < 0) {
-      combinedClassName = 'negative';
-    } else if (roundedValue > 0) {
-      combinedClassName = 'positive';
-    } else {
-      combinedClassName = 'zero';
-    }
+  if (roundedValue < 0) {
+    combinedClassName = 'negative';
+  } else if (roundedValue > 0) {
+    combinedClassName = 'positive';
+  } else {
+    combinedClassName = 'zero';
+  }
+
+  let priceChangePercentage;
+  if (roundedValue > 1000000000) {
+    priceChangePercentage = `${Math.round(roundedValue / 1000000000)}B%`;
+  } else if (roundedValue > 1000000) {
+    priceChangePercentage = `${Math.round(roundedValue / 1000000)}M%`;
+  } else if (roundedValue > 1000) {
+    priceChangePercentage = `${Math.round(roundedValue / 1000)}K%`;
+  } else {
+    priceChangePercentage = `${roundedValue}%`;
   }
 
   return (
@@ -78,6 +95,8 @@ function MarketPriceTable() {
   const [marketData, setMarketData] = useState(null);
   const [currency, setCurrency] = useState('krw');
   const nextPage = useRef(1);
+
+  console.log(marketData);
 
   const fetchMarketData = async (page, currency) => {
     try {
@@ -128,7 +147,6 @@ function MarketPriceTable() {
       try {
         await fetchAndUpdateMarketData(nextPage.current, 'krw');
         await fetchAndUpdateMarketData(nextPage.current, 'usd');
-        nextPage.current += 1;
       } catch (error) {
         console.log(error);
       }
@@ -137,20 +155,25 @@ function MarketPriceTable() {
     fetchInitialData();
   }, []);
 
+  let fetchingData = false;
+
   const handlePageChange = async (params) => {
     const { page, pageSize } = params;
     const currentPage = page + 1;
     const lastPage = Math.ceil(marketData.krw.length / pageSize);
-    console.log();
+
     if (currentPage === lastPage) {
-      try {
-        await Promise.all([
-          fetchAndUpdateMarketData(nextPage.current, 'krw'),
-          fetchAndUpdateMarketData(nextPage.current, 'usd'),
-        ]);
-        nextPage.current += 1;
-      } catch (error) {
-        console.log(error);
+      if (!fetchingData) {
+        fetchingData = true;
+        try {
+          nextPage.current += 1;
+          await fetchAndUpdateMarketData(nextPage.current, 'krw');
+          await fetchAndUpdateMarketData(nextPage.current, 'usd');
+        } catch (error) {
+          console.log(error);
+        } finally {
+          fetchingData = false;
+        }
       }
     }
   };
@@ -200,7 +223,11 @@ function MarketPriceTable() {
         <div className="coin-name-container">
           <img
             className="coin-image"
-            src={params.row.image}
+            src={
+              params.row.image !== 'missing_large.png'
+                ? params.row.image
+                : defaultImg
+            }
             alt={params.value}
           />
           <div className="coin-description">
