@@ -12,6 +12,7 @@ import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import defaultImg from '/src/assets/no-image.jpg';
+import clsx from 'clsx';
 
 const apiKey = import.meta.env.VITE_COINGECKO_KEY;
 
@@ -63,15 +64,12 @@ function PriceChangePercentage({ value }) {
   }
 
   const roundedValue = Math.round(value * 100) / 100;
-  let combinedClassName = '';
 
-  if (roundedValue < 0) {
-    combinedClassName = 'negative';
-  } else if (roundedValue > 0) {
-    combinedClassName = 'positive';
-  } else {
-    combinedClassName = 'zero';
-  }
+  let combinedClassName = clsx('price-change-percentage', {
+    negative: roundedValue < 0,
+    positive: roundedValue > 0,
+    zero: roundedValue === 0,
+  });
 
   let priceChangePercentage;
   if (roundedValue > 1000000000) {
@@ -85,7 +83,7 @@ function PriceChangePercentage({ value }) {
   }
 
   return (
-    <div className={`price-change-percentage ${combinedClassName}`}>
+    <div className={combinedClassName}>
       <span>{priceChangePercentage}</span>
     </div>
   );
@@ -95,8 +93,6 @@ function MarketPriceTable() {
   const [marketData, setMarketData] = useState(null);
   const [currency, setCurrency] = useState('krw');
   const nextPage = useRef(1);
-
-  console.log(marketData);
 
   const fetchMarketData = async (page, currency) => {
     try {
@@ -260,9 +256,7 @@ function MarketPriceTable() {
       align: 'right',
       headerClassName: 'custom-header',
       renderCell: (params) => (
-        <span className="market-cap">
-          {params.value && formattedCurrency(params.value)}
-        </span>
+        <span className="market-cap">{formattedCurrency(params.value)}</span>
       ),
     },
     {
@@ -275,16 +269,22 @@ function MarketPriceTable() {
       headerClassName: 'custom-header',
       renderCell: (params) => (
         <div className="total-volume-container">
-          <span className="total-volume">
-            {params.value && formattedCurrency(params.value)}
-          </span>
-          <div className="coin-total-volume-container">
-            {formattedCoinTotalVolume(
-              params.value,
-              params.row.current_price,
-              params.row.symbol
-            )}
-          </div>
+          {params.value !== null ? (
+            <>
+              <span className="total-volume">
+                {params.value && formattedCurrency(params.value)}
+              </span>
+              <div className="coin-total-volume-container">
+                {formattedCoinTotalVolume(
+                  params.value,
+                  params.row.current_price,
+                  params.row.symbol
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="total-volume">-</div>
+          )}
         </div>
       ),
     },
