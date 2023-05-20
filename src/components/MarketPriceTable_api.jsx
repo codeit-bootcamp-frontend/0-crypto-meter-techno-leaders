@@ -1,28 +1,178 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  gridPageCountSelector,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from '@mui/x-data-grid';
 import '/src/components/MarketPriceTable.css';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import defaultImg from '/src/assets/no-image.jpg';
 import clsx from 'clsx';
 
-function getPriceChangePercentageDiv(params) {
-  const value = params.value.toFixed(2);
-  let cellClassName = '';
-  if (value < 0) {
-    cellClassName = 'negative';
-  } else if (value > 0) {
-    cellClassName = 'positive';
+const apiKey = import.meta.env.VITE_COINGECKO_KEY;
+
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#00A661',
+    },
+  },
+});
+
+function CustomPagination() {
+  const apiRef = useGridApiContext();
+  const page = useGridSelector(apiRef, gridPageSelector);
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+
+  return (
+    <ThemeProvider theme={customTheme}>
+      <Pagination
+        style={{ margin: '3rem auto 0' }}
+        color="primary"
+        shape="rounded"
+        page={page + 1}
+        count={pageCount}
+        renderItem={(props2) => (
+          <PaginationItem
+            {...props2}
+            disableRipple
+            style={{
+              fontSize: '1.4rem',
+              fontFamily: 'Pretendard',
+              fontWeight: 500,
+            }}
+          />
+        )}
+        onChange={(event, value) => apiRef.current.setPage(value - 1)}
+      />
+    </ThemeProvider>
+  );
+}
+
+function PriceChangePercentage({ value }) {
+  if (value === null) {
+    return (
+      <div className="price-change-percentage">
+        <span>-</span>
+      </div>
+    );
   }
-  const combinedClassName = clsx('price-change-percentage', cellClassName);
+
+  const roundedValue = Math.round(value * 100) / 100;
+
+  let combinedClassName = clsx('price-change-percentage', {
+    negative: roundedValue < 0,
+    positive: roundedValue > 0,
+    zero: roundedValue === 0,
+  });
+
+  let priceChangePercentage;
+  if (roundedValue > 1000000000) {
+    priceChangePercentage = `${Math.round(roundedValue / 1000000000)}B%`;
+  } else if (roundedValue > 1000000) {
+    priceChangePercentage = `${Math.round(roundedValue / 1000000)}M%`;
+  } else if (roundedValue > 1000) {
+    priceChangePercentage = `${Math.round(roundedValue / 1000)}K%`;
+  } else {
+    priceChangePercentage = `${roundedValue}%`;
+  }
+
   return (
     <div className={combinedClassName}>
-      <span>{value}</span>
+      <span>{priceChangePercentage}</span>
     </div>
   );
 }
 
 function MarketPriceTable() {
-  const [marketData, setMarketData] = useState([]);
-  const [vsCurrency, setVsCurrency] = useState('krw');
+  const [marketData, setMarketData] = useState(null);
+  const [currency, setCurrency] = useState('krw');
+  const nextPage = useRef(1);
+
+  const fetchMarketData = async (page, currency) => {
+    try {
+      const response = await fetch(
+        `https://pro-api.coingecko.com/api/v3/coins/markets?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&order=market_cap_desc&per_page=240&page=${page}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const formatMarketData = (data, currency) => {
+    const startIndex =
+      marketData && marketData[currency] ? marketData[currency].length : 0;
+    return data.map((item, index) => ({
+      ...item,
+      id: startIndex + index + 1,
+    }));
+  };
+
+  const updateMarketData = (newData, currency, prevMarketData) => {
+    const updatedData = { ...prevMarketData };
+    if (updatedData[currency] === undefined) {
+      updatedData[currency] = newData;
+    } else {
+      updatedData[currency] = [...updatedData[currency], ...newData];
+    }
+    return updatedData;
+  };
+
+  const fetchAndUpdateMarketData = async (page, currency) => {
+    try {
+      const data = await fetchMarketData(page, currency);
+      const formattedData = formatMarketData(data, currency);
+      setMarketData((prevMarketData) =>
+        updateMarketData(formattedData, currency, prevMarketData)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        await fetchAndUpdateMarketData(nextPage.current, 'krw');
+        await fetchAndUpdateMarketData(nextPage.current, 'usd');
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
+
+  let fetchingData = false;
+
+  const handlePageChange = async (params) => {
+    const { page, pageSize } = params;
+    const currentPage = page + 1;
+    const lastPage = Math.ceil(marketData.krw.length / pageSize);
+
+    if (currentPage === lastPage) {
+      if (!fetchingData) {
+        fetchingData = true;
+        try {
+          nextPage.current += 1;
+          await fetchAndUpdateMarketData(nextPage.current, 'krw');
+          await fetchAndUpdateMarketData(nextPage.current, 'usd');
+        } catch (error) {
+          console.log(error);
+        } finally {
+          fetchingData = false;
+        }
+      }
+    }
+  };
 
   const formattedCoinTotalVolume = (totalVolume, currentPrice, symbol) => {
     const coinTotalVolume = totalVolume / currentPrice;
@@ -37,11 +187,18 @@ function MarketPriceTable() {
   };
 
   const getCurrency = () => {
-    return vsCurrency === 'krw' ? '￦' : '$';
+    return currency === 'krw' ? '￦' : '$';
+  };
+
+  const changeCurrency = () => {
+    currency === 'krw' ? setCurrency('usd') : setCurrency('krw');
   };
 
   const formattedCurrency = (value) => {
-    return getCurrency() + value.toLocaleString();
+    return (
+      getCurrency() +
+      value.toLocaleString(undefined, { maximumFractionDigits: 10 })
+    );
   };
 
   const columns = [
@@ -62,7 +219,11 @@ function MarketPriceTable() {
         <div className="coin-name-container">
           <img
             className="coin-image"
-            src={params.row.image}
+            src={
+              params.row.image !== 'missing_large.png'
+                ? params.row.image
+                : defaultImg
+            }
             alt={params.value}
           />
           <div className="coin-description">
@@ -81,7 +242,9 @@ function MarketPriceTable() {
       align: 'right',
       headerClassName: 'custom-header',
       renderCell: (params) => (
-        <span className="coin-price">{formattedCurrency(params.value)}</span>
+        <span className="coin-price">
+          {params.value && formattedCurrency(params.value)}
+        </span>
       ),
     },
     {
@@ -106,16 +269,22 @@ function MarketPriceTable() {
       headerClassName: 'custom-header',
       renderCell: (params) => (
         <div className="total-volume-container">
-          <span className="total-volume">
-            {formattedCurrency(params.value)}
-          </span>
-          <div className="coin-total-volume-container">
-            {formattedCoinTotalVolume(
-              params.value,
-              params.row.current_price,
-              params.row.symbol
-            )}
-          </div>
+          {params.value !== null ? (
+            <>
+              <span className="total-volume">
+                {params.value && formattedCurrency(params.value)}
+              </span>
+              <div className="coin-total-volume-container">
+                {formattedCoinTotalVolume(
+                  params.value,
+                  params.row.current_price,
+                  params.row.symbol
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="total-volume">-</div>
+          )}
         </div>
       ),
     },
@@ -128,7 +297,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: getPriceChangePercentageDiv,
+      renderCell: (params) => PriceChangePercentage(params),
     },
     {
       field: 'price_change_percentage_24h_in_currency',
@@ -139,7 +308,7 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: getPriceChangePercentageDiv,
+      renderCell: (params) => PriceChangePercentage(params),
     },
     {
       field: 'price_change_percentage_7d_in_currency',
@@ -150,51 +319,24 @@ function MarketPriceTable() {
       headerAlign: 'right',
       align: 'right',
       headerClassName: 'custom-header',
-      renderCell: getPriceChangePercentageDiv,
+      renderCell: (params) => PriceChangePercentage(params),
     },
   ];
 
-  const fetchData = useCallback(
-    async (vsCurrency) => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vsCurrency}&order=market_cap_desc&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
-        );
-        const data = await response.json();
-        const formattedData = data.map((item, index) => ({
-          ...item,
-          id: index + 1,
-        }));
-        setMarketData(formattedData);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [vsCurrency]
-  );
-
-  useEffect(() => {
-    fetchData(vsCurrency);
-  }, [vsCurrency]);
-
   return (
     <div className="body">
+      <button style={{ fontSize: '2rem' }} onClick={changeCurrency}>
+        {currency === 'krw' ? '원화' : '달러'}
+      </button>
       <div className="market-price-table">
         <h2 className="market-price-table-title">전체 암호화폐 시세</h2>
-        <button
-          onClick={() => {
-            vsCurrency === 'krw' ? setVsCurrency('usd') : setVsCurrency('krw');
-          }}
-        >
-          통화변경
-        </button>
         <DataGrid
           style={{
             border: 'none',
             borderRadius: '0',
             borderTop: '1px solid #161c2f',
           }}
-          rows={marketData}
+          rows={(marketData && marketData[currency]) || []}
           columns={columns}
           initialState={{
             pagination: {
@@ -203,11 +345,14 @@ function MarketPriceTable() {
               },
             },
           }}
-          pageSizeOptions={[5]}
+          slots={{
+            pagination: CustomPagination,
+          }}
           checkboxSelection={false}
           disableRowSelectionOnClick={true}
           rowHeight={80}
           headerHeight={20}
+          onPaginationModelChange={handlePageChange}
         />
       </div>
     </div>

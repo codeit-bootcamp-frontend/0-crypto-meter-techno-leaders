@@ -39,6 +39,7 @@
 .coin-image {
   width: 3.2rem;
   margin-right: 1rem;
+  border-radius: 50%;
 }
 
 .coin-id {
@@ -83,15 +84,14 @@
 }
 
 .price-change-percentage {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 600;
-  width: 6.6rem;
+  width: 8rem;
   height: 2.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
-  background-color: #f5f5f5;
 }
 
 .negative {
@@ -104,8 +104,13 @@
   color: #00a661;
 }
 
-.negative span {
-  margin-left: -0.4rem;
+.zero {
+  background-color: #f3f3f5;
+  color: #343434;
+}
+
+.price-change-percentage span {
+  margin-left: 0.4rem;
 }
 
 .custom-header {
