@@ -19,8 +19,7 @@ import coinDayData from '/src/assets/coins_bitcoin_marketcharts_day.json';
 import ChipBox from '/src/components/ChipBox';
 
 function convertToChartData(data, currency, period) {
-  const chartData = [];
-  data.forEach((elem) => {
+  const chartData = data.map((elem) => {
     const formattedDate = millisecondsToDate(elem[0], period);
     let price;
     if (currency === 'krw') {
@@ -29,7 +28,7 @@ function convertToChartData(data, currency, period) {
       price = +elem[1].toFixed(2);
     }
 
-    chartData.push({ x: formattedDate, y: price });
+    return { x: formattedDate, y: price };
   });
   return chartData;
 }
@@ -56,6 +55,7 @@ function millisecondsToDate(milliseconds, type = 'year') {
   }
 }
 
+/* period에 따라 API 요청 */
 function getCoinData(period) {
   let coinData;
 
