@@ -16,17 +16,22 @@ const DEFAULT_VALUES = {
   id: 'bitcoin',
   imageUrl:
     'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579',
+  // 오늘날짜(date 객체)도 받아올 예정
+};
+
+const DEFAULT_MARKET_PRICES = {
+  prevKrw: 38327701.66106745,
+  todayKrw: 35837757.44617293,
+  prevUsd: 28913.48836365432,
+  todayUsd: 26842.95249471792,
 };
 
 function formatTimeStampNow() {
   const today = new Date();
   const oneDay = 24 * 60 * 60 * 1000;
   const timeStamp = today.getHours() < 9 ? new Date(today - oneDay) : today;
-  const year = timeStamp.getFullYear();
-  const month = timeStamp.getMonth() + 1;
-  const day = timeStamp.getDate();
 
-  return `${year}년 ${month}월 ${day}일 9시 기준`;
+  return `${formatDate(timeStamp)} 9시 기준`;
 }
 
 function formatResultPrice(price, currency) {
@@ -67,10 +72,10 @@ const priceIndexMapper = {
 
 function MainBoard({
   values = DEFAULT_VALUES,
-  prevKrw = 38327701.66106745,
-  todayKrw = 35837757.44617293,
-  prevUsd = 28913.48836365432,
-  todayUsd = 26842.95249471792,
+  prevKrw = DEFAULT_MARKET_PRICES.prevKrw, // default 변수 두기
+  todayKrw = DEFAULT_MARKET_PRICES.todayKrw,
+  prevUsd = DEFAULT_MARKET_PRICES.prevUsd,
+  todayUsd = DEFAULT_MARKET_PRICES.todayUsd,
 }) {
   const currency = useCurrency();
   const resultPrices = calculateResultPrices(
