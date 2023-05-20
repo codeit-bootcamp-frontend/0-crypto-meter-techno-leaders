@@ -39,6 +39,7 @@
 .coin-image {
   width: 3.2rem;
   margin-right: 1rem;
+  border-radius: 50%;
 }
 
 .coin-id {
@@ -104,7 +105,7 @@
 }
 
 .zero {
-  background-color: #f1f1f1;
+  background-color: #f3f3f5;
   color: #343434;
 }
 
