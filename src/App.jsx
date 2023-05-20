@@ -1,6 +1,6 @@
-import './App.css';
-import MainBoard from './components/MainBoard';
-import { CurrencyProvider } from './contexts/CurrencyContext';
+import '/src/App.css';
+import MainBoard from '/src/components/MainBoard';
+import { CurrencyProvider } from '/src/contexts/CurrencyContext';
 
 function App() {
   return (

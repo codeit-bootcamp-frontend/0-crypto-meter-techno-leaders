@@ -1,5 +1,5 @@
 import '/src/components/ChipBox.css';
-import Chip from './Chip';
+import Chip from '/src/components/Chip';
 
 function ChipBox({ values, names, activeValue, onChange }) {
   return (

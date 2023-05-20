@@ -5,7 +5,7 @@ import { formatDate } from '/src/formatDate';
 import kakaotalk from '/src/assets/images/kakaotalk.svg';
 import facebook from '/src/assets/images/facebook.svg';
 import share from '/src/assets/images/share.svg';
-import { useCurrency } from '../contexts/CurrencyContext';
+import { useCurrency } from '/src/contexts/CurrencyContext';
 
 const PREV_DATE = new Date('2022-05-12');
 
@@ -72,7 +72,7 @@ const priceIndexMapper = {
 
 function MainBoard({
   values = DEFAULT_VALUES,
-  prevKrw = DEFAULT_MARKET_PRICES.prevKrw, // default 변수 두기
+  prevKrw = DEFAULT_MARKET_PRICES.prevKrw,
   todayKrw = DEFAULT_MARKET_PRICES.todayKrw,
   prevUsd = DEFAULT_MARKET_PRICES.prevUsd,
   todayUsd = DEFAULT_MARKET_PRICES.todayUsd,

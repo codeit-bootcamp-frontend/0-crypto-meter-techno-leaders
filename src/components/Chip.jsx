@@ -1,6 +1,6 @@
 import '/src/components/Chip.css';
 
-function Chip({ value = 'year', name = '1년', onClick, active = false }) {
+function Chip({ value, name, onClick, active = false }) {
   const activeClass = active ? 'active' : '';
 
   const handleClick = () => {
