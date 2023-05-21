@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import '/src/components/Chip.css';
+import '/src/components/MainBoard/Chip.css';
 
 function Chip({ value, name, onClick, active = false }) {
   const chipClass = clsx('chip-button', { active });

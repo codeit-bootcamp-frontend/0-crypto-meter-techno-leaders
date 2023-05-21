@@ -1,7 +1,7 @@
-import CoinChart from '/src/components/CoinChart';
-import '/src/components/MainBoard.css';
+import CoinChart from '/src/components/MainBoard/CoinChart';
+import '/src/components/MainBoard/MainBoard.css';
 import Divider from '/src/components/Divider';
-import { formatDate } from '/src/formatDate';
+import { formatDate } from '/src/utils/formatDate';
 import kakaotalk from '/src/assets/images/kakaotalk.svg';
 import facebook from '/src/assets/images/facebook.svg';
 import share from '/src/assets/images/share.svg';
