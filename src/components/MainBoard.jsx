@@ -122,7 +122,7 @@ function MainBoard({
           </h1>
           <p className="base-date">({formatTimeStampNow()})</p>
         </div>
-        <div className="chart-container">
+        <div className="chart-wrapper">
           <CoinChart
             id={values.id}
             currency={currency}

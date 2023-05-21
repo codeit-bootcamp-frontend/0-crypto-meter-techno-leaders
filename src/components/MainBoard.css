@@ -73,7 +73,7 @@
   font-weight: bold;
 }
 
-.chart-container {
+.chart-wrapper {
   aspect-ratio: 2;
   max-width: 91rem;
 }
