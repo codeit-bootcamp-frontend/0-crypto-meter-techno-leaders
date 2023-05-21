@@ -4,12 +4,12 @@ import '/src/components/Chip.css';
 function Chip({ value, name, onClick, active = false }) {
   const chipClass = clsx('chip-button', { active });
 
-  const handleClick = () => {
+  const handleChipClick = () => {
     onClick(value);
   };
 
   return (
-    <button className={chipClass} onClick={handleClick}>
+    <button className={chipClass} onClick={handleChipClick}>
       {name}
     </button>
   );

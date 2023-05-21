@@ -1,5 +1,5 @@
 .chip-button {
-  font-family: 'pretendard', sans-serif;
+  font-family: inherit;
   border-radius: 2.1rem;
   border: none;
   padding: 0.4rem 1rem;

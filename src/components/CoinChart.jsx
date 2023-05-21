@@ -199,8 +199,8 @@ const options = (period, currency) => {
   };
 };
 
-const values = ['all', 'year', 'month', 'week', 'day'];
-const names = ['전체', '1년', '1달', '1주', '1일'];
+const periodValues = ['all', 'year', 'month', 'week', 'day'];
+const periodNames = ['전체', '1년', '1달', '1주', '1일'];
 
 function CoinChart({ id, currency, fluctuation }) {
   const [selectedPeriod, setSelectedPeriod] = useState('year');
@@ -216,8 +216,8 @@ function CoinChart({ id, currency, fluctuation }) {
   return (
     <>
       <ChipBox
-        values={values}
-        names={names}
+        values={periodValues}
+        names={periodNames}
         activeValue={selectedPeriod}
         onChange={setSelectedPeriod}
       />
