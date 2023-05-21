@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
-import InputBoardTitle from '/src/components/InputBoardTitle';
+import InputBoardTitle from '/src/components/InputBoard/InputBoardTitle';
 
 import cryptoCoins from '/src/assets/coins_markets.json';
 

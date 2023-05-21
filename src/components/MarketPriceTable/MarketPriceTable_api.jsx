@@ -7,7 +7,7 @@ import {
   useGridApiContext,
   useGridSelector,
 } from '@mui/x-data-grid';
-import '/src/components/MarketPriceTable.css';
+import '/src/components/MarketPriceTable/MarketPriceTable.css';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import { ThemeProvider, createTheme } from '@mui/material/styles';

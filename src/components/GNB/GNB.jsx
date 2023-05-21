@@ -3,7 +3,7 @@ import restoreIcon from '/src/assets/images/restore.svg';
 import Button from '/src/components/GNB/Button';
 import Logo from '/src/components/GNB/Logo';
 import HistoryModal from '/src/components/GNB/HistoryModal';
-import { useCurrency, useSetCurrency } from '../../contexts/CurrencyContext';
+import { useCurrency, useSetCurrency } from '/src/contexts/CurrencyContext';
 
 function GNB() {
   const [isSearchLogVisible, setisSearchLogVisible] = useState(false);

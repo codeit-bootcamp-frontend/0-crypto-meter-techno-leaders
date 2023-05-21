@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import '/src/components/MarketPriceTable.css';
+import '/src/components/MarketPriceTable/MarketPriceTable.css';
 import clsx from 'clsx';
 
 function getPriceChangePercentageDiv(params) {

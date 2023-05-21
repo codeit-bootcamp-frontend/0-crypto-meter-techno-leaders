@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import Modal from 'react-modal';
-import Button from './Button';
+import Button from '/src/components/GNB/Button';
 import HistoryList from '/src/components/GNB/HistoryList';
 
 const modalStyle = {

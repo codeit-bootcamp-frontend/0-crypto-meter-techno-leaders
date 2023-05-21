@@ -1,4 +1,4 @@
-import { formatDate } from '/src/formatDate';
+import { formatDate } from '/src/utils/formatDate';
 
 function InputBoardTitle({ values }) {
   const { selectedDate, amount, crypto } = values;
