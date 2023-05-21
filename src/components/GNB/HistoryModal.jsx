@@ -1,18 +1,19 @@
 import { useCallback } from 'react';
 import Modal from 'react-modal';
 import Button from './Button';
+import HistoryList from '/src/components/GNB/HistoryList';
 
 const modalStyle = {
   overlay: {
-    top: '76px',
-    right: '52px',
+    top: '0',
+    right: '0',
     backgroundColor: 'none',
   },
   content: {
     position: 'absolute',
     overflow: 'auto',
-    top: 0,
-    right: 0,
+    top: '76px',
+    right: '52px',
     left: 'auto',
     bottom: 'auto',
     border: '1px solid #E7E9F0',
@@ -21,6 +22,7 @@ const modalStyle = {
     zIndex: 10,
     width: '520px',
     height: '590px',
+    padding: 0,
   },
 };
 
@@ -40,11 +42,20 @@ function HistoryModal({ isOpen, handleModalOpen }) {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          width: '464px',
+          borderBottom: '1px solid #E7E9F0',
+          paddingLeft: '28px',
         }}
       >
-        <h1 style={{ fontSize: '20px', fontWeight: 700 }}>검색 기록</h1>
-        <Button propStyle={{ border: 'none' }} name="기록 모두 지우기" />
+        <h1 style={{ fontSize: '20px', fontWeight: 700, width: '73px' }}>
+          검색
+        </h1>
+        <Button
+          propStyle={{ border: 'none', width: '90px' }}
+          name="기록 모두 "
+        />
       </div>
+      <HistoryList></HistoryList>
     </Modal>
   );
 }
