@@ -3,6 +3,8 @@ import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
 import InputBoardTitle from '/src/components/InputBoardTitle';
 
+import cryptoCoins from '/src/assets/coins_markets.json';
+
 // react-datepicker 캘린더 드롭다운 기본 css 모듈
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -28,10 +30,12 @@ function InputBoard() {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
+  const handleDateChange = (date) => {
+    handleChange('selectedDate', date);
+  };
+
   const handleInputChange = (e) => {
-    e.target
-      ? handleChange(e.target.name, e.target.value)
-      : handleChange('selectedDate', e);
+    handleChange(e.target.name, e.target.value);
   };
 
   const addTotalAmount = (e) => {
@@ -53,7 +57,7 @@ function InputBoard() {
           name="selectedDate"
           locale={'ko'}
           selected={values.selectedDate}
-          onChange={handleInputChange}
+          onChange={handleDateChange}
           showMonthDropdown
           showYearDropdown
           dropdownMode="select"
@@ -85,10 +89,14 @@ function InputBoard() {
           value={values.crypto}
           onChange={handleInputChange}
         >
-          <option value="Bitcoin">BitCoin</option>
-          <option value="Ethereum">Ethereum</option>
-          <option value="Tether">Tether</option>
-          <option value="Dogecoin">Dogecoin</option>
+          {cryptoCoins.map((item) => {
+            const { id, name, image } = item;
+            return (
+              <option key={id} value={name}>
+                {name}
+              </option>
+            );
+          })}
         </select>
         <button type="submit">오늘 얼마가 되었을까?</button>
       </form>
