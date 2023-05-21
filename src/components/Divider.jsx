@@ -1,4 +1,4 @@
-function Divider({ color = 'black', width = '1px', type = 'solid' }) {
+function Divider({ width = '1px', type = 'solid', color = 'black' }) {
   const style = {
     borderBottom: `${width} ${type} ${color}`,
   };
