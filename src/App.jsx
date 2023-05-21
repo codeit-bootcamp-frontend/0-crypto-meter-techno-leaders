@@ -1,7 +1,12 @@
-import './App.css';
+import '/src/App.css';
+import MainBoard from '/src/components/MainBoard';
+import { CurrencyProvider } from '/src/contexts/CurrencyContext';
 
 function App() {
-  return <h1>dfhskf</h1>;
+  return (
+    <CurrencyProvider>
+      <MainBoard />
+    </CurrencyProvider>
+  );
 }
-
 export default App;

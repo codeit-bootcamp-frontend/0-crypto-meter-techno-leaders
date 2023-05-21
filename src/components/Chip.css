@@ -1,0 +1,15 @@
+.chip-button {
+  font-family: inherit;
+  border-radius: 2.1rem;
+  border: none;
+  padding: 0.4rem 1rem;
+  background-color: #e7e9f0;
+  color: #848898;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #161c2f;
+  color: #f5f8f9;
+}
