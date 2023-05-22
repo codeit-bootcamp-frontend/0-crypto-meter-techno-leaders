@@ -22,10 +22,10 @@ function convertToChartData(data, currency, period) {
     if ((period === 'all' && i % 7 === 0) || period !== 'all') {
       const formattedDate = millisecondsToDate(elem[0], period);
       let price;
-      if (currency === 'krw') {
+      if (elem[1] < 10000) {
+        price = Number(elem[1].toFixed(2));
+      } else {
         price = Math.round(elem[1]);
-      } else if (currency === 'usd') {
-        price = +elem[1].toFixed(2);
       }
       chartData.push({ x: formattedDate, y: price });
     }
@@ -82,7 +82,7 @@ async function getMarketChartData(id, currency, period) {
 
   try {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${mapper[period].days}&interval=${mapper[period].interval}`
+      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${mapper[period].days}&interval=${mapper[period].interval}`
     );
     const marketChartData = await response.json();
     return marketChartData;
@@ -217,7 +217,7 @@ const options = (period, currency) => {
           callback: function (value) {
             const label = this.getLabelForValue(value);
             const deletedComma = label.replaceAll(',', '');
-            return `${deletedComma.slice(0, 1)},${deletedComma.slice(1, 4)}만`;
+            return deletedComma;
           },
         },
       },
