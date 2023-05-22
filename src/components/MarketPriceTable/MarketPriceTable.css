@@ -1,5 +1,5 @@
 .market-price-table {
-  height: 185.6rem;
+  height: 190rem;
   max-width: 132rem;
   background-color: #ffffff;
   border-radius: 3rem;
@@ -50,7 +50,6 @@
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  /* filter: brightness(50%); */
 }
 
 .search-input:focus {
@@ -160,6 +159,11 @@
 }
 
 @media (max-width: 570px) {
+  .market-price-table {
+    height: 195rem;
+    border-radius: 0;
+  }
+
   .header {
     display: block;
     margin-bottom: 2rem;
@@ -174,32 +178,3 @@
     width: 100%;
   }
 }
-
-/* 
-@media (max-width: 700px) {
-  .datagrid {
-    overflow-x: auto;
-    position: relative;
-  }
-
-  .datagrid .MuiDataGrid-cell:nth-child(1) {
-    position: sticky;
-    left: 0;
-    z-index: 10;
-    background-color: white;
-  }
-
-  .datagrid .MuiDataGrid-cell:nth-child(2) {
-    position: sticky;
-    left: 5rem;
-    z-index: 10;
-    background-color: white;
-  }
-
-  .datagrid .MuiDataGrid-window {
-    position: sticky;
-    left: 0;
-    z-index: 9; 
-  }
-}
-*/

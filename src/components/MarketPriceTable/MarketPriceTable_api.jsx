@@ -7,7 +7,6 @@ import CustomPagination from '/src/components/MarketPriceTable/CustomPagintion';
 import fetchMarketData from '/src/components/MarketPriceTable/api/marketDataApi';
 import Columns from '/src/components/MarketPriceTable/columns';
 import SearchInput from '/src/components/MarketPriceTable/SearchInput';
-// test
 
 const cn = classNames.bind(styles);
 
