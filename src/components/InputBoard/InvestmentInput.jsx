@@ -1,5 +1,6 @@
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import { KrwButtons, UsdButtons } from '/src/components/InputBoard/AddButtons';
+import styles from '/src/components/InputBoard/InvestmentInput.module.css';
 
 function InvestmentInput({ investment, onChange }) {
   const currency = useCurrency();
@@ -21,7 +22,7 @@ function InvestmentInput({ investment, onChange }) {
         value={investment}
         onChange={handleInvestmentChange}
       />
-      <div className="addButtons" onClick={addTotalInvestment}>
+      <div className={styles.buttonsContainer} onClick={addTotalInvestment}>
         {currency === 'krw' ? <KrwButtons /> : <UsdButtons />}
       </div>
     </>
