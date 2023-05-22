@@ -7,8 +7,13 @@ import {
   useGridApiContext,
   useGridSelector,
 } from '@mui/x-data-grid';
+import { useMediaQuery } from 'react-responsive';
 
 function CustomPagination() {
+  const isSmallScreen = useMediaQuery({ maxWidth: 570 });
+  const apiRef = useGridApiContext();
+  const page = useGridSelector(apiRef, gridPageSelector);
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
   const customTheme = createTheme({
     palette: {
       primary: {
@@ -16,9 +21,6 @@ function CustomPagination() {
       },
     },
   });
-  const apiRef = useGridApiContext();
-  const page = useGridSelector(apiRef, gridPageSelector);
-  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
 
   return (
     <ThemeProvider theme={customTheme}>
@@ -28,6 +30,7 @@ function CustomPagination() {
         shape="rounded"
         page={page + 1}
         count={pageCount}
+        siblingCount={isSmallScreen ? 0 : 1}
         renderItem={(props2) => (
           <PaginationItem
             {...props2}
