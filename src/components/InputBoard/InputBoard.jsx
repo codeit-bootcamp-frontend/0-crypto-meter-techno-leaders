@@ -31,37 +31,35 @@ function InputBoard({ values, onChange }) {
   return (
     <div className={styles.inputBoardWrapper}>
       <InputBoardTitle values={values} />
-      <div className="boardInput">
-        <ReactDatePicker
-          name="selectedDate"
-          locale={'ko'}
-          selected={selectedDate}
-          onChange={handleDateChange}
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          dateFormat="yyyy년 MM월 dd일"
-          dateFormatCalendar="yyyy MMMM"
-        />
-        <InvestmentInput
-          investment={investment}
-          onChange={handleInvestmentChange}
-        />
-        <select
-          name="cryptoName"
-          value={cryptoName}
-          onChange={handleCryptoChange}
-        >
-          {cryptoCoins.map((item) => {
-            const { id, name, image } = item;
-            return (
-              <option key={id} value={name}>
-                {name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
+      <ReactDatePicker
+        name="selectedDate"
+        locale={'ko'}
+        selected={selectedDate}
+        onChange={handleDateChange}
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        dateFormat="yyyy년 MM월 dd일"
+        dateFormatCalendar="yyyy MMMM"
+      />
+      <InvestmentInput
+        investment={investment}
+        onChange={handleInvestmentChange}
+      />
+      <select
+        name="cryptoName"
+        value={cryptoName}
+        onChange={handleCryptoChange}
+      >
+        {cryptoCoins.map((item) => {
+          const { id, name, image } = item;
+          return (
+            <option key={id} value={name}>
+              {name}
+            </option>
+          );
+        })}
+      </select>
       <button onClick={handleSubmit}>오늘 얼마가 되었을까?</button>
     </div>
   );
