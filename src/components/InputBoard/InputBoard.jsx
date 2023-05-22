@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDatePicker from 'react-datepicker';
 import InputBoardTitle from '/src/components/InputBoard/InputBoardTitle';
+import InvestmentInput from '/src/components/InputBoard/InvestmentInput';
 import 'react-datepicker/dist/react-datepicker.css';
+import styles from '/src/components/InputBoard/InputBoard.module.css';
 
 import cryptoCoins from '/src/assets/coins_markets.json';
 
@@ -12,15 +14,13 @@ function InputBoard({ values, onChange }) {
     onChange('selectedDate', date);
   };
 
-  const handleInputChange = (e) => {
-    e.preventDefault();
-    onChange(e.target.name, e.target.value);
+  const handleInvestmentChange = (value) => {
+    onChange('investment', value);
   };
 
-  const addTotalInvestment = (e) => {
+  const handleCryptoChange = (e) => {
     e.preventDefault();
-    const newInvestment = +investment + +e.target.value;
-    onChange('investment', newInvestment);
+    onChange('cryptoName', e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -29,9 +29,9 @@ function InputBoard({ values, onChange }) {
   };
 
   return (
-    <div className="inputBoardContainer">
+    <div className={styles.inputBoardWrapper}>
       <InputBoardTitle values={values} />
-      <form className="boardInput" onSubmit={handleSubmit}>
+      <div className="boardInput">
         <ReactDatePicker
           name="selectedDate"
           locale={'ko'}
@@ -43,30 +43,14 @@ function InputBoard({ values, onChange }) {
           dateFormat="yyyy년 MM월 dd일"
           dateFormatCalendar="yyyy MMMM"
         />
-        <input
-          name="investment"
-          type="number"
-          value={investment}
-          onChange={handleInputChange}
+        <InvestmentInput
+          investment={investment}
+          onChange={handleInvestmentChange}
         />
-        <div className="addButtons">
-          <button value={5000} onClick={addTotalInvestment}>
-            5,000원
-          </button>
-          <button value={10000} onClick={addTotalInvestment}>
-            10,000원
-          </button>
-          <button value={50000} onClick={addTotalInvestment}>
-            50,000원
-          </button>
-          <button value={100000} onClick={addTotalInvestment}>
-            100,000원
-          </button>
-        </div>
         <select
           name="cryptoName"
           value={cryptoName}
-          onChange={handleInputChange}
+          onChange={handleCryptoChange}
         >
           {cryptoCoins.map((item) => {
             const { id, name, image } = item;
@@ -77,8 +61,8 @@ function InputBoard({ values, onChange }) {
             );
           })}
         </select>
-        <button type="submit">오늘 얼마가 되었을까?</button>
-      </form>
+      </div>
+      <button onClick={handleSubmit}>오늘 얼마가 되었을까?</button>
     </div>
   );
 }
