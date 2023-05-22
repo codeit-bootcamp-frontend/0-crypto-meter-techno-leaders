@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { CurrencyProvider } from '/src/contexts/CurrencyContext';
 import { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
+import { CurrencyProvider } from '/src/contexts/CurrencyContext';
 import GNB from '/src/components/GNB/GNB';
 import InputBoard from '/src/components/InputBoard/InputBoard';
 import MainBoard from '/src/components/MainBoard/MainBoard';
 import MarketPriceTable from '/src/components/MarketPriceTable/MarketPriceTable_api.jsx';
+
 import '/src/App.css';
 
 registerLocale('ko', ko);
@@ -32,7 +33,7 @@ function App() {
   };
 
   return (
-    <CurrencyProvider value={'krw'}>
+    <CurrencyProvider defaultValue={'krw'}>
       <GNB />
       <InputBoard values={values} onChange={handleChange} />
       <MainBoard />
