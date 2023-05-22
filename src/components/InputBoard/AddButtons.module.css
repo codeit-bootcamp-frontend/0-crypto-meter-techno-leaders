@@ -1,0 +1,20 @@
+.addButton {
+  padding: 0 1.2rem;
+  width: auto;
+  height: 3rem;
+  border-radius: 2.3rem;
+  border-width: 0.1rem;
+  border-style: solid;
+  border-color: #ced2dd;
+  border-image: none;
+  text-align: center;
+  background-color: transparent;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  letter-spacing: -0.03rem;
+  color: #f5f8f9;
+  cursor: pointer;
+}

@@ -1,3 +1,5 @@
+import styles from '/src/components/InputBoard/AddButtons.module.css';
+
 export function KrwButtons() {
   const krwValues = [5000, 10000, 50000, 100000];
 
@@ -6,7 +8,7 @@ export function KrwButtons() {
       {krwValues.map((value) => {
         const formattedValue = value.toLocaleString();
         return (
-          <button key={value} value={value}>
+          <button key={value} value={value} className={styles.addButton}>
             {formattedValue}원
           </button>
         );
@@ -23,7 +25,7 @@ export function UsdButtons() {
       {usdValues.map((value) => {
         const formattedValue = value.toLocaleString();
         return (
-          <button key={value} value={value}>
+          <button key={value} value={value} className={styles.addButton}>
             ${formattedValue}
           </button>
         );
