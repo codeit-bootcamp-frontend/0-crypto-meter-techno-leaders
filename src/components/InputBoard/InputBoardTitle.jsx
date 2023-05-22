@@ -1,20 +1,22 @@
 import { formatDate } from '/src/utils/formatDate';
 
 function InputBoardTitle({ values }) {
-  const { selectedDate, amount, crypto } = values;
+  const { selectedDate, investment, cryptoName } = values;
+
+  const formattedDate = formatDate(selectedDate);
 
   return (
     <div className="inputBoardTitle">
-      <p>
+      <div>
         내가 만약
         <br />
-        <span>{formatDate(selectedDate)}</span>에
-      </p>
-      <p>
-        <span>{amount}원</span>으로
+        <span>{formattedDate}</span>에
+      </div>
+      <div>
+        <span>{investment}원</span>으로
         <br />
-        <span>{crypto}</span>을 샀다면,
-      </p>
+        <span>{cryptoName}</span>을 샀다면,
+      </div>
     </div>
   );
 }

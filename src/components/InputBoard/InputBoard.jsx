@@ -1,47 +1,26 @@
-import React, { useState } from 'react';
-import ReactDatePicker, { registerLocale } from 'react-datepicker';
-import ko from 'date-fns/locale/ko';
+import React from 'react';
+import ReactDatePicker from 'react-datepicker';
 import InputBoardTitle from '/src/components/InputBoard/InputBoardTitle';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import cryptoCoins from '/src/assets/coins_markets.json';
 
-// react-datepicker 캘린더 드롭다운 기본 css 모듈
-import 'react-datepicker/dist/react-datepicker.css';
-
-registerLocale('ko', ko);
-
-const TODAY = new Date();
-const ONE_YEAR_AGO = new Date(
-  TODAY.getFullYear() - 1,
-  TODAY.getMonth(),
-  TODAY.getDate()
-);
-
-const DEFAULT_VALUES = {
-  selectedDate: ONE_YEAR_AGO,
-  amount: 15000,
-  crypto: 'Bitcoin',
-};
-
-function InputBoard() {
-  const [values, setValues] = useState(DEFAULT_VALUES);
-
-  const handleChange = (name, value) => {
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
-  };
+function InputBoard({ values, onChange }) {
+  const { selectedDate, investment, cryptoName } = values;
 
   const handleDateChange = (date) => {
-    handleChange('selectedDate', date);
+    onChange('selectedDate', date);
   };
 
   const handleInputChange = (e) => {
-    handleChange(e.target.name, e.target.value);
+    e.preventDefault();
+    onChange(e.target.name, e.target.value);
   };
 
-  const addTotalAmount = (e) => {
+  const addTotalInvestment = (e) => {
     e.preventDefault();
-    const newAmount = values.amount + +e.target.value;
-    handleChange('amount', newAmount);
+    const newInvestment = +investment + +e.target.value;
+    onChange('investment', newInvestment);
   };
 
   const handleSubmit = (e) => {
@@ -56,7 +35,7 @@ function InputBoard() {
         <ReactDatePicker
           name="selectedDate"
           locale={'ko'}
-          selected={values.selectedDate}
+          selected={selectedDate}
           onChange={handleDateChange}
           showMonthDropdown
           showYearDropdown
@@ -65,28 +44,28 @@ function InputBoard() {
           dateFormatCalendar="yyyy MMMM"
         />
         <input
-          name="amount"
+          name="investment"
           type="number"
-          value={values.amount}
+          value={investment}
           onChange={handleInputChange}
         />
         <div className="addButtons">
-          <button value={5000} onClick={addTotalAmount}>
+          <button value={5000} onClick={addTotalInvestment}>
             5,000원
           </button>
-          <button value={10000} onClick={addTotalAmount}>
+          <button value={10000} onClick={addTotalInvestment}>
             10,000원
           </button>
-          <button value={50000} onClick={addTotalAmount}>
+          <button value={50000} onClick={addTotalInvestment}>
             50,000원
           </button>
-          <button value={100000} onClick={addTotalAmount}>
+          <button value={100000} onClick={addTotalInvestment}>
             100,000원
           </button>
         </div>
         <select
-          name="crypto"
-          value={values.crypto}
+          name="cryptoName"
+          value={cryptoName}
           onChange={handleInputChange}
         >
           {cryptoCoins.map((item) => {
