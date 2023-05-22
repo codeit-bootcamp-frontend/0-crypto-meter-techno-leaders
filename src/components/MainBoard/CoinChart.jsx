@@ -82,7 +82,7 @@ async function getMarketChartData(id, currency, period) {
 
   try {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${mapper[period].days}&interval=${mapper[period].interval}`
+      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${mapper[period].days}&interval=${mapper[period].interval}`
     );
     const marketChartData = await response.json();
     return marketChartData;
@@ -216,8 +216,13 @@ const options = (period, currency) => {
         ticks: {
           callback: function (value) {
             const label = this.getLabelForValue(value);
-            const deletedComma = label.replaceAll(',', '');
-            return deletedComma;
+            const price = Number(label.replaceAll(',', ''));
+
+            if (currency === 'krw' && price >= 1e6) {
+              return (price / 1e4).toLocaleString('ko-KR') + '만';
+            } else {
+              return price.toLocaleString('ko-KR');
+            }
           },
         },
       },
