@@ -18,6 +18,7 @@ function InvestmentInput({ investment, onChange }) {
   return (
     <>
       <NumericFormat
+        className={styles.input}
         value={investment}
         thousandSeparator
         onValueChange={handleInvestmentChange}
