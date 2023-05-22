@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   gap: 0.8rem;
+  padding-top: 1.2rem;
 }
 
 .input {
@@ -21,4 +22,25 @@
   border-radius: 1.2rem;
   background-color: transparent;
   color: #ffffff;
+}
+
+.input:focus {
+  outline-style: none;
+  border-color: #ffffff;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.currency {
+  display: inline-block;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 2.4rem;
+  letter-spacing: -0.03rem;
+  color: #ffffff;
+  position: absolute;
+  top: 2.5rem;
+  right: 2rem;
 }
