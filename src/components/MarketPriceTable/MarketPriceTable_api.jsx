@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import { DataGrid } from '@mui/x-data-grid';
 import styles from '/src/components/MarketPriceTable/MarketPriceTable.css';
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 import CustomPagination from '/src/components/MarketPriceTable/CustomPagintion';
 import fetchMarketData from '/src/components/MarketPriceTable/api/marketDataApi';
 import Columns from '/src/components/MarketPriceTable/columns';

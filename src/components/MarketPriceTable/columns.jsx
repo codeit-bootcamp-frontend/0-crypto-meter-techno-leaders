@@ -4,7 +4,7 @@ import CoinTotalVolume from '/src/components/MarketPriceTable/CoinTotalVolume';
 import CryptoCard from '/src/components/MarketPriceTable/CryptoCard';
 import formatPrice from '/src/components/MarketPriceTable/utils/formatPrice.js';
 import styles from '/src/components/MarketPriceTable/MarketPriceTable.css';
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 
 const cn = classNames.bind(styles);
 

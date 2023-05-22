@@ -1,5 +1,5 @@
 import styles from '/src/components/MarketPriceTable/MarketPriceTable.css';
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 
 const cn = classNames.bind(styles);
 
