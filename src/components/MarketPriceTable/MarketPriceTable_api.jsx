@@ -1,16 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import { DataGrid } from '@mui/x-data-grid';
-import '/src/components/MarketPriceTable/MarketPriceTable.css';
+import styles from '/src/components/MarketPriceTable/MarketPriceTable.css';
+import classNames from 'classnames';
 import CustomPagination from '/src/components/MarketPriceTable/CustomPagintion';
 import fetchMarketData from '/src/components/MarketPriceTable/api/marketDataApi';
-import columns from '/src/components/MarketPriceTable/columns.jsx';
+import Columns from '/src/components/MarketPriceTable/columns';
+import SearchInput from '/src/components/MarketPriceTable/SearchInput';
+
+const cn = classNames.bind(styles);
 
 function MarketPriceTable() {
   const [marketData, setMarketData] = useState({});
   const nextPage = useRef(0);
   const currency = useCurrency();
-  const tableColumns = columns(currency);
+  const tableColumns = Columns(currency);
   const [fetchingData, setFetchingData] = useState(false);
   const [searchText, setSearchText] = useState('');
 
@@ -79,49 +83,44 @@ function MarketPriceTable() {
     });
   };
 
-  const handleInputChange = (e) => {
-    setSearchText(e.target.value);
+  const handleInputChange = (value) => {
+    setSearchText(value);
   };
 
   return (
-    <div className="body">
-      <div className="market-price-table">
-        <div className="header">
-          <h2 className="header-title">전체 암호화폐 시세</h2>
-          <input
-            type="text"
-            className="header-input"
-            onChange={handleInputChange}
-          ></input>
-        </div>
-        <div className="datagrid-container">
-          <DataGrid
-            style={{
-              border: 'none',
-              borderRadius: '0',
-              borderTop: '1px solid #161c2f',
-              fontFamily: 'inherit',
-              fontWeight: 'inherit',
-            }}
-            rows={filterRows(marketData[currency] || [])}
-            columns={tableColumns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 20,
-                },
+    <div className={cn('market-price-table')}>
+      <div className={cn('header')}>
+        <h2 className={cn('header-title')}>전체 암호화폐 시세</h2>
+        <SearchInput handleInputChange={handleInputChange} />
+      </div>
+      <div className={cn('datagrid-container')}>
+        <DataGrid
+          style={{
+            border: 'none',
+            borderRadius: '0',
+            borderTop: '1px solid #161c2f',
+            fontFamily: 'inherit',
+            fontWeight: 'inherit',
+          }}
+          rows={filterRows(marketData[currency] || [])}
+          columns={tableColumns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 20,
               },
-            }}
-            slots={{
-              pagination: CustomPagination,
-            }}
-            checkboxSelection={false}
-            disableRowSelectionOnClick={true}
-            rowHeight={80}
-            headerHeight={20}
-            onPaginationModelChange={handlePageChange}
-          />
-        </div>
+            },
+          }}
+          slots={{
+            pagination: CustomPagination,
+          }}
+          checkboxSelection={false}
+          disableRowSelectionOnClick={true}
+          rowHeight={80}
+          headerHeight={20}
+          onPaginationModelChange={handlePageChange}
+          disableColumnMenu={true}
+        />
       </div>
     </div>
   );
