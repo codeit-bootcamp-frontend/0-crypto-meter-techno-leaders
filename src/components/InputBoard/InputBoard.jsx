@@ -60,7 +60,9 @@ function InputBoard({ values, onChange }) {
           );
         })}
       </select>
-      <button onClick={handleSubmit}>오늘 얼마가 되었을까?</button>
+      <button className={styles.submitButton} onClick={handleSubmit}>
+        오늘 얼마가 되었을까?
+      </button>
     </div>
   );
 }
