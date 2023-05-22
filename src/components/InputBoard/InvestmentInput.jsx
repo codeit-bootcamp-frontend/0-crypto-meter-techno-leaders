@@ -1,5 +1,5 @@
-import { KrwButtons, UsdButtons } from '/src/components/InputBoard/AddButtons';
 import { useCurrency } from '/src/contexts/CurrencyContext';
+import { KrwButtons, UsdButtons } from '/src/components/InputBoard/AddButtons';
 
 function InvestmentInput({ investment, onChange }) {
   const currency = useCurrency();
