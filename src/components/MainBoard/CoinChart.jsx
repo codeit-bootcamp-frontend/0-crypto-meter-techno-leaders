@@ -17,16 +17,18 @@ import ChipBox from '/src/components/MainBoard/ChipBox';
 const apiKey = import.meta.env.VITE_COINGECKO_KEY;
 
 function convertToChartData(data, currency, period) {
-  const chartData = data?.map((elem) => {
-    const formattedDate = millisecondsToDate(elem[0], period);
-    let price;
-    if (currency === 'krw') {
-      price = Math.round(elem[1]);
-    } else if (currency === 'usd') {
-      price = +elem[1].toFixed(2);
+  const chartData = [];
+  data?.forEach((elem, i) => {
+    if ((period === 'all' && i % 7 === 0) || period !== 'all') {
+      const formattedDate = millisecondsToDate(elem[0], period);
+      let price;
+      if (currency === 'krw') {
+        price = Math.round(elem[1]);
+      } else if (currency === 'usd') {
+        price = +elem[1].toFixed(2);
+      }
+      chartData.push({ x: formattedDate, y: price });
     }
-
-    return { x: formattedDate, y: price };
   });
   return chartData;
 }
@@ -39,7 +41,7 @@ function hourMinuteString(hour, minute) {
   return `${amPm} ${formatHour}:${formatMinute}`;
 }
 
-function millisecondsToDate(milliseconds, type = 'year') {
+function millisecondsToDate(milliseconds, type) {
   const date = new Date(milliseconds);
   const formattedDate = formatDate(date);
   const hour = date.getHours();
@@ -191,15 +193,21 @@ const options = (period, currency) => {
           maxTicksLimit: 4,
           callback: function (index) {
             const label = this.getLabelForValue(index);
-            if (period === 'all' || period === 'year') {
-              if (label.slice(-3) === ' 1일') return label.slice(0, -3);
-            } else if (period === 'month') {
-              if (index !== 0 && index % 4 === 0) return label;
-            } else if (period === 'week') {
-              if (label.slice(-5, -3) === ' 0') return label.slice(0, -8);
-            } else {
-              if (Number(label.slice(-2)) < 5)
-                return label.slice(13, -3) + '시';
+            const ticksLength = this._addedLabels.length;
+            const validLabelRange = Math.round(ticksLength / 3);
+
+            if (index % validLabelRange === 0 || index === ticksLength - 1) {
+              if (period === 'all') {
+                return label.slice(0, 5);
+              } else if (period === 'year') {
+                return label.slice(0, -3);
+              } else if (period === 'month') {
+                return label.slice(5);
+              } else if (period === 'week') {
+                return label.slice(5, -8);
+              } else if (period === 'day') {
+                return label.slice(-8, -2) + '00';
+              }
             }
           },
         },
