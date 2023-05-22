@@ -25,7 +25,8 @@
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "react-responsive": "^9.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
