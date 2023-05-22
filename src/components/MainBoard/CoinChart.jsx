@@ -11,12 +11,12 @@ import {
 } from 'chart.js';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { formatDate } from '/src/formatDate';
+import { formatDate } from '/src/utils/formatDate';
 import coinYearData from '/src/assets/coins_bitcoin_marketcharts.json';
 import coinMonthData from '/src/assets/coins_bitcoin_marketcharts_month.json';
 import coinWeekData from '/src/assets/coins_bitcoin_marketcharts_week.json';
 import coinDayData from '/src/assets/coins_bitcoin_marketcharts_day.json';
-import ChipBox from '/src/components/ChipBox';
+import ChipBox from '/src/components/MainBoard/ChipBox';
 
 function convertToChartData(data, currency, period) {
   const chartData = data.map((elem) => {

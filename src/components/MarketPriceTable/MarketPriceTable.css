@@ -1,29 +1,42 @@
-* {
-  font-size: 62.5%;
-  font-family: 'Pretendard Variable', Pretendard, -apple-system,
-    BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
-    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 .body {
   background-color: #f5f8f9;
 }
 
 .market-price-table {
   height: 100%;
-  max-width: fit-content;
+  max-width: 132rem;
   background-color: #ffffff;
   border-radius: 3rem;
   padding: 4rem;
 }
 
-.market-price-table-title {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
   display: inline-block;
   font-size: 2.6rem;
   margin-bottom: 3rem;
+}
+
+.header-input {
+  border-radius: 0.5rem;
+  border: 1px solid rgb(177, 176, 184);
+  width: 25rem;
+  height: 3rem;
+  padding: 0 1rem;
+}
+
+.header-input:focus {
+  outline: none;
+}
+
+.custom-header {
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .coin-name-container {
@@ -61,10 +74,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  gap: 0.5rem;
 }
 
 .coin-total-volume-container {
-  font-size: 1.9rem;
+  font-size: 1.3rem;
   line-height: 1rem;
   font-weight: 400;
   color: #848898;
@@ -84,7 +98,7 @@
 }
 
 .price-change-percentage {
-  font-size: 2.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   width: 8rem;
   height: 2.2rem;
@@ -113,8 +127,39 @@
   margin-left: 0.4rem;
 }
 
-.custom-header {
-  height: 1rem;
-  font-size: 10rem;
-  font-weight: 600;
+.MuiDataGrid-columnHeaders {
+  height: 5rem;
+  min-height: inherit !important;
 }
+
+.MuiDataGrid-columnHeaderTitle {
+  font-weight: inherit !important;
+}
+/* 
+@media (max-width: 700px) {
+  .datagrid {
+    overflow-x: auto;
+    position: relative;
+  }
+
+  .datagrid .MuiDataGrid-cell:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background-color: white;
+  }
+
+  .datagrid .MuiDataGrid-cell:nth-child(2) {
+    position: sticky;
+    left: 5rem;
+    z-index: 10;
+    background-color: white;
+  }
+
+  .datagrid .MuiDataGrid-window {
+    position: sticky;
+    left: 0;
+    z-index: 9; 
+  }
+}
+*/
