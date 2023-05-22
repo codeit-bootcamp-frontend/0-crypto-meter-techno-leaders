@@ -1,4 +1,4 @@
-import currencyUnits from '/src/components/MarketPriceTable/constants/currencyUnits.js';
+import currencyUnits from '/src/utils/currencyUnits.js';
 
 function formatPrice(value, currency) {
   const formattedPrice = !value.toString().includes('e')
