@@ -10,20 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "chart.js": "^4.3.0",
-    "clsx": "^1.2.1",
-    "react-chartjs-2": "^5.2.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.0",
     "@mui/x-data-grid": "^6.4.0",
     "@mui/x-data-grid-generator": "^6.4.0",
+    "chart.js": "^4.3.0",
+    "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "react-number-format": "^5.2.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
