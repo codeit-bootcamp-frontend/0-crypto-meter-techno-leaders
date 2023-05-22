@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import InputBoardTitle from '/src/components/InputBoard/InputBoardTitle';
 import InvestmentInput from '/src/components/InputBoard/InvestmentInput';
-import 'react-datepicker/dist/react-datepicker.css';
 import styles from '/src/components/InputBoard/InputBoard.module.css';
 
 import cryptoCoins from '/src/assets/coins_markets.json';

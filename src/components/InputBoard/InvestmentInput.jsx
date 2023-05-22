@@ -1,7 +1,7 @@
+import { NumericFormat } from 'react-number-format';
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import { KrwButtons, UsdButtons } from '/src/components/InputBoard/AddButtons';
 import styles from '/src/components/InputBoard/InvestmentInput.module.css';
-import { NumericFormat } from 'react-number-format';
 
 function InvestmentInput({ investment, onChange }) {
   const currency = useCurrency();
