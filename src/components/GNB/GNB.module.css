@@ -1,0 +1,39 @@
+.gnb-container {
+  background-color: #f5f8f9;
+  padding: 0 57px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.gnb-container-mobile {
+  padding: 0 29px 0 24px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 329px;
+}
+
+.button-container-mobile {
+  width: 208px;
+}
+
+.select-currency {
+  height: 40px;
+  width: 90px;
+  background-color: transparent;
+  border: 1px solid #ced2dd;
+  border-radius: 15px;
+  padding-left: 15px;
+  font-size: 14px;
+}
+
+.select-currency-mobile {
+  width: 59px;
+}

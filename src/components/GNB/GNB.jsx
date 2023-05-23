@@ -4,6 +4,12 @@ import Button from '/src/components/GNB/Button';
 import Logo from '/src/components/GNB/Logo';
 import HistoryModal from '/src/components/GNB/HistoryModal';
 import { useCurrency, useSetCurrency } from '/src/contexts/CurrencyContext';
+import { useMediaQuery } from 'react-responsive';
+import { Mobile, TabletAbove } from './MediaQuery';
+import styles from '/src/components/GNB/GNB.module.css';
+import classNames from 'classnames/bind';
+
+const cn = classNames.bind(styles);
 
 function GNB() {
   const [isSearchLogVisible, setisSearchLogVisible] = useState(false);
@@ -12,7 +18,6 @@ function GNB() {
 
   const handleRestoreClick = useCallback(() => {
     console.log('다시 계산하기 버튼 클릭');
-    // inputBoard, mainBoard 초기화 로직 들어갈 곳
   }, []);
 
   const handleCurrencyChange = useCallback((e) => {
@@ -23,50 +28,41 @@ function GNB() {
     setisSearchLogVisible(true);
   }, []);
 
-  console.log(currency); // currency state가 잘 변화하는지 확인하려고 잠시 넣었고, 이후 변경 예정입니다.
+  const isMobile = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
 
   return (
-    <div
-      style={{
-        backgroundColor: '#F5F8F9',
-        padding: '0 57px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '100px',
-        position: 'relative',
-        boxSizing: 'border-box',
-        margin: 0,
-      }}
-    >
+    <div className={cn('gnb-container', isMobile && 'gnb-container-mobile')}>
       <Logo />
       <div
-        className="button-container"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '329px',
-        }}
+        className={cn(
+          'button-container',
+          isMobile && 'button-container-mobile'
+        )}
       >
         <Button
           handleClick={handleRestoreClick}
           source={restoreIcon}
           name="다시 계산하기"
+          propStyle={isMobile && { width: '50px' }}
         />
         <select
+          className={cn(
+            'select-currency',
+            isMobile && 'select-currency-mobile'
+          )}
           value={currency}
           onChange={handleCurrencyChange}
-          style={{
-            height: '40px',
-            width: '90px',
-            backgroundColor: 'transparent',
-            border: '1px solid #CED2DD',
-            borderRadius: '15px',
-            paddingLeft: '15px',
-          }}
         >
-          <option value="krw">원 (₩)</option>
-          <option value="usd">USD ($)</option>
+          <Mobile>
+            <option value="krw">₩</option>
+            <option value="usd">$</option>
+          </Mobile>
+          <TabletAbove>
+            <option value="krw">원 (₩)</option>
+            <option value="usd">USD ($)</option>
+          </TabletAbove>
         </select>
         <Button
           handleClick={handleHistoryClick}
