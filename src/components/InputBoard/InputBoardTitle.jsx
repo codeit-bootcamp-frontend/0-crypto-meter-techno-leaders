@@ -1,20 +1,27 @@
 import { formatDate } from '/src/utils/formatDate';
+import { formatCurrency } from '/src//utils/formatCurrency';
+import { useCurrency } from '/src/contexts/CurrencyContext';
+import styles from '/src/components/InputBoard/InputBoardTitle.module.css';
 
 function InputBoardTitle({ values }) {
-  const { selectedDate, amount, crypto } = values;
+  const currency = useCurrency();
+  const { selectedDate, investment, cryptoName } = values;
+
+  const formattedDate = formatDate(selectedDate);
+  const formattedInvestment = formatCurrency(investment, currency);
 
   return (
-    <div className="inputBoardTitle">
-      <p>
+    <div className={styles.title}>
+      <div>
         내가 만약
         <br />
-        <span>{formatDate(selectedDate)}</span>에
-      </p>
-      <p>
-        <span>{amount}원</span>으로
+        <span className={styles.titleValues}>{formattedDate}</span>에
+      </div>
+      <div>
+        <span className={styles.titleValues}>{formattedInvestment}</span>으로
         <br />
-        <span>{crypto}</span>을 샀다면,
-      </p>
+        <span className={styles.titleValues}>{cryptoName}</span>을 샀다면,
+      </div>
     </div>
   );
 }

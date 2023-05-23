@@ -1,13 +1,13 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Pretendard', sans-serif;
+}
+
 html {
   font-size: 62.5%;
-  font-family: 'Pretendard', sans-serif;
 }
 
 body {
   background-color: #f5f8f9;
   margin: 0;
-}
-
-* {
-  box-sizing: border-box;
 }

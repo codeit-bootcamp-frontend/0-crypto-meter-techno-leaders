@@ -1,0 +1,46 @@
+.buttonsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  padding-top: 1.2rem;
+}
+
+.input {
+  padding: 0 2rem;
+  width: 100%;
+  height: 7.4rem;
+  font-style: normal;
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-size: 1.7rem;
+  line-height: 2.2rem;
+  letter-spacing: -0.03rem;
+  border-width: 0.1rem;
+  border-style: solid;
+  border-color: #616575;
+  border-image: none;
+  border-radius: 1.2rem;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.input:focus {
+  outline-style: none;
+  border-color: #ffffff;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.currency {
+  display: inline-block;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 2.4rem;
+  letter-spacing: -0.03rem;
+  color: #ffffff;
+  position: absolute;
+  top: 2.5rem;
+  right: 2rem;
+}
