@@ -43,7 +43,7 @@ function GNB() {
       >
         <Button
           handleClick={handleRestoreClick}
-          source={restoreIcon}
+          imageSource={restoreIcon}
           name="다시 계산하기"
           propStyle={isMobile && { width: '50px' }}
         />

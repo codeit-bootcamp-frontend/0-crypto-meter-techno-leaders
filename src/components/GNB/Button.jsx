@@ -9,7 +9,7 @@ function Button({
   handleClick,
   name,
   propStyle,
-  source = null,
+  imageSource = null,
 }) {
   return (
     <>
@@ -19,8 +19,8 @@ function Button({
           style={{ ...propStyle }}
           onClick={handleClick}
         >
-          {source ? (
-            <img src={source} />
+          {imageSource ? (
+            <img src={imageSource} />
           ) : (
             <p className={cn('button-name')}>{name}</p>
           )}
@@ -32,7 +32,7 @@ function Button({
           style={{ ...propStyle }}
           onClick={handleClick}
         >
-          {source && <img src={source} />}
+          {imageSource && <img src={imageSource} />}
           <p className={cn('button-name')}>{name}</p>
         </button>
       </TabletAbove>
