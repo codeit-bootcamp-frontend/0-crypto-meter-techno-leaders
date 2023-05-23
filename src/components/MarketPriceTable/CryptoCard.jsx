@@ -5,13 +5,11 @@ import classNames from 'classnames/bind';
 const cn = classNames.bind(styles);
 
 function CryptoCard({ name, image, symbol }) {
+  const imageSrc = image !== 'missing_large.png' ? image : defaultImg;
+
   return (
     <div className={cn('coin-name-container')}>
-      <img
-        className={cn('coin-image')}
-        src={image !== 'missing_large.png' ? image : defaultImg}
-        alt={name}
-      />
+      <img className={cn('coin-image')} src={imageSrc} alt={name} />
       <div className={cn('coin-description')}>
         <span className={cn('coin-name')}>{name}</span>
         <span className={cn('coin-symbol')}>{symbol}</span>

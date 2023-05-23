@@ -149,15 +149,6 @@
   margin-left: 0.4rem;
 }
 
-.MuiDataGrid-columnHeaders {
-  height: 5rem;
-  min-height: inherit !important;
-}
-
-.MuiDataGrid-columnHeaderTitle {
-  font-weight: inherit !important;
-}
-
 @media (max-width: 570px) {
   .market-price-table {
     height: 195rem;

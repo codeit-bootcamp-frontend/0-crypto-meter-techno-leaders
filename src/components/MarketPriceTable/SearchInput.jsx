@@ -3,9 +3,9 @@ import classNames from 'classnames/bind';
 
 const cn = classNames.bind(styles);
 
-function SearchInput({ handleInputChange }) {
-  const onInputChange = (e) => {
-    handleInputChange(e.target.value);
+function SearchInput({ onInputChange }) {
+  const handleInputChange = (e) => {
+    onInputChange(e.target.value);
   };
 
   return (
@@ -14,7 +14,7 @@ function SearchInput({ handleInputChange }) {
         type="text"
         placeholder="검색"
         className={cn('search-input')}
-        onChange={onInputChange}
+        onChange={handleInputChange}
       ></input>
       <svg
         className={cn('search-icon')}

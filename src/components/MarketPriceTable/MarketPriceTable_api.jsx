@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import CustomPagination from '/src/components/MarketPriceTable/CustomPagintion';
 import fetchMarketData from '/src/components/MarketPriceTable/api/marketDataApi';
 import Columns from '/src/components/MarketPriceTable/columns';
-import SearchInput from '/src/components/MarketPriceTable/SearchInput';
+// import SearchInput from '/src/components/MarketPriceTable/SearchInput';
 
 const cn = classNames.bind(styles);
 
@@ -83,15 +83,15 @@ function MarketPriceTable() {
     });
   };
 
-  const handleInputChange = (value) => {
-    setSearchText(value);
-  };
+  // const handleInputChange = (value) => {
+  //   setSearchText(value);
+  // };
 
   return (
     <div className={cn('market-price-table')}>
       <div className={cn('header')}>
         <h2 className={cn('header-title')}>전체 암호화폐 시세</h2>
-        <SearchInput handleInputChange={handleInputChange} />
+        {/* <SearchInput onInputChange={handleInputChange} /> */}
       </div>
       <div className={cn('datagrid-container')}>
         <DataGrid
@@ -114,6 +114,13 @@ function MarketPriceTable() {
             },
             '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover': {
               background: '#d1d4e0',
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              height: '5rem',
+              minHeight: 'inherit',
+            },
+            '& .MuiDataGrid-columnHeaderTitle': {
+              fontWeight: 'inherit',
             },
           }}
           rows={filterRows(marketData[currency] || [])}

@@ -5,13 +5,10 @@ import classNames from 'classnames/bind';
 const cn = classNames.bind(styles);
 
 const CoinTotalVolume = ({ totalVolume, currentPrice, symbol }) => {
-  const coinTotalVolume =
-    currentPrice !== 0
-      ? shortenNumber(Math.round(totalVolume / currentPrice))
-      : '0';
+  const coinTotalVolume = currentPrice && shortenNumber(Math.round(totalVolume / currentPrice))
   return (
     <div className={cn('coin-total-volume-container')}>
-      <span className={cn('coin-total-volume')}>{coinTotalVolume}</span>
+      <span className={cn('coin-total-volume')}>{currentPrice ? coinTotalVolume : '0'}</span>
       <span className={cn('coin-total-volume-symbol')}>
         {symbol.toUpperCase()}
       </span>
