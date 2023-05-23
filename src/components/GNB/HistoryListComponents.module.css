@@ -1,0 +1,38 @@
+.history-list {
+  margin: 0;
+  padding-left: 2.4rem;
+}
+
+.history-item {
+  width: 47.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  border-bottom: 0.1rem solid #e7e9f0;
+}
+
+.coin-logo {
+  width: 2.8rem;
+  height: 2.8rem;
+}
+
+.history-content-container {
+  height: 3.9rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-info {
+  height: 1.9rem;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.gray {
+  color: #848898;
+}
+
+.black {
+  color: #0b0e1b;
+}

@@ -1,0 +1,42 @@
+.gnb-container {
+  background-color: #f5f8f9;
+  padding: 0 5.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10rem;
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.gnb-container-mobile {
+  padding: 0 2.9rem 0 2.4rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 32.9rem;
+}
+
+.button-container-mobile {
+  width: 20.8rem;
+}
+
+.select-currency {
+  height: 4rem;
+  width: 9rem;
+  background-color: transparent;
+  border: 0.1rem solid #ced2dd;
+  border-radius: 1.5rem;
+  padding-left: 1.5rem;
+  font-size: 1.4rem;
+  appearance: none;
+  background: url('/src/assets/images/dropdownTriangle.svg') no-repeat right
+    1.12rem center;
+}
+
+.select-currency-mobile {
+  width: 5.9rem;
+}
