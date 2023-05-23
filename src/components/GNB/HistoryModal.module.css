@@ -1,0 +1,16 @@
+.modal-header {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 6.4rem;
+  border-bottom: 0.1rem solid #e7e9f0;
+  padding: 0 2.8rem;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 700;
+  width: 7.3rem;
+}

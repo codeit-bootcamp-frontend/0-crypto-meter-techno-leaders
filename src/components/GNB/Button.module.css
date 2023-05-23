@@ -1,0 +1,25 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.757rem;
+  height: 4rem;
+  width: 12.6rem;
+  border: 0.1rem solid #ced2dd;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.active {
+  gap: 1rem;
+  border: 0.1rem solid #00a661;
+  background-color: #daf1e5;
+  color: #00a661;
+}
+
+.button-name {
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
