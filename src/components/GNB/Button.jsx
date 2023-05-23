@@ -1,4 +1,4 @@
-import { Mobile, TabletAbove } from './MediaQuery';
+import { Mobile, TabletAbove } from '/src/components/GNB/MediaQuery';
 import classNames from 'classnames/bind';
 import styles from '/src/components/GNB/Button.module.css';
 
