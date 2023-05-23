@@ -23,11 +23,9 @@ function InvestmentInput({ investment, onChange }) {
         thousandSeparator
         onValueChange={handleInvestmentChange}
       />
-      {currency === 'krw' ? (
-        <div className={styles.currency}>원 (₩)</div>
-      ) : (
-        <div className={styles.currency}>USD ($)</div>
-      )}
+      <div className={styles.currency}>
+        {currency === 'krw' ? '원 (₩)' : 'USD ($)'}
+      </div>
       <div className={styles.buttonsContainer} onClick={addTotalInvestment}>
         {currency === 'krw' ? <KrwButtons /> : <UsdButtons />}
       </div>
