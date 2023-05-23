@@ -9,26 +9,26 @@ import {
   Filler,
   Legend,
 } from 'chart.js';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { formatDate } from '/src/utils/formatDate';
-import coinYearData from '/src/assets/coins_bitcoin_marketcharts.json';
-import coinMonthData from '/src/assets/coins_bitcoin_marketcharts_month.json';
-import coinWeekData from '/src/assets/coins_bitcoin_marketcharts_week.json';
-import coinDayData from '/src/assets/coins_bitcoin_marketcharts_day.json';
 import ChipBox from '/src/components/MainBoard/ChipBox';
 
-function convertToChartData(data, currency, period) {
-  const chartData = data.map((elem) => {
-    const formattedDate = millisecondsToDate(elem[0], period);
-    let price;
-    if (currency === 'krw') {
-      price = Math.round(elem[1]);
-    } else if (currency === 'usd') {
-      price = +elem[1].toFixed(2);
-    }
+const apiKey = import.meta.env.VITE_COINGECKO_KEY;
 
-    return { x: formattedDate, y: price };
+function convertToChartData(data, currency, period) {
+  const chartData = [];
+  data?.forEach((elem, i) => {
+    if ((period === 'all' && i % 7 === 0) || period !== 'all') {
+      const formattedDate = millisecondsToDate(elem[0], period);
+      let price;
+      if (elem[1] < 10000) {
+        price = Number(elem[1].toFixed(2));
+      } else {
+        price = Math.round(elem[1]);
+      }
+      chartData.push({ x: formattedDate, y: price });
+    }
   });
   return chartData;
 }
@@ -41,7 +41,7 @@ function hourMinuteString(hour, minute) {
   return `${amPm} ${formatHour}:${formatMinute}`;
 }
 
-function millisecondsToDate(milliseconds, type = 'year') {
+function millisecondsToDate(milliseconds, type) {
   const date = new Date(milliseconds);
   const formattedDate = formatDate(date);
   const hour = date.getHours();
@@ -56,20 +56,40 @@ function millisecondsToDate(milliseconds, type = 'year') {
 }
 
 /* period에 따라 API 요청 */
-function getCoinData(period) {
-  let coinData;
+async function getMarketChartData(id, currency, period) {
+  const periodMapper = {
+    all: {
+      days: 'max',
+      interval: 'daily',
+    },
+    year: {
+      days: 365,
+      interval: 'daily',
+    },
+    month: {
+      days: 30,
+      interval: 'daily',
+    },
+    week: {
+      days: 7,
+      interval: 'hourly',
+    },
+    day: {
+      days: 1,
+      interval: 'auto', // 5 minutes
+    },
+  };
 
-  if (period === 'year' || period === 'all') {
-    coinData = coinYearData.prices;
-  } else if (period === 'month') {
-    coinData = coinMonthData.prices;
-  } else if (period === 'week') {
-    coinData = coinWeekData.prices;
-  } else if (period === 'day') {
-    coinData = coinDayData.prices;
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${periodMapper[period].days}&interval=${periodMapper[period].interval}`
+    );
+    const marketChartData = await response.json();
+    return marketChartData;
+  } catch (error) {
+    console.log(error);
+    throw new Error();
   }
-
-  return coinData;
 }
 
 ChartJS.register(
@@ -173,15 +193,22 @@ const options = (period, currency) => {
           maxTicksLimit: 4,
           callback: function (index) {
             const label = this.getLabelForValue(index);
-            if (period === 'all' || period === 'year') {
-              if (label.slice(-3) === ' 1일') return label.slice(0, -3);
-            } else if (period === 'month') {
-              if (index !== 0 && index % 4 === 0) return label;
-            } else if (period === 'week') {
-              if (label.slice(-5, -3) === ' 0') return label.slice(0, -8);
-            } else {
-              if (Number(label.slice(-2)) < 5)
-                return label.slice(13, -3) + '시';
+            const ticksLength = this._addedLabels.length;
+            const validLabelRange = Math.round(ticksLength / 3);
+
+            if (index % validLabelRange === 0 || index === ticksLength - 1) {
+              switch (period) {
+                case 'all':
+                  return label.slice(0, 5);
+                case 'year':
+                  return label.slice(0, -3);
+                case 'month':
+                  return label.slice(5);
+                case 'week':
+                  return label.slice(5, -8);
+                case 'day':
+                  return label.slice(-8, -2) + '00';
+              }
             }
           },
         },
@@ -190,8 +217,13 @@ const options = (period, currency) => {
         ticks: {
           callback: function (value) {
             const label = this.getLabelForValue(value);
-            const deletedComma = label.replaceAll(',', '');
-            return `${deletedComma.slice(0, 1)},${deletedComma.slice(1, 4)}만`;
+            const price = Number(label.replaceAll(',', ''));
+
+            if (currency === 'krw' && price >= 1e6) {
+              return (price / 1e4).toLocaleString('ko-KR') + '만';
+            } else {
+              return price.toLocaleString('ko-KR');
+            }
           },
         },
       },
@@ -204,15 +236,32 @@ const periodNames = ['전체', '1년', '1달', '1주', '1일'];
 
 function CoinChart({ id, currency, fluctuation }) {
   const [selectedPeriod, setSelectedPeriod] = useState('year');
+  const [coinData, setCoinData] = useState(null);
   const canvas = document.createElement('canvas');
-  const data = getCoinData(selectedPeriod);
+
   const chartData = getChartData(
     canvas,
-    data,
+    coinData,
     currency,
     fluctuation,
     selectedPeriod
   );
+
+  const getAndSetCoinData = useCallback(async (id, currency, period) => {
+    let result;
+    try {
+      result = await getMarketChartData(id, currency, period);
+    } catch (error) {
+      return;
+    }
+    const { prices } = result;
+    setCoinData(prices);
+  }, []);
+
+  useEffect(() => {
+    getAndSetCoinData(id, currency, selectedPeriod);
+  }, [id, currency, selectedPeriod]);
+
   return (
     <>
       <ChipBox

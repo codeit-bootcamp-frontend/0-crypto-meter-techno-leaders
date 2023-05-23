@@ -1,0 +1,180 @@
+.market-price-table {
+  height: 190rem;
+  max-width: 132rem;
+  background-color: #ffffff;
+  border-radius: 3rem;
+  padding: 4rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.header-title {
+  display: inline-block;
+  font-size: 2.6rem;
+}
+
+.input-container {
+  position: relative;
+}
+
+.search-input {
+  border-radius: 2.1rem;
+  border: none;
+  width: 25rem;
+  height: 4rem;
+  padding: 0 3rem;
+  background-color: #f2f3f7;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.search-input::placeholder {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: #8d919f;
+  line-height: 1.5rem;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.custom-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.coin-name-container {
+  display: flex;
+  align-items: center;
+}
+
+.coin-description {
+  display: flex;
+  flex-direction: column;
+}
+
+.coin-image {
+  width: 3.2rem;
+  margin-right: 1rem;
+  border-radius: 50%;
+}
+
+.coin-id {
+  color: #616575;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.coin-name,
+.coin-price,
+.total-volume,
+.market-cap {
+  color: #0b0e1b;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.total-volume-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.coin-total-volume-container {
+  font-size: 1.3rem;
+  line-height: 1rem;
+  font-weight: 400;
+  color: #848898;
+}
+
+.coin-total-volume {
+  margin-right: 0.3rem;
+}
+
+.coin-name {
+  font-weight: 600;
+}
+
+.coin-symbol {
+  color: #848898;
+  font-size: 1.2rem;
+}
+
+.price-change-percentage {
+  font-size: 1.3rem;
+  font-weight: 600;
+  width: 8rem;
+  height: 2.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+
+.negative {
+  background-color: #f8eae7;
+  color: #fd493d;
+}
+
+.positive {
+  background-color: #daf1e5;
+  color: #00a661;
+}
+
+.zero {
+  background-color: #f3f3f5;
+  color: #343434;
+}
+
+.price-change-percentage span {
+  margin-left: 0.4rem;
+}
+
+.MuiDataGrid-columnHeaders {
+  height: 5rem;
+  min-height: inherit !important;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  font-weight: inherit !important;
+}
+
+@media (max-width: 570px) {
+  .market-price-table {
+    height: 195rem;
+    border-radius: 0;
+  }
+
+  .header {
+    display: block;
+    margin-bottom: 2rem;
+  }
+
+  .header-title {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
