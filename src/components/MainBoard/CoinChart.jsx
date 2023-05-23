@@ -9,7 +9,7 @@ import {
   Filler,
   Legend,
 } from 'chart.js';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { formatDate } from '/src/utils/formatDate';
 import ChipBox from '/src/components/MainBoard/ChipBox';
@@ -55,7 +55,7 @@ function millisecondsToDate(milliseconds, type = 'year') {
 
 /* period에 따라 API 요청 */
 async function getMarketChartData(id, currency, period) {
-  const mapper = {
+  const periodMapper = {
     all: {
       days: 'max',
       interval: 'daily',
@@ -80,7 +80,7 @@ async function getMarketChartData(id, currency, period) {
 
   try {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${mapper[period].days}&interval=${mapper[period].interval}`
+      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${periodMapper[period].days}&interval=${periodMapper[period].interval}`
     );
     const marketChartData = await response.json();
     return marketChartData;
@@ -233,7 +233,7 @@ function CoinChart({ id, currency, fluctuation }) {
     selectedPeriod
   );
 
-  const getAndSetCoinData = async (id, currency, period) => {
+  const getAndSetCoinData = useCallback(async (id, currency, period) => {
     let result;
     try {
       result = await getMarketChartData(id, currency, period);
@@ -242,7 +242,7 @@ function CoinChart({ id, currency, fluctuation }) {
     }
     const { prices } = result;
     setCoinData(prices);
-  };
+  }, []);
 
   useEffect(() => {
     getAndSetCoinData(id, currency, selectedPeriod);
