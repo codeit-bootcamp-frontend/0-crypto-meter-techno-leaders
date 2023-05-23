@@ -4,13 +4,13 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 64px;
-  border-bottom: 1px solid #e7e9f0;
-  padding: 0 28px;
+  height: 6.4rem;
+  border-bottom: 0.1rem solid #e7e9f0;
+  padding: 0 2.8rem;
 }
 
 .modal-title {
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 700;
-  width: 73px;
+  width: 7.3rem;
 }
