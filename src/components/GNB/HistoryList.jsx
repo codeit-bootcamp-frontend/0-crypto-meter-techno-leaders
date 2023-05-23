@@ -4,6 +4,8 @@ import styles from '/src/components/GNB/HistoryListComponents.module.css';
 
 const cn = classNames.bind(styles);
 
+const data = [];
+
 function HistoryList() {
   return (
     <ul className={cn('history-list')}>
