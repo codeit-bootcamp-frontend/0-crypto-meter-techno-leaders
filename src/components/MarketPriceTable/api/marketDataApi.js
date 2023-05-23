@@ -6,7 +6,7 @@ const fetchMarketData = async (page, currency) => {
       params: {
         vs_currency: currency,
         order: 'market_cap_desc',
-        per_page: 240,
+        per_page: 200,
         page: page,
         sparkline: false,
         price_change_percentage: '1h,24h,7d',
