@@ -45,7 +45,7 @@ function HistoryModal({ isOpen, handleModalOpen }) {
           name="기록 모두 지우기"
         />
       </div>
-      <HistoryList></HistoryList>
+      <HistoryList />
     </Modal>
   );
 }
