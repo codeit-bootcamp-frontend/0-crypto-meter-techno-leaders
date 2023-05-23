@@ -12,7 +12,7 @@ import classNames from 'classnames/bind';
 const cn = classNames.bind(styles);
 
 function GNB() {
-  const [isSearchLogVisible, setisSearchLogVisible] = useState(false);
+  const [isSearchLogVisible, setIsLogVisible] = useState(false);
   const currency = useCurrency();
   const setCurrency = useSetCurrency();
 
@@ -25,7 +25,7 @@ function GNB() {
   }, []);
 
   const handleHistoryClick = useCallback(() => {
-    setisSearchLogVisible(true);
+    setIsLogVisible(true);
   }, []);
 
   const isMobile = useMediaQuery({
@@ -72,7 +72,7 @@ function GNB() {
         />
         <HistoryModal
           isOpen={isSearchLogVisible}
-          handleModalOpen={setisSearchLogVisible}
+          handleModalOpen={setIsLogVisible}
         />
       </div>
     </div>
