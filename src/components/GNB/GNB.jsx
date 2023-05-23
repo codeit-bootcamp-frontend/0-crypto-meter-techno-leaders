@@ -5,7 +5,7 @@ import Logo from '/src/components/GNB/Logo';
 import HistoryModal from '/src/components/GNB/HistoryModal';
 import { useCurrency, useSetCurrency } from '/src/contexts/CurrencyContext';
 import { useMediaQuery } from 'react-responsive';
-import { Mobile, TabletAbove } from './MediaQuery';
+import { Mobile, TabletAbove } from '/src/components/GNB/MediaQuery';
 import styles from '/src/components/GNB/GNB.module.css';
 import classNames from 'classnames/bind';
 
