@@ -95,12 +95,26 @@ function MarketPriceTable() {
       </div>
       <div className={cn('datagrid-container')}>
         <DataGrid
-          style={{
+          sx={{
             border: 'none',
             borderRadius: '0',
             borderTop: '1px solid #161c2f',
             fontFamily: 'inherit',
             fontWeight: 'inherit',
+            '& .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
+              width: '0.4rem',
+              height: '1.4rem',
+            },
+            '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-track': {
+              background: '#ffffff',
+            },
+            '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb': {
+              backgroundColor: '#E7E9F0',
+              borderRadius: '2rem',
+            },
+            '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover': {
+              background: '#d1d4e0',
+            },
           }}
           rows={filterRows(marketData[currency] || [])}
           columns={tableColumns}
