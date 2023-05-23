@@ -197,16 +197,17 @@ const options = (period, currency) => {
             const validLabelRange = Math.round(ticksLength / 3);
 
             if (index % validLabelRange === 0 || index === ticksLength - 1) {
-              if (period === 'all') {
-                return label.slice(0, 5);
-              } else if (period === 'year') {
-                return label.slice(0, -3);
-              } else if (period === 'month') {
-                return label.slice(5);
-              } else if (period === 'week') {
-                return label.slice(5, -8);
-              } else if (period === 'day') {
-                return label.slice(-8, -2) + '00';
+              switch (period) {
+                case 'all':
+                  return label.slice(0, 5);
+                case 'year':
+                  return label.slice(0, -3);
+                case 'month':
+                  return label.slice(5);
+                case 'week':
+                  return label.slice(5, -8);
+                case 'day':
+                  return label.slice(-8, -2) + '00';
               }
             }
           },
