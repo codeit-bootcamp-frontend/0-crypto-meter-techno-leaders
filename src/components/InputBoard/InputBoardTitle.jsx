@@ -1,4 +1,4 @@
-import { formatDate } from '/src/utils/formatDate';
+import { format } from 'date-fns';
 import { formatCurrency } from '/src//utils/formatCurrency';
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import styles from '/src/components/InputBoard/InputBoardTitle.module.css';
@@ -7,7 +7,7 @@ function InputBoardTitle({ values }) {
   const currency = useCurrency();
   const { selectedDate, investment, cryptoName } = values;
 
-  const formattedDate = formatDate(selectedDate);
+  const formattedDate = format(selectedDate, 'yyyy년 M월 d일');
   const formattedInvestment = formatCurrency(investment, currency);
 
   return (

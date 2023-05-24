@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 import { useCallback, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { formatDate } from '/src/utils/formatDate';
+import { format } from 'date-fns';
 import ChipBox from '/src/components/MainBoard/ChipBox';
 
 const apiKey = import.meta.env.VITE_COINGECKO_KEY;
@@ -43,7 +43,7 @@ function hourMinuteString(hour, minute) {
 
 function millisecondsToDate(milliseconds, type) {
   const date = new Date(milliseconds);
-  const formattedDate = formatDate(date);
+  const formattedDate = format(date, 'yyyy년 M월 d일');
   const hour = date.getHours();
   const minute = date.getMinutes();
   const formatHourMinute = hourMinuteString(hour, minute);
