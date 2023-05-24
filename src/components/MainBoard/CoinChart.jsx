@@ -8,6 +8,7 @@ import {
   Tooltip,
   Filler,
   Legend,
+  defaults,
 } from 'chart.js';
 import { useCallback, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -158,6 +159,7 @@ const getChartData = (canvas, data, currency, fluctuation, period = 'year') => {
 };
 
 const options = (period, currency) => {
+  defaults.font.size = 14;
   return {
     responsive: true,
     plugins: {
@@ -207,6 +209,9 @@ const options = (period, currency) => {
                 case 'week':
                   return label.slice(5, -8);
                 case 'day':
+                  if (index === ticksLength - 1) {
+                    return label.slice(-8);
+                  }
                   return label.slice(-8, -2) + '00';
               }
             }
