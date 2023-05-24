@@ -28,24 +28,18 @@ function GNB({ onRestore }) {
   });
 
   return (
-    <div className={cn('gnb-container', isMobile && 'gnb-container-mobile')}>
+    <div className={cn('gnb-container')}>
       <Logo />
-      <div
-        className={cn('button-container', {
-          'button-container-mobile': isMobile,
-        })}
-      >
+      <div className={cn('button-container')}>
         <Button
           handleClick={handleRestoreClick}
           imageSource={restoreIcon}
-          name="다시 계산하기"
           propStyle={isMobile && { width: '50px' }}
-        />
+        >
+          다시 계산하기
+        </Button>
         <select
-          className={cn(
-            'select-currency',
-            isMobile && 'select-currency-mobile'
-          )}
+          className={cn('select-currency')}
           value={currency}
           onChange={handleCurrencyChange}
         >
