@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { Popover } from '@headlessui/react';
 import Button from '/src/components/GNB/Button';
 import HistoryList from '/src/components/GNB/HistoryList';
