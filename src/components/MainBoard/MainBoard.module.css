@@ -82,6 +82,14 @@
   gap: 2.6rem;
 }
 
+@media (max-width: 1199px) {
+  .mainboard-container {
+    padding: 0;
+    background-color: inherit;
+    border-radius: 0;
+  }
+}
+
 @media (max-width: 767px) {
   .crypto-info {
     gap: 0.8rem;

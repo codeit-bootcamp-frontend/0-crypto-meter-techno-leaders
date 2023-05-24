@@ -13,6 +13,7 @@
 }
 
 .gnb-container-mobile {
+  background-color: inherit;
   padding: 0 2.9rem 0 2.4rem;
 }
 

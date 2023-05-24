@@ -13,3 +13,15 @@
   width: 100%;
   min-width: 0;
 }
+
+@media (max-width: 1199px) {
+  .main-container {
+    padding: 0 3.6rem 10rem;
+    flex-direction: column;
+    gap: 6rem;
+  }
+
+  .row {
+    gap: 8rem;
+  }
+}

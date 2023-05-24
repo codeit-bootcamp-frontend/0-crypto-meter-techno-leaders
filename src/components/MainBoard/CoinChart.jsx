@@ -270,7 +270,6 @@ function CoinChart({ id, currency, fluctuation }) {
   }, [id, currency, selectedPeriod]);
 
   defaults.font.size = isMobile ? 10 : 14;
-  console.log('hi');
   return (
     <>
       <ChipBox
