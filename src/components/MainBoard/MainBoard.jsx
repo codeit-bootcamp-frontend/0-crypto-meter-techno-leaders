@@ -1,5 +1,6 @@
 import CoinChart from '/src/components/MainBoard/CoinChart';
 import Divider from '/src/components/Divider';
+import Toast from '/src/components/Toast/Toast';
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import { formatDate } from '/src/utils/formatDate';
 import styles from '/src/components/MainBoard/MainBoard.module.css';
@@ -7,6 +8,7 @@ import classNames from 'classnames/bind';
 import kakaotalk from '/src/assets/images/kakaotalk.svg';
 import facebook from '/src/assets/images/facebook.svg';
 import share from '/src/assets/images/share.svg';
+import { useState } from 'react';
 
 const PREV_DATE = new Date('2022-05-12');
 
@@ -78,6 +80,7 @@ function MainBoard({
   prevUsd = DEFAULT_MARKET_PRICES.prevUsd,
   todayUsd = DEFAULT_MARKET_PRICES.todayUsd,
 }) {
+  const [toastOpen, setToastOpen] = useState(false);
   const currency = useCurrency();
   const resultPrices = calculateResultPrices(
     values.investment,
@@ -94,6 +97,15 @@ function MainBoard({
 
   const cn = classNames.bind(styles);
 
+  const handleCopyUrl = async () => {
+    try {
+      navigator.clipboard.writeText(window.location.href);
+      setToastOpen(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className={cn('mainboard-container')}>
@@ -105,8 +117,14 @@ function MainBoard({
           <div className={cn('share-link-container')}>
             <img src={kakaotalk} />
             <img src={facebook} />
-            <img src={share} />
+            <img onClick={handleCopyUrl} src={share} />
           </div>
+          {toastOpen && (
+            <Toast
+              onSetToast={setToastOpen}
+              text="🧷클립 보드에 복사되었습니다."
+            />
+          )}
         </div>
         <Divider />
         <div className={cn('title-container')}>
