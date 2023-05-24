@@ -5,7 +5,7 @@ import styles from '/src/components/InputBoard/InputBoardTitle.module.css';
 
 function InputBoardTitle({ values }) {
   const currency = useCurrency();
-  const { selectedDate, investment, cryptoName } = values;
+  const { selectedDate, investment, coinName } = values;
 
   const formattedDate = format(selectedDate, 'yyyy년 M월 d일');
   const formattedInvestment = formatCurrency(investment, currency);
@@ -20,7 +20,7 @@ function InputBoardTitle({ values }) {
       <div>
         <span className={styles.titleValues}>{formattedInvestment}</span>으로
         <br />
-        <span className={styles.titleValues}>{cryptoName}</span>을 샀다면,
+        <span className={styles.titleValues}>{coinName}</span>을 샀다면,
       </div>
     </div>
   );

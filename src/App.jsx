@@ -21,7 +21,12 @@ const DEFAULT_VALUES = {
   currentDate: TODAY,
   selectedDate: ONE_YEAR_AGO,
   investment: 15000,
-  cryptoName: 'Bitcoin',
+  coinInfo: {
+    value: 'bitcoin',
+    label: 'Bitcoin',
+    image:
+      'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
+  },
 };
 
 function App() {

@@ -4,11 +4,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import InputBoardTitle from '/src/components/InputBoard/InputBoardTitle';
 import InvestmentInput from '/src/components/InputBoard/InvestmentInput';
 import styles from '/src/components/InputBoard/InputBoard.module.css';
-
-import cryptoCoins from '/src/assets/coins_markets.json';
+import CoinSelect from './CoinSelect';
 
 function InputBoard({ values, onChange }) {
-  const { selectedDate, investment, cryptoName } = values;
+  const { selectedDate, investment, coinInfo } = values;
 
   const handleDateChange = (date) => {
     onChange('selectedDate', date);
@@ -18,9 +17,8 @@ function InputBoard({ values, onChange }) {
     onChange('investment', value);
   };
 
-  const handleCryptoChange = (e) => {
-    e.preventDefault();
-    onChange('cryptoName', e.target.value);
+  const handleCoinInfoChange = (value) => {
+    onChange('coinInfo', value);
   };
 
   const handleSubmit = (e) => {
@@ -46,20 +44,7 @@ function InputBoard({ values, onChange }) {
         investment={investment}
         onChange={handleInvestmentChange}
       />
-      <select
-        name="cryptoName"
-        value={cryptoName}
-        onChange={handleCryptoChange}
-      >
-        {cryptoCoins.map((item) => {
-          const { id, name, image } = item;
-          return (
-            <option key={id} value={name}>
-              {name}
-            </option>
-          );
-        })}
-      </select>
+      <CoinSelect coinInfo={coinInfo} onChange={handleCoinInfoChange} />
       <button className={styles.submitButton} onClick={handleSubmit}>
         오늘 얼마가 되었을까?
       </button>
