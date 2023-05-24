@@ -37,7 +37,7 @@ function InputBoard({ values, onChange }) {
         showMonthDropdown
         showYearDropdown
         dropdownMode="select"
-        dateFormat="yyyy년 MM월 dd일"
+        dateFormat="yyyy년 M월 d일"
         dateFormatCalendar="yyyy MMMM"
       />
       <InvestmentInput
