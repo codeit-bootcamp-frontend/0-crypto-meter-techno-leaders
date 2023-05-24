@@ -5,12 +5,12 @@ const API_KEY = import.meta.env.VITE_COINGECKO_KEY;
 const API_KEY_QUERY = `x_cg_pro_api_key=${API_KEY}`;
 
 export async function getCoinsMarkets(
-  currency = 'krw',
-  order = 'market_cap_desc',
-  perPage = '200',
-  page = '1'
+  page = 1,
+  perPage = 100,
+  vsCurrency = 'krw',
+  order = 'market_cap_desc'
 ) {
-  const query = `${API_KEY_QUERY}&vs_currency=${currency}&order=${order}&per_page=${perPage}&page=${page}`;
+  const query = `${API_KEY_QUERY}&vs_currency=${vsCurrency}&order=${order}&per_page=${perPage}&page=${page}`;
   const response = await fetch(
     `${BASE_URL}/coins/markets?${query}&sparkline=false&locale=en`
   );

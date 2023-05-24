@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
 import Select, { components } from 'react-select';
+import useAsync from '/src/hooks/useAsync';
+import { getCoinsMarkets } from '/src/api.jsx';
 import styles from '/src/components/InputBoard/CoinSelect.module.css';
-import coinsList from '/src/assets/coins_markets.json';
 
-const options = coinsList.map((coin) => {
-  const { id, name, image } = coin;
-  return { value: id, label: name, image: image };
-});
+const PER_PAGE = 100;
+const VS_CURRENCY = 'krw';
+const ORDER = 'market_cap_desc';
 
 function CustomOption({ innerProps, label, data }) {
   return (
@@ -29,9 +30,46 @@ function CustomControl({ children, ...props }) {
 }
 
 function CoinSelect({ coinInfo, onChange }) {
+  const [options, setOptions] = useState([]);
+  const [page, setPage] = useState(1);
+  const [isLoading, loadingError, getCoinsMarketsAsync] =
+    useAsync(getCoinsMarkets);
+
+  const formatOptions = (coinList) => {
+    const formattedOptions = coinList.map((coin) => {
+      const { id, name, image } = coin;
+      return { value: id, label: name, image: image };
+    });
+
+    return formattedOptions;
+  };
+
+  const handleLoad = async (queryOptions) => {
+    const result = await getCoinsMarketsAsync(queryOptions);
+    if (!result) return;
+
+    const formattedResult = formatOptions(result);
+    if (queryOptions.page === 1) {
+      setOptions(formattedResult);
+    } else {
+      setOptions((prevItems) => [...prevItems, ...formattedResult]);
+    }
+    setPage(queryOptions.page + 1);
+  };
+
   const handleCoinInfoChange = (selectedCoin) => {
     onChange(selectedCoin);
   };
+
+  useEffect(() => {
+    handleLoad({
+      page: 1,
+      perPage: PER_PAGE,
+      vsCurrency: VS_CURRENCY,
+      order: ORDER,
+    });
+  }, [page]);
+
   return (
     <Select
       options={options}
