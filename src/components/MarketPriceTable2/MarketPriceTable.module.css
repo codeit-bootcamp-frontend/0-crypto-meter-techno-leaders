@@ -1,0 +1,19 @@
+.current-page {
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  background-color: #00a661;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.pagination-ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+}
