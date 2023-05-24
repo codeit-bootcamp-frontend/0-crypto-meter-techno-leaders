@@ -25,3 +25,10 @@
     gap: 8rem;
   }
 }
+
+@media (max-width: 767px) {
+  .main-container {
+    padding: 0 2rem 10rem;
+    gap: 5.2rem;
+  }
+}
