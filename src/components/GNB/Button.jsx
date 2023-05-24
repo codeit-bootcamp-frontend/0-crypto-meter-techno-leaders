@@ -7,7 +7,7 @@ const cn = classNames.bind(styles);
 function Button({
   isSearchLogVisible,
   handleClick,
-  name,
+  children,
   propStyle,
   imageSource = null,
 }) {
@@ -22,7 +22,7 @@ function Button({
           {imageSource ? (
             <img src={imageSource} />
           ) : (
-            <p className={cn('button-name')}>{name}</p>
+            <p className={cn('button-name')}>{children}</p>
           )}
         </button>
       </Mobile>
@@ -33,7 +33,7 @@ function Button({
           onClick={handleClick}
         >
           {imageSource && <img src={imageSource} />}
-          <p className={cn('button-name')}>{name}</p>
+          <p className={cn('button-name')}>{children}</p>
         </button>
       </TabletAbove>
     </>

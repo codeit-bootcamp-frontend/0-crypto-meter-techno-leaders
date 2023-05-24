@@ -31,9 +31,14 @@ function HistoryPopover() {
               <div className={cn('popover-header')}>
                 <h1>검색기록</h1>
                 <Button
-                  propStyle={{ border: 'none', width: '95px' }}
-                  name="기록 모두 지우기"
-                />
+                  propStyle={{
+                    border: 'none',
+                    width: '9.5rem',
+                    color: '#474B58',
+                  }}
+                >
+                  기록 모두 지우기
+                </Button>
               </div>
               <HistoryList />
             </Popover.Panel>
