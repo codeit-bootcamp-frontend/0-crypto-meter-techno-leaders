@@ -34,9 +34,13 @@ function App() {
   return (
     <CurrencyProvider defaultValue={'krw'}>
       <GNB />
-      <InputBoard values={values} onChange={handleChange} />
-      <MainBoard />
-      <MarketPriceTable />
+      <div className="main-container">
+        <InputBoard values={values} onChange={handleChange} />
+        <div className="row">
+          <MainBoard />
+          <MarketPriceTable />
+        </div>
+      </div>
     </CurrencyProvider>
   );
 }
