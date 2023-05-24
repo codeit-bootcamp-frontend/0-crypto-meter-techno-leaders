@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { registerLocale } from 'react-datepicker';
-import ko from 'date-fns/locale/ko';
 import { CurrencyProvider } from '/src/contexts/CurrencyContext';
+import ko from 'date-fns/locale/ko';
 import GNB from '/src/components/GNB/GNB';
 import InputBoard from '/src/components/InputBoard/InputBoard';
 import MainBoard from '/src/components/MainBoard/MainBoard';
-import MarketPriceTable from '/src/components/MarketPriceTable2/MarketPriceTable.jsx';
-import '/src/App.css';
+import MarketPriceTable from '/src/components/MarketPriceTable/MarketPriceTable_api.jsx';
+import styles from '/src/App.module.css';
+import classNames from 'classnames/bind';
 
 registerLocale('ko', ko);
 
@@ -27,16 +28,26 @@ const DEFAULT_VALUES = {
 function App() {
   const [values, setValues] = useState(DEFAULT_VALUES);
 
+  const cn = classNames.bind(styles);
+
+  const handleRestore = () => {
+    setValues(DEFAULT_VALUES);
+  };
+
   const handleChange = (name, value) => {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
   return (
     <CurrencyProvider defaultValue={'krw'}>
-      <GNB />
-      <InputBoard values={values} onChange={handleChange} />
-      <MainBoard />
-      <MarketPriceTable />
+      <GNB onRestore={handleRestore} />
+      <div className={cn('main-container')}>
+        <InputBoard values={values} onChange={handleChange} />
+        <div className={cn('col')}>
+          <MainBoard />
+          <MarketPriceTable />
+        </div>
+      </div>
     </CurrencyProvider>
   );
 }
