@@ -5,6 +5,8 @@
   background-color: #161c2f;
   border-radius: 2.4rem;
   flex-shrink: 0;
+  position: sticky;
+  top: 10rem;
 }
 
 .submitButton {
