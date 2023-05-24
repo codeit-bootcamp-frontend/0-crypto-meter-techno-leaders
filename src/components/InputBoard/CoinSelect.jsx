@@ -36,6 +36,10 @@ function CoinSelect({ coinInfo, onChange }) {
   const [isLoading, loadingError, getCoinsMarketsAsync] =
     useAsync(getCoinsMarkets);
 
+  const handleCoinInfoChange = (selectedCoin) => {
+    onChange(selectedCoin);
+  };
+
   const handleLoad = useCallback(
     async (queryOptions) => {
       const result = await getCoinsMarketsAsync(queryOptions);
@@ -52,8 +56,13 @@ function CoinSelect({ coinInfo, onChange }) {
     [getCoinsMarketsAsync]
   );
 
-  const handleCoinInfoChange = (selectedCoin) => {
-    onChange(selectedCoin);
+  const handleLoadMore = () => {
+    handleLoad({
+      page,
+      perPage: PER_PAGE,
+      vsCurrency: VS_CURRENCY,
+      order: ORDER,
+    });
   };
 
   useEffect(() => {
@@ -66,12 +75,17 @@ function CoinSelect({ coinInfo, onChange }) {
   }, [page, handleLoad]);
 
   return (
-    <Select
-      options={options}
-      components={{ Option: CustomOption, Control: CustomControl }}
-      value={coinInfo}
-      onChange={handleCoinInfoChange}
-    />
+    <>
+      <Select
+        options={options}
+        components={{
+          Option: CustomOption,
+          Control: CustomControl,
+        }}
+        value={coinInfo}
+        onChange={handleCoinInfoChange}
+      />
+    </>
   );
 }
 
