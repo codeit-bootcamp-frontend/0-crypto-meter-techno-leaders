@@ -11,13 +11,15 @@ import {
   defaults,
 } from 'chart.js';
 import { useCallback, useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { Line } from 'react-chartjs-2';
 import { formatDate } from '/src/utils/formatDate';
 import ChipBox from '/src/components/MainBoard/ChipBox';
+import { isMonday } from 'date-fns';
 
 const apiKey = import.meta.env.VITE_COINGECKO_KEY;
 
-function convertToChartData(data, currency, period) {
+function convertToChartData(data, period) {
   const chartData = [];
   data?.forEach((elem, i) => {
     if ((period === 'all' && i % 7 === 0) || period !== 'all') {
@@ -152,14 +154,13 @@ const getChartData = (canvas, data, currency, fluctuation, period = 'year') => {
         borderWidth: 2,
         pointHoverBackgroundColor: pointBackgroundColor,
         pointHoverBorderWidth: 3,
-        data: convertToChartData(data, currency, period),
+        data: convertToChartData(data, period),
       },
     ],
   };
 };
 
 const options = (period, currency) => {
-  defaults.font.size = 14;
   return {
     responsive: true,
     plugins: {
@@ -242,6 +243,7 @@ const periodNames = ['전체', '1년', '1달', '1주', '1일'];
 function CoinChart({ id, currency, fluctuation }) {
   const [selectedPeriod, setSelectedPeriod] = useState('year');
   const [coinData, setCoinData] = useState(null);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const canvas = document.createElement('canvas');
 
   const chartData = getChartData(
@@ -267,6 +269,8 @@ function CoinChart({ id, currency, fluctuation }) {
     getAndSetCoinData(id, currency, selectedPeriod);
   }, [id, currency, selectedPeriod]);
 
+  defaults.font.size = isMobile ? 10 : 14;
+  console.log('hi');
   return (
     <>
       <ChipBox
