@@ -5,7 +5,8 @@ import { CurrencyProvider } from '/src/contexts/CurrencyContext';
 import GNB from '/src/components/GNB/GNB';
 import InputBoard from '/src/components/InputBoard/InputBoard';
 import MainBoard from '/src/components/MainBoard/MainBoard';
-import MarketPriceTable from '/src/components/MarketPriceTable/MarketPriceTable_api.jsx';
+// import MarketPriceTable from '/src/components/MarketPriceTable/MarketPriceTable_api.jsx';
+import MarketPriceTable2 from '/src/components/MarketPriceTable/MarketPriceTable_api.jsx';
 import '/src/App.css';
 
 registerLocale('ko', ko);
@@ -36,7 +37,7 @@ function App() {
       <GNB />
       <InputBoard values={values} onChange={handleChange} />
       <MainBoard />
-      <MarketPriceTable />
+      <MarketPriceTable2 />
     </CurrencyProvider>
   );
 }
