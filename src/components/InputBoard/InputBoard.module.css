@@ -1,9 +1,12 @@
 .inputBoardWrapper {
   width: 44.5rem;
-  height: auto;
+  height: 100%;
   padding: 5.4rem 4rem 6rem;
   background-color: #161c2f;
   border-radius: 2.4rem;
+  flex-shrink: 0;
+  position: sticky;
+  top: 10rem;
 }
 
 .submitButton {

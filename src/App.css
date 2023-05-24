@@ -1,0 +1,15 @@
+.main-container {
+  display: flex;
+  gap: 2.4rem;
+  padding: 0 3.6rem 4.6rem;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  max-width: 137.9rem;
+  width: 100%;
+  min-width: 0;
+}
