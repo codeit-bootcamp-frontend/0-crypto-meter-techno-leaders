@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import InputBoardTitle from '/src/components/InputBoard/InputBoardTitle';
 import InvestmentInput from '/src/components/InputBoard/InvestmentInput';
 import styles from '/src/components/InputBoard/InputBoard.module.css';
-import CoinSelect from './CoinSelect';
+import CoinSelect from '/src/components/InputBoard/CoinSelect';
 
 function InputBoard({ values, onChange }) {
   const { selectedDate, investment, coinInfo } = values;
@@ -17,8 +17,8 @@ function InputBoard({ values, onChange }) {
     onChange('investment', value);
   };
 
-  const handleCoinInfoChange = (value) => {
-    onChange('coinInfo', value);
+  const handleCoinInfoChange = (selectedOption) => {
+    onChange('coinInfo', selectedOption);
   };
 
   const handleSubmit = (e) => {
