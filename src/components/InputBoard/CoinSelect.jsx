@@ -75,17 +75,15 @@ function CoinSelect({ coinInfo, onChange }) {
   }, [page, handleLoad]);
 
   return (
-    <>
-      <Select
-        options={options}
-        components={{
-          Option: CustomOption,
-          Control: CustomControl,
-        }}
-        value={coinInfo}
-        onChange={handleCoinInfoChange}
-      />
-    </>
+    <Select
+      options={options}
+      components={{
+        Option: CustomOption,
+        Control: CustomControl,
+      }}
+      value={coinInfo}
+      onChange={handleCoinInfoChange}
+    />
   );
 }
 
