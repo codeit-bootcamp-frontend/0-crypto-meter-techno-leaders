@@ -28,3 +28,11 @@
   color: #0b0e1b;
   cursor: pointer;
 }
+
+@media (max-width: 1199px) {
+  .inputBoardWrapper {
+    width: 100%;
+    padding: 0;
+    position: initial;
+  }
+}
