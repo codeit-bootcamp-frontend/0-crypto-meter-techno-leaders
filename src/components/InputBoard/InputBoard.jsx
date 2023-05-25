@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useMediaQuery } from 'react-responsive';
-import dropdown from '/src/assets/images/dropdown.svg';
+import dropdown from '/src/assets/images/dropdownWhite.svg';
 import InputBoardTitle from '/src/components/InputBoard/InputBoardTitle';
 import InvestmentInput from '/src/components/InputBoard/InvestmentInput';
 import styles from '/src/components/InputBoard/InputBoard.module.css';
@@ -33,7 +33,7 @@ function InputBoard({ values, onChange }) {
   };
 
   const openBottomSheet = () => {
-    setOpen((prevValue) => !prevValue);
+    setOpen(true);
   };
 
   return (
@@ -42,8 +42,9 @@ function InputBoard({ values, onChange }) {
 
       {isMobile ? (
         <BottomSheet open={open}>
-          <img src={dropdown} />
+          <img className={styles.dropdown} src={dropdown} />
           <ReactDatePicker
+            className={styles.datePicker}
             name="selectedDate"
             locale={'ko'}
             selected={selectedDate}

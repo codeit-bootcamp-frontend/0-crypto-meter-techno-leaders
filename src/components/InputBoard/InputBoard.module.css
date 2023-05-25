@@ -82,4 +82,23 @@
     padding: 0;
     position: initial;
   }
+
+  .dropdown {
+    background-color: #161c2f;
+  }
+
+  .datePicker {
+    color: #161c2f;
+    border-color: #ced2dd;
+  }
+
+  .datePicker:focus {
+    outline-style: none;
+    border-color: #161c2f;
+  }
+
+  .submitButton {
+    background-color: #161c2f;
+    color: #ffffff;
+  }
 }
