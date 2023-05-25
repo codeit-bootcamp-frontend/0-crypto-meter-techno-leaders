@@ -2,7 +2,8 @@ import { format } from 'date-fns';
 
 const BASE_URL = 'https://pro-api.coingecko.com/api/v3';
 const API_KEY = import.meta.env.VITE_COINGECKO_KEY;
-const API_KEY_QUERY = `x_cg_pro_api_key=${API_KEY}`;
+// const API_KEY_QUERY = `x_cg_pro_api_key=${API_KEY}`;
+const API_KEY_QUERY = 'x_cg_pro_api_key=CG-ReEFUZC8FpbDTSJ6AmbKy3m1';
 
 export async function getCoinsMarkets(
   page = 1,
@@ -24,9 +25,11 @@ export async function getCoinsMarkets(
   return body;
 }
 
-export async function getCoinHistory(coinId, date) {
+export async function getCoinHistory({ coinId, date }) {
+  console.log(coinId, date);
   const formattedDate = format(date, 'dd-M-yyyy');
   const query = `${API_KEY_QUERY}&date=${formattedDate}`;
+  console.log(`${BASE_URL}/coins/${coinId}/history?${query}`);
   const response = await fetch(`${BASE_URL}/coins/${coinId}/history?${query}`);
 
   if (!response.ok) {
