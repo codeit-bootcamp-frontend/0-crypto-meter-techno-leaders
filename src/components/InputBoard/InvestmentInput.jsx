@@ -10,9 +10,8 @@ function InvestmentInput({ investment, onChange }) {
     onChange(+value);
   };
 
-  const addTotalInvestment = (e) => {
-    const newValue = investment + +e.target.value;
-    onChange(newValue);
+  const addTotalInvestment = (value) => {
+    onChange(+value);
   };
 
   return (
@@ -26,8 +25,12 @@ function InvestmentInput({ investment, onChange }) {
       <div className={styles.currency}>
         {currency === 'krw' ? '원 (₩)' : 'USD ($)'}
       </div>
-      <div className={styles.buttonsContainer} onClick={addTotalInvestment}>
-        {currency === 'krw' ? <KrwButtons /> : <UsdButtons />}
+      <div className={styles.buttonsContainer}>
+        {currency === 'krw' ? (
+          <KrwButtons investment={investment} onAdd={addTotalInvestment} />
+        ) : (
+          <UsdButtons investment={investment} onAdd={addTotalInvestment} />
+        )}
       </div>
     </div>
   );
