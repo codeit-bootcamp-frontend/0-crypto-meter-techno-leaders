@@ -58,7 +58,6 @@ function millisecondsToDate(milliseconds, type) {
   }
 }
 
-/* period에 따라 API 요청 */
 async function getMarketChartData(id, currency, period) {
   const periodMapper = {
     all: {

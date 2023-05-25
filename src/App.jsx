@@ -38,6 +38,11 @@ function App() {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
+  if (window.Kakao) {
+    const kakao = window.Kakao;
+    if (!kakao.isInitialized()) kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
+  }
+
   return (
     <CurrencyProvider defaultValue={'krw'}>
       <GNB onRestore={handleRestore} />

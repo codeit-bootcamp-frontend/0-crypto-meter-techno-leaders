@@ -109,7 +109,33 @@ function MainBoard({
   const handleShareFacebook = () => {
     const url = encodeURI(window.location.href);
 
-    window.open('http://www.facebook.com/sharer/sharer.php?u=' + url);
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + url);
+  };
+
+  const handleShareKakao = () => {
+    const url = encodeURI(window.location.href);
+
+    window.Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '눈 떠보니 코인 부자가 되었습니다.',
+        description: '1년 전 내가 10만원으로 비트코인을 샀다면?',
+        imageUrl: window.location.href + '/asset/images/imgLogo.svg',
+        link: {
+          webUrl: url,
+          mobileWebUrl: url,
+        },
+      },
+      buttons: [
+        {
+          title: '자세히 보기',
+          link: {
+            webUrl: url,
+            mobileWebUrl: url,
+          },
+        },
+      ],
+    });
   };
 
   return (
@@ -121,7 +147,7 @@ function MainBoard({
             <span className={cn('crypto-name')}>{values.name}</span>
           </div>
           <div className={cn('share-link-container')}>
-            <img src={kakaotalk} />
+            <img onClick={handleShareKakao} src={kakaotalk} />
             <img onClick={handleShareFacebook} src={facebook} />
             <img onClick={handleCopyUrl} src={share} />
           </div>
