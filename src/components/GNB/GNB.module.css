@@ -29,11 +29,13 @@
   appearance: none;
   background: url('/src/assets/images/dropdownTriangle.svg') no-repeat right
     1.12rem center;
+  outline: none;
 }
 
 @media (max-width: 1199px) {
   .gnb-container {
     background-color: white;
+    height: 9rem;
   }
 }
 

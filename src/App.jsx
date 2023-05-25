@@ -49,7 +49,7 @@ function App() {
   const handleChange = (name, value) => {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
-  
+
   const handleLoad = useCallback(
     async (queryOptions) => {
       const result = await getCoinHistoryAsync(queryOptions);
@@ -59,11 +59,26 @@ function App() {
     },
     [getCoinHistoryAsync]
   );
-  
+
   if (window.Kakao) {
     const kakao = window.Kakao;
     if (!kakao.isInitialized()) kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
   }
+
+  useEffect(() => {
+    const jsonHistoryArray = localStorage.getItem('history');
+    const historyArray = JSON.parse(jsonHistoryArray);
+    setHistory(historyArray);
+  }, []); // 컴포넌트 마운트 시 로컬 스토리지에 저장되어 있던 데이터 불러오기
+
+  useEffect(() => {
+    if (history.length >= 30) {
+      history.pop();
+    }
+    history.unshift(values);
+    const copyHistory = JSON.parse(JSON.stringify(history));
+    setHistory(copyHistory);
+  }, [values]);
 
   return (
     <CurrencyProvider defaultValue={'krw'}>
