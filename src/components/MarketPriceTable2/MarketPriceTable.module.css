@@ -275,6 +275,6 @@
     height: 100%;
     width: 5px; /* 그림자의 너비 조정 */
     box-shadow: 5px 0 5px rgb(229, 229, 229); /* 우측에 그림자 설정 */
-    mix-blend-mode: multiply;
+    filter: blend-mode(multiply);
   }
 }
