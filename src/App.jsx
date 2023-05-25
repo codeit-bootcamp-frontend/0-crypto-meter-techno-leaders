@@ -5,7 +5,7 @@ import ko from 'date-fns/locale/ko';
 import GNB from '/src/components/GNB/GNB';
 import InputBoard from '/src/components/InputBoard/InputBoard';
 import MainBoard from '/src/components/MainBoard/MainBoard';
-import MarketPriceTable from '/src/components/MarketPriceTable/MarketPriceTable_api.jsx';
+import MarketPriceTable from '/src/components/MarketPriceTable2/MarketPriceTable.jsx';
 import styles from '/src/App.module.css';
 import classNames from 'classnames/bind';
 
@@ -42,7 +42,7 @@ function App() {
     <CurrencyProvider defaultValue={'krw'}>
       <GNB onRestore={handleRestore} />
       <div className={cn('main-container')}>
-        <InputBoard values={values} onChange={handleChange} />
+        {/* <InputBoard values={values} onChange={handleChange} /> */}
         <div className={cn('col')}>
           <MainBoard />
           <MarketPriceTable />

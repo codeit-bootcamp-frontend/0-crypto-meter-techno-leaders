@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import fetchMarketData from '/src/components/MarketPriceTable/api/marketDataApi';
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import formatPrice from '/src/components/MarketPriceTable/utils/formatPrice.js';
-import PriceChangePercentage from '/src/components/MarketPriceTable/PriceChangePercentage';
+import PriceChangePercentage from '/src/components/MarketPriceTable2/PriceChangePercentage';
 import CryptoCard from '/src/components/MarketPriceTable/CryptoCard';
 import ReactPaginate from 'react-paginate';
 import styles from '/src/components/MarketPriceTable2/MarketPriceTable.module.css';
@@ -129,111 +129,116 @@ function MarketPriceTable() {
   // console.log(marketData);
 
   return (
-    <>
-      <table>
-        <thead>
-          <tr>
-            <th onClick={() => handleSort('id')}>
-              #
-              {sortConfig.column === 'id' &&
-                (sortConfig.direction === 'asc' ? '▲' : '▼')}
-            </th>
-            <th onClick={() => handleSort('name')}>
-              화폐 이름
-              {sortConfig.column === 'name' &&
-                (sortConfig.direction === 'asc' ? '▲' : '▼')}
-            </th>
-            <th onClick={() => handleSort('current_price')}>
-              가격
-              {sortConfig.column === 'current_price' &&
-                (sortConfig.direction === 'asc' ? '▲' : '▼')}
-            </th>
-            <th onClick={() => handleSort('market_cap')}>
-              총 시가
-              {sortConfig.column === 'market_cap' &&
-                (sortConfig.direction === 'asc' ? '▲' : '▼')}
-            </th>
-            <th onClick={() => handleSort('total_volume')}>
-              24시간 거래량
-              {sortConfig.column === 'total_volume' &&
-                (sortConfig.direction === 'asc' ? '▲' : '▼')}
-            </th>
-            <th
-              onClick={() =>
-                handleSort('price_change_percentage_1h_in_currency')
-              }
-            >
-              1시간 변동폭
-              {sortConfig.column === 'price_change_percentage_1h_in_currency' &&
-                (sortConfig.direction === 'asc' ? '▲' : '▼')}
-            </th>
-            <th
-              onClick={() =>
-                handleSort('price_change_percentage_24h_in_currency')
-              }
-            >
-              24시간 변동폭
-              {sortConfig.column ===
-                'price_change_percentage_24h_in_currency' &&
-                (sortConfig.direction === 'asc' ? '▲' : '▼')}
-            </th>
-            <th
-              onClick={() =>
-                handleSort('price_change_percentage_7d_in_currency')
-              }
-            >
-              7일 변동폭
-              {sortConfig.column === 'price_change_percentage_7d_in_currency' &&
-                (sortConfig.direction === 'asc' ? '▲' : '▼')}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {marketData &&
-            getDataForCurrentPage().map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>
-                  <CryptoCard
-                    name={item.value}
-                    image={item.image}
-                    symbol={item.symbol}
-                  />
-                </td>
-                <td>
-                  {item.total_volume !== null
-                    ? formatPrice(item.current_price, currency)
-                    : '-'}
-                </td>
-                <td>
-                  {item.market_cap !== null
-                    ? formatPrice(item.market_cap, currency)
-                    : '-'}
-                </td>
-                <td>
-                  {item.total_volume !== null
-                    ? formatPrice(item.total_volume, currency)
-                    : '-'}
-                </td>
-                <td>
-                  <PriceChangePercentage
-                    value={item.price_change_percentage_1h_in_currency}
-                  />
-                </td>
-                <td>
-                  <PriceChangePercentage
-                    value={item.price_change_percentage_24h_in_currency}
-                  />
-                </td>
-                <td>
-                  <PriceChangePercentage
-                    value={item.price_change_percentage_7d_in_currency}
-                  />
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+    <div className={cn('market-price-table-wrapper')}>
+      <div className={cn('market-price-table-container')}>
+        <h2 className={cn('header-title')}>전체 암호화폐 시세</h2>
+        <table className={cn('market-price-table')}>
+          <thead>
+            <tr>
+              <th onClick={() => handleSort('id')}>
+                #
+                {sortConfig.column === 'id' &&
+                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+              </th>
+              <th onClick={() => handleSort('name')}>
+                화폐 이름
+                {sortConfig.column === 'name' &&
+                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+              </th>
+              <th onClick={() => handleSort('current_price')}>
+                가격
+                {sortConfig.column === 'current_price' &&
+                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+              </th>
+              <th onClick={() => handleSort('market_cap')}>
+                총 시가
+                {sortConfig.column === 'market_cap' &&
+                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+              </th>
+              <th onClick={() => handleSort('total_volume')}>
+                24시간 거래량
+                {sortConfig.column === 'total_volume' &&
+                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+              </th>
+              <th
+                onClick={() =>
+                  handleSort('price_change_percentage_1h_in_currency')
+                }
+              >
+                1시간 변동폭
+                {sortConfig.column ===
+                  'price_change_percentage_1h_in_currency' &&
+                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+              </th>
+              <th
+                onClick={() =>
+                  handleSort('price_change_percentage_24h_in_currency')
+                }
+              >
+                24시간 변동폭
+                {sortConfig.column ===
+                  'price_change_percentage_24h_in_currency' &&
+                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+              </th>
+              <th
+                onClick={() =>
+                  handleSort('price_change_percentage_7d_in_currency')
+                }
+              >
+                7일 변동폭
+                {sortConfig.column ===
+                  'price_change_percentage_7d_in_currency' &&
+                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {marketData &&
+              getDataForCurrentPage().map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>
+                    <CryptoCard
+                      name={item.value}
+                      image={item.image}
+                      symbol={item.symbol}
+                    />
+                  </td>
+                  <td>
+                    {item.total_volume !== null
+                      ? formatPrice(item.current_price, currency)
+                      : '-'}
+                  </td>
+                  <td>
+                    {item.market_cap !== null
+                      ? formatPrice(item.market_cap, currency)
+                      : '-'}
+                  </td>
+                  <td>
+                    {item.total_volume !== null
+                      ? formatPrice(item.total_volume, currency)
+                      : '-'}
+                  </td>
+                  <td>
+                    <PriceChangePercentage
+                      value={item.price_change_percentage_1h_in_currency}
+                    />
+                  </td>
+                  <td>
+                    <PriceChangePercentage
+                      value={item.price_change_percentage_24h_in_currency}
+                    />
+                  </td>
+                  <td>
+                    <PriceChangePercentage
+                      value={item.price_change_percentage_7d_in_currency}
+                    />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
       <ReactPaginate
         pageCount={
           marketData && Math.ceil(marketData[currency].length / itemsPerPage)
@@ -249,7 +254,7 @@ function MarketPriceTable() {
         previousClassName={cn('pageLabel-btn')}
         nextClassName={cn('pageLabel-btn')}
       />
-    </>
+    </div>
   );
 }
 
