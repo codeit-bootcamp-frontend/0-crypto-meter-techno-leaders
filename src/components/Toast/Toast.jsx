@@ -10,7 +10,7 @@ function Toast({ onSetToast, text }) {
 
     const fadeOutTimer = setTimeout(() => {
       setAnimation('fade-out');
-    }, 1500);
+    }, 2000);
 
     return () => {
       clearTimeout(durationTimer);

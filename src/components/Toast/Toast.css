@@ -17,11 +17,11 @@
 }
 
 .fade-in {
-  animation: fadeIn 1.5s;
+  animation: fadeIn 1s;
 }
 
 .fade-out {
-  animation: fadeOut 1.5s;
+  animation: fadeOut 1s;
 }
 
 .toast-wrapper {
