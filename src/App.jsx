@@ -53,11 +53,16 @@ function App() {
       const { krw, usd } = currentPrice;
 
       if (queryOptions.date === selectedDate) {
-        setValues((prevValues) => ({ ...prevValues }));
+        setValues();
+      } else {
+        setValues();
       }
     },
     [getCoinHistoryAsync]
   );
+
+  handleLoad(coinInfo.value, currentDate);
+  handleLoad(coinInfo.value);
 
   useEffect(async () => {
     const result = await getCoinHistoryAsync(coinInfo.value, currentDate);
