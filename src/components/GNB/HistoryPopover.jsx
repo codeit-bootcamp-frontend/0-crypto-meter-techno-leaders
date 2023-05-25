@@ -40,7 +40,7 @@ function HistoryPopover({ data }) {
                     width: '9.5rem',
                     color: '#474B58',
                   }}
-                  onClick={handleHistoryDelete}
+                  handleClick={handleHistoryDelete}
                 >
                   기록 모두 지우기
                 </Button>
