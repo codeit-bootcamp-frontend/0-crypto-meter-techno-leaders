@@ -6,7 +6,7 @@ const cn = classNames.bind(styles);
 
 const CoinTotalVolume = ({ totalVolume, currentPrice, symbol, currency }) => {
   const coinTotalVolume =
-    currentPrice !== 0
+    !currentPrice && !totalVolume
       ? Math.round(totalVolume / currentPrice).toLocaleString(undefined, {
           maximumFractionDigits: 10,
         })

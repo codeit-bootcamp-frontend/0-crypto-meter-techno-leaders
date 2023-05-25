@@ -1,30 +1,37 @@
-.pagination-ul {
+.pagination {
   list-style-type: none;
   display: flex;
   justify-content: center;
-  gap: 1.4rem;
+  gap: 1rem;
   align-items: center;
-  font-size: 1.4rem;
-  font-weight: 500;
+  margin-bottom: 3.6rem;
 }
 
-.pagination-ul li {
+.pagination-item {
   border-radius: 0.5rem;
 }
 
-.pagination-ul li a {
+.active-pagination-item {
+  background-color: #00a661;
+  color: white;
+}
+
+.pagination-link {
+  width: 3rem;
+  height: 3rem;
+  text-decoration: none;
+  color: #161c2f;
+  font-size: 1.3rem;
+  font-weight: 500;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
   cursor: pointer;
-  width: 3rem;
-  height: 3rem;
 }
 
-.current-page {
+.active-pagination-link {
   color: white;
-  background-color: #00a661;
 }
 
 .market-price-table-wrapper {
@@ -76,8 +83,12 @@
 
 .market-price-table th:nth-child(1),
 .market-price-table td:nth-child(1) {
-  width: 7rem; /* 첫 번째 컬럼의 폭 */
+  width: 5rem;
   text-align: left;
+}
+
+.market-price-table td:nth-child(1) {
+  color: #616575;
 }
 
 .market-price-table th:nth-child(2),
@@ -88,7 +99,7 @@
 
 .market-price-table th:nth-child(3),
 .market-price-table td:nth-child(3) {
-  width: 24.3rem;
+  width: 17.3rem;
   text-align: right;
 }
 
@@ -206,7 +217,7 @@
 .price-change-percentage {
   font-size: 1.3rem;
   font-weight: 600;
-  width: 8rem;
+  width: 7rem;
   height: 2.2rem;
   display: flex;
   justify-content: center;
@@ -257,6 +268,10 @@
 }
 
 @media (max-width: 767px) {
+  .pagination {
+    gap: 0.8rem;
+  }
+
   .header {
     display: block;
     margin-bottom: 2rem;
@@ -264,7 +279,7 @@
 
   .header-title {
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.3rem;
   }
 
   .search-input {
@@ -277,23 +292,52 @@
     left: 0;
     z-index: 1;
     background-color: #fff;
-    width: 2.6rem;
+    width: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .market-price-table th:nth-child(2),
   .market-price-table td:nth-child(2) {
     position: sticky;
-    left: 2.6rem;
+    left: 4.324rem;
     background-color: #fff;
     background-blend-mode: multiply;
     z-index: 10;
-    width: 14rem;
-    padding: 2rem;
+    width: 6rem;
+    padding: 1rem;
   }
 
   .market-price-table th:nth-child(3),
   .market-price-table td:nth-child(3) {
-    width: 13rem;
+    width: 5rem;
+    font-size: 1.4rem;
+  }
+
+  .market-price-table th:nth-child(4),
+  .market-price-table td:nth-child(4) {
+    width: 10rem;
+    font-size: 1.4rem;
+  }
+
+  .market-price-table th:nth-child(5),
+  .market-price-table td:nth-child(5) {
+    width: 10rem;
+    font-size: 1.4rem;
+  }
+
+  .market-price-table th:nth-child(6),
+  .market-price-table td:nth-child(6) {
+    width: 4rem;
+  }
+
+  .market-price-table th:nth-child(7),
+  .market-price-table td:nth-child(7) {
+    width: 4rem;
+  }
+
+  .market-price-table th:nth-child(8),
+  .market-price-table td:nth-child(8) {
+    width: 4rem;
   }
 
   .market-price-table th:nth-child(2)::after,
@@ -306,5 +350,64 @@
     width: 5px; /* 그림자의 너비 조정 */
     box-shadow: 5px 0 5px rgb(229, 229, 229); /* 우측에 그림자 설정 */
     filter: blend-mode(multiply);
+  }
+
+  .coin-name,
+  .coin-price,
+  .total-volume,
+  .market-cap {
+    font-size: 1.4rem;
+  }
+
+  .coin-name {
+    margin-bottom: 0.3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .market-price-table th:nth-child(1),
+  .market-price-table td:nth-child(1) {
+    width: 0.9rem;
+  }
+
+  .market-price-table td:nth-child(1) {
+    font-size: 1.2rem;
+  }
+
+  .market-price-table th:nth-child(2),
+  .market-price-table td:nth-child(2) {
+    left: 3.861rem;
+    width: 2.7rem;
+    padding: 0.7rem;
+  }
+
+  .market-price-table th:nth-child(3),
+  .market-price-table td:nth-child(3) {
+    width: 3rem;
+  }
+
+  .market-price-table th:nth-child(4),
+  .market-price-table td:nth-child(4) {
+    width: 7rem;
+  }
+
+  .market-price-table th:nth-child(5),
+  .market-price-table td:nth-child(5) {
+    width: 7rem;
+  }
+
+  .market-price-table th:nth-child(6),
+  .market-price-table td:nth-child(6) {
+    width: 3rem;
+  }
+
+  .market-price-table th:nth-child(7),
+  .market-price-table td:nth-child(7) {
+    width: 3rem;
+  }
+
+  .market-price-table th:nth-child(8),
+  .market-price-table td:nth-child(8) {
+    width: 3rem;
   }
 }
