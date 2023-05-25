@@ -3,10 +3,14 @@ import fetchMarketData from '/src/components/MarketPriceTable/api/marketDataApi'
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import formatPrice from '/src/components/MarketPriceTable/utils/formatPrice.js';
 import PriceChangePercentage from '/src/components/MarketPriceTable2/PriceChangePercentage';
-import CryptoCard from '/src/components/MarketPriceTable/CryptoCard';
+import CryptoCard from '/src/components/MarketPriceTable2/CryptoCard';
 import ReactPaginate from 'react-paginate';
 import styles from '/src/components/MarketPriceTable2/MarketPriceTable.module.css';
 import classNames from 'classnames/bind';
+import orderAsc from '/src/assets/images/orderAscending.svg';
+import orderDes from '/src/assets/images/orderDesending.svg';
+import orderNone from '/src/assets/images/orderNone.svg';
+import CoinTotalVolume from '/src/components/MarketPriceTable2/CoinTotalVolume';
 // import Pagination from '/src/components/MarketPriceTable2/Pagenation.jsx';
 
 const cn = classNames.bind(styles);
@@ -130,35 +134,80 @@ function MarketPriceTable() {
 
   return (
     <div className={cn('market-price-table-wrapper')}>
+      <h2 className={cn('header-title')}>전체 암호화폐 시세</h2>
       <div className={cn('market-price-table-container')}>
-        <h2 className={cn('header-title')}>전체 암호화폐 시세</h2>
         <table className={cn('market-price-table')}>
           <thead>
             <tr>
               <th onClick={() => handleSort('id')}>
                 #
-                {sortConfig.column === 'id' &&
-                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                <img
+                  src={
+                    sortConfig.column === 'id'
+                      ? sortConfig.direction === 'asc'
+                        ? orderAsc
+                        : orderDes
+                      : orderNone
+                  }
+                  className={cn('order-img')}
+                  alt="Sort Icon"
+                />
               </th>
               <th onClick={() => handleSort('name')}>
                 화폐 이름
-                {sortConfig.column === 'name' &&
-                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                <img
+                  src={
+                    sortConfig.column === 'name'
+                      ? sortConfig.direction === 'asc'
+                        ? orderAsc
+                        : orderDes
+                      : orderNone
+                  }
+                  className={cn('order-img')}
+                  alt="Sort Icon"
+                />
               </th>
               <th onClick={() => handleSort('current_price')}>
                 가격
-                {sortConfig.column === 'current_price' &&
-                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                <img
+                  src={
+                    sortConfig.column === 'current_price'
+                      ? sortConfig.direction === 'asc'
+                        ? orderAsc
+                        : orderDes
+                      : orderNone
+                  }
+                  className={cn('order-img')}
+                  alt="Sort Icon"
+                />
               </th>
               <th onClick={() => handleSort('market_cap')}>
                 총 시가
-                {sortConfig.column === 'market_cap' &&
-                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                <img
+                  src={
+                    sortConfig.column === 'market_cap'
+                      ? sortConfig.direction === 'asc'
+                        ? orderAsc
+                        : orderDes
+                      : orderNone
+                  }
+                  className={cn('order-img')}
+                  alt="Sort Icon"
+                />
               </th>
               <th onClick={() => handleSort('total_volume')}>
                 24시간 거래량
-                {sortConfig.column === 'total_volume' &&
-                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                <img
+                  src={
+                    sortConfig.column === 'total_volume'
+                      ? sortConfig.direction === 'asc'
+                        ? orderAsc
+                        : orderDes
+                      : orderNone
+                  }
+                  className={cn('order-img')}
+                  alt="Sort Icon"
+                />
               </th>
               <th
                 onClick={() =>
@@ -166,9 +215,18 @@ function MarketPriceTable() {
                 }
               >
                 1시간 변동폭
-                {sortConfig.column ===
-                  'price_change_percentage_1h_in_currency' &&
-                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                <img
+                  src={
+                    sortConfig.column ===
+                    'price_change_percentage_1h_in_currency'
+                      ? sortConfig.direction === 'asc'
+                        ? orderAsc
+                        : orderDes
+                      : orderNone
+                  }
+                  className={cn('order-img')}
+                  alt="Sort Icon"
+                />
               </th>
               <th
                 onClick={() =>
@@ -176,9 +234,18 @@ function MarketPriceTable() {
                 }
               >
                 24시간 변동폭
-                {sortConfig.column ===
-                  'price_change_percentage_24h_in_currency' &&
-                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                <img
+                  src={
+                    sortConfig.column ===
+                    'price_change_percentage_24h_in_currency'
+                      ? sortConfig.direction === 'asc'
+                        ? orderAsc
+                        : orderDes
+                      : orderNone
+                  }
+                  className={cn('order-img')}
+                  alt="Sort Icon"
+                />
               </th>
               <th
                 onClick={() =>
@@ -186,9 +253,18 @@ function MarketPriceTable() {
                 }
               >
                 7일 변동폭
-                {sortConfig.column ===
-                  'price_change_percentage_7d_in_currency' &&
-                  (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                <img
+                  src={
+                    sortConfig.column ===
+                    'price_change_percentage_7d_in_currency'
+                      ? sortConfig.direction === 'asc'
+                        ? orderAsc
+                        : orderDes
+                      : orderNone
+                  }
+                  className={cn('order-img')}
+                  alt="Sort Icon"
+                />
               </th>
             </tr>
           </thead>
@@ -199,7 +275,7 @@ function MarketPriceTable() {
                   <td>{item.id}</td>
                   <td>
                     <CryptoCard
-                      name={item.value}
+                      name={item.name}
                       image={item.image}
                       symbol={item.symbol}
                     />
@@ -215,9 +291,17 @@ function MarketPriceTable() {
                       : '-'}
                   </td>
                   <td>
-                    {item.total_volume !== null
-                      ? formatPrice(item.total_volume, currency)
-                      : '-'}
+                    {item.total_volume !== null ? (
+                      <CoinTotalVolume
+                        totalVolume={item.total_volume}
+                        currentPrice={item.current_price}
+                        symbol={item.symbol}
+                        currency={currency}
+                      />
+                    ) : (
+                      // ? formatPrice(item.total_volume, currency)
+                      '-'
+                    )}
                   </td>
                   <td>
                     <PriceChangePercentage
