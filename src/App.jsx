@@ -49,7 +49,7 @@ function App() {
   const handleChange = (name, value) => {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
-
+  
   const handleLoad = useCallback(
     async (queryOptions) => {
       const result = await getCoinHistoryAsync(queryOptions);
@@ -59,6 +59,11 @@ function App() {
     },
     [getCoinHistoryAsync]
   );
+  
+  if (window.Kakao) {
+    const kakao = window.Kakao;
+    if (!kakao.isInitialized()) kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
+  }
 
   return (
     <CurrencyProvider defaultValue={'krw'}>
