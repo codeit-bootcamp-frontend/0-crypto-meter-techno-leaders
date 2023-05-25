@@ -1,5 +1,6 @@
 .chip-button {
   font-family: inherit;
+  font-size: 1.4rem;
   border-radius: 2.1rem;
   border: none;
   padding: 0.4rem 1rem;
@@ -12,4 +13,10 @@
 .active {
   background-color: #161c2f;
   color: #f5f8f9;
+}
+
+@media (max-width: 767px) {
+  .chip-button {
+    font-size: 1.2rem;
+  }
 }

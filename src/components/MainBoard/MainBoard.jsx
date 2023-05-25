@@ -110,11 +110,11 @@ function MainBoard({
         </div>
         <Divider />
         <div className={cn('title-container')}>
-          <h1 className={cn('precondition')}>
+          <h1 className={cn('precondition-title')}>
             {format(values.selectedDate, 'yyyy년 M월 d일')}에{' '}
             {formatResultPrice(values.investment, currency)}으로 샀다면 오늘
           </h1>
-          <h1 className={cn('result')}>
+          <h1 className={cn('result-title')}>
             <span className={cn(`${fluctuation}-emphasize`)}>
               {formatResultPrice(
                 resultPrices[priceIndexMapper[currency]],

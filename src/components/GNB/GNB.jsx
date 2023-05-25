@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import restoreIcon from '/src/assets/images/restore.svg';
 import Button from '/src/components/GNB/Button';
 import Logo from '/src/components/GNB/Logo';
-import HistoryModal from '/src/components/GNB/HistoryModal';
+import HistoryPopover from '/src/components/GNB/HistoryPopover';
 import { useCurrency, useSetCurrency } from '/src/contexts/CurrencyContext';
 import { useMediaQuery } from 'react-responsive';
 import { Mobile, TabletAbove } from '/src/components/GNB/MediaQuery';
@@ -11,21 +11,16 @@ import classNames from 'classnames/bind';
 
 const cn = classNames.bind(styles);
 
-function GNB() {
-  const [isSearchLogVisible, setIsLogVisible] = useState(false);
+function GNB({ onRestore }) {
   const currency = useCurrency();
   const setCurrency = useSetCurrency();
 
   const handleRestoreClick = useCallback(() => {
-    console.log('다시 계산하기 버튼 클릭');
+    onRestore();
   }, []);
 
   const handleCurrencyChange = useCallback((e) => {
     setCurrency(e.target.value);
-  }, []);
-
-  const handleHistoryClick = useCallback(() => {
-    setIsLogVisible(true);
   }, []);
 
   const isMobile = useMediaQuery({
@@ -33,25 +28,18 @@ function GNB() {
   });
 
   return (
-    <div className={cn('gnb-container', isMobile && 'gnb-container-mobile')}>
+    <div className={cn('gnb-container')}>
       <Logo />
-      <div
-        className={cn(
-          'button-container',
-          isMobile && 'button-container-mobile'
-        )}
-      >
+      <div className={cn('button-container')}>
         <Button
           handleClick={handleRestoreClick}
           imageSource={restoreIcon}
-          name="다시 계산하기"
           propStyle={isMobile && { width: '50px' }}
-        />
+        >
+          다시 계산하기
+        </Button>
         <select
-          className={cn(
-            'select-currency',
-            isMobile && 'select-currency-mobile'
-          )}
+          className={cn('select-currency')}
           value={currency}
           onChange={handleCurrencyChange}
         >
@@ -64,16 +52,7 @@ function GNB() {
             <option value="usd">USD ($)</option>
           </TabletAbove>
         </select>
-        <Button
-          handleClick={handleHistoryClick}
-          propStyle={{ width: '81px' }}
-          isSearchLogVisible={isSearchLogVisible}
-          name="검색 기록"
-        />
-        <HistoryModal
-          isOpen={isSearchLogVisible}
-          handleModalOpen={setIsLogVisible}
-        />
+        <HistoryPopover />
       </div>
     </div>
   );

@@ -3,3 +3,9 @@
   gap: 0.8rem;
   justify-content: end;
 }
+
+@media (max-width: 767px) {
+  .chips-container {
+    justify-content: start;
+  }
+}
