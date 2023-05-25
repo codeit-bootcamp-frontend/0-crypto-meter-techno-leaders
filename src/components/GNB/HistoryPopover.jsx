@@ -12,6 +12,10 @@ function HistoryPopover({ data }) {
     !open;
   }, []);
 
+  const handleHistoryDelete = () => {
+    localStorage.removeItem('history');
+  };
+
   return (
     <Popover as="div">
       {({ open }) => (
@@ -36,6 +40,7 @@ function HistoryPopover({ data }) {
                     width: '9.5rem',
                     color: '#474B58',
                   }}
+                  onClick={handleHistoryDelete}
                 >
                   기록 모두 지우기
                 </Button>
