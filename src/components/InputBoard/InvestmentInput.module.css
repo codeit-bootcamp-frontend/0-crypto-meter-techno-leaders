@@ -55,4 +55,31 @@
     outline-style: none;
     border-color: #161c2f;
   }
+
+  .currency {
+    color: #161c2f;
+  }
+
+  .buttonsContainer {
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .input {
+    height: 6.3rem;
+    font-size: 1.5rem;
+    line-height: 100%;
+  }
+
+  .currency {
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    top: 2.2rem;
+  }
+
+  .buttonsContainer {
+    margin-bottom: 2.5rem;
+  }
 }

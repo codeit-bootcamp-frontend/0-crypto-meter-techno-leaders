@@ -53,8 +53,8 @@
   margin-bottom: 2.5rem;
 }
 
-.coinSelectWrapper {
-  margin-bottom: 18.9rem;
+.submitWrapper {
+  margin-top: 18.9rem;
 }
 
 .submitButton {
@@ -77,6 +77,10 @@
 }
 
 @media (max-width: 1199px) {
+  .bottomSheetContents {
+    padding: 6.4rem 5.4rem;
+  }
+
   .inputBoardWrapper {
     width: 100%;
     padding: 0;
@@ -84,7 +88,12 @@
   }
 
   .dropdown {
-    background-color: #161c2f;
+    top: 3rem;
+    right: 2.15rem;
+  }
+
+  .datepickerContainer {
+    position: relative;
   }
 
   .datePicker {
@@ -100,5 +109,34 @@
   .submitButton {
     background-color: #161c2f;
     color: #ffffff;
+  }
+
+  .submitWrapper {
+    margin-top: 6.7rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .bottomSheetContents {
+    padding: 4.4rem 2.4rem;
+  }
+  .datePicker {
+    height: 6.3rem;
+    font-size: 1.5rem;
+    line-height: 100%;
+  }
+
+  .submitButton {
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+  }
+
+  .dropdown {
+    top: 2.7rem;
+    right: 2.15rem;
+  }
+
+  .submitWrapper {
+    margin-top: 5.6rem;
   }
 }
