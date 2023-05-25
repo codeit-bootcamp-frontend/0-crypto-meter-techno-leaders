@@ -120,7 +120,8 @@ function MainBoard({
       content: {
         title: '눈 떠보니 코인 부자인데요?',
         description: '1년 전 내가 10만원으로 비트코인을 샀다면?',
-        imageUrl: window.location.href + 'src/asset/images/imgLogo.svg',
+        imageUrl:
+          'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80',
         link: {
           webUrl: url,
           mobileWebUrl: url,
