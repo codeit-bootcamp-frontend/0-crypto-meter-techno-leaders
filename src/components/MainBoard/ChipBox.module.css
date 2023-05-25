@@ -2,7 +2,6 @@
   display: flex;
   gap: 0.8rem;
   justify-content: end;
-  /* margin-bottom: 2.6rem; */
 }
 
 @media (max-width: 767px) {

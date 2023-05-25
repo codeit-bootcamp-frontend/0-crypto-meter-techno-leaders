@@ -1,0 +1,44 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s;
+}
+
+.fade-out {
+  animation: fadeOut 1s;
+}
+
+.toast-wrapper {
+  bottom: 5rem;
+  background-color: rgba(44, 44, 44, 0.8);
+  padding: 2.5rem 4.5rem;
+  border-radius: 1rem;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+  transition: all 0.3s linear;
+}
+
+.toast-text {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
