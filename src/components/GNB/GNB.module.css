@@ -30,6 +30,7 @@
   background: url('/src/assets/images/dropdownTriangle.svg') no-repeat right
     1.12rem center;
   outline: none;
+  color: #262a38;
 }
 
 @media (max-width: 1199px) {
