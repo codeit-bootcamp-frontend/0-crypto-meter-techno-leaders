@@ -18,3 +18,18 @@
   color: #f5f8f9;
   cursor: pointer;
 }
+
+@media (max-width: 1199px) {
+  .addButton {
+    color: #262a38;
+    border-color: #474b58;
+  }
+}
+
+@media (max-width: 767px) {
+  .addButton {
+    height: 2.2rem;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+  }
+}
