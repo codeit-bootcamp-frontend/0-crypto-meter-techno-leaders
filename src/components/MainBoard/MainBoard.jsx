@@ -1,12 +1,12 @@
-import CoinChart from '/src/components/MainBoard/CoinChart';
-import Divider from '/src/components/Divider';
-import { useCurrency } from '/src/contexts/CurrencyContext';
-import { formatDate } from '/src/utils/formatDate';
-import styles from '/src/components/MainBoard/MainBoard.module.css';
-import classNames from 'classnames/bind';
+import { format } from 'date-fns';
 import kakaotalk from '/src/assets/images/kakaotalk.svg';
 import facebook from '/src/assets/images/facebook.svg';
 import share from '/src/assets/images/share.svg';
+import CoinChart from '/src/components/MainBoard/CoinChart';
+import Divider from '/src/components/Divider';
+import { useCurrency } from '/src/contexts/CurrencyContext';
+import styles from '/src/components/MainBoard/MainBoard.module.css';
+import classNames from 'classnames/bind';
 
 const PREV_DATE = new Date('2022-05-12');
 
@@ -32,7 +32,7 @@ function formatTimeStampNow() {
   const oneDay = 24 * 60 * 60 * 1000;
   const timeStamp = today.getHours() < 9 ? new Date(today - oneDay) : today;
 
-  return `${formatDate(timeStamp)} 9시 기준`;
+  return `${format(timeStamp, 'yyyy년 M월 d일')} 9시 기준`;
 }
 
 function formatResultPrice(price, currency) {
@@ -111,7 +111,7 @@ function MainBoard({
         <Divider />
         <div className={cn('title-container')}>
           <h1 className={cn('precondition-title')}>
-            {formatDate(values.selectedDate)}에{' '}
+            {format(values.selectedDate, 'yyyy년 M월 d일')}에{' '}
             {formatResultPrice(values.investment, currency)}으로 샀다면 오늘
           </h1>
           <h1 className={cn('result-title')}>

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
-import { CurrencyProvider } from '/src/contexts/CurrencyContext';
 import ko from 'date-fns/locale/ko';
+import { getCoinHistory } from '/src/api/api';
+import { CurrencyProvider } from '/src/contexts/CurrencyContext';
+import useAsync from '/src/hooks/useAsync';
 import GNB from '/src/components/GNB/GNB';
 import InputBoard from '/src/components/InputBoard/InputBoard';
 import MainBoard from '/src/components/MainBoard/MainBoard';
@@ -22,11 +24,21 @@ const DEFAULT_VALUES = {
   currentDate: TODAY,
   selectedDate: ONE_YEAR_AGO,
   investment: 15000,
-  cryptoName: 'Bitcoin',
+  coinInfo: {
+    value: 'bitcoin',
+    label: 'Bitcoin',
+    image:
+      'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
+  },
 };
 
 function App() {
   const [values, setValues] = useState(DEFAULT_VALUES);
+  const [history, setHistory] = useState([]);
+  const [isLoading, loadingError, getCoinHistoryAsync] =
+    useAsync(getCoinHistory);
+
+  const { currentDate, selectedDate, investment, coinInfo } = values;
 
   const cn = classNames.bind(styles);
 
@@ -37,6 +49,22 @@ function App() {
   const handleChange = (name, value) => {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
+
+  const handleLoad = useCallback(
+    async (queryOptions) => {
+      const result = await getCoinHistoryAsync(queryOptions);
+      if (!result) return;
+
+      // 뭔가를 더 만들것임
+    },
+    [getCoinHistoryAsync]
+  );
+
+  // 초기 로딩용 사이드 이펙트
+  useEffect(() => {}, []);
+
+  // 로컬 스토리지 저장용 사이드이펙트
+  useEffect();
 
   return (
     <CurrencyProvider defaultValue={'krw'}>

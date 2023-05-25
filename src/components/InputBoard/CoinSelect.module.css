@@ -1,0 +1,14 @@
+.coinOption {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.7rem;
+  line-height: 2.2rem;
+  letter-spacing: -0.03rem;
+  background-color: #262a38;
+  color: #ffffff;
+}
+
+.coinImg {
+  width: 3rem;
+  height: 3rem;
+}
