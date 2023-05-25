@@ -265,7 +265,7 @@ function App() {
 
   return (
     <>
-      <GNB onRestore={handleRestore} setHistory={setHistory} />
+      <GNB onRestore={handleRestore} data={history} setHistory={setHistory} />
       <div className={cn('main-container')}>
         <InputBoard values={values} onChange={handleChange} />
         <div className={cn('col')}>
