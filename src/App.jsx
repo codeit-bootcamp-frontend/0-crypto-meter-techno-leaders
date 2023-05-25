@@ -259,6 +259,10 @@ function App() {
     setHistory(historyArray);
   }, []); // 컴포넌트 마운트 시 로컬 스토리지에 저장되어 있던 데이터 불러오기
 
+  useEffect(() => {
+    localStorage.setItem('history', JSON.stringify(history));
+  }, [history]);
+
   return (
     <>
       <GNB onRestore={handleRestore} setHistory={setHistory} />
