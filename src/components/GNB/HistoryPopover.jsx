@@ -7,13 +7,14 @@ import styles from '/src/components/GNB/HistoryPopover.module.css';
 
 const cn = classNames.bind(styles);
 
-function HistoryPopover({ data }) {
+function HistoryPopover({ data, setHistory }) {
   const handlePopoverOpenClose = useCallback(() => {
     !open;
   }, []);
 
   const handleHistoryDelete = () => {
     localStorage.removeItem('history');
+    setHistory([]);
   };
 
   return (
