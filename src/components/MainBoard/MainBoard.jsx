@@ -155,7 +155,7 @@ function MainBoard({
           {toastOpen && (
             <Toast
               onSetToast={setToastOpen}
-              text="🧷클립 보드에 복사되었습니다."
+              text="🧷 클립 보드에 복사되었습니다."
             />
           )}
         </div>
