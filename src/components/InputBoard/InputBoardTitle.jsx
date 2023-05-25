@@ -4,9 +4,8 @@ import { formatCurrency } from '/src//utils/formatCurrency';
 import { useCurrency } from '/src/contexts/CurrencyContext';
 import styles from '/src/components/InputBoard/InputBoardTitle.module.css';
 
-function InputBoardTitle({ values }) {
+function InputBoardTitle({ selectedDate, investment, coinInfo }) {
   const currency = useCurrency();
-  const { selectedDate, investment, coinInfo } = values;
 
   const formattedDate = format(selectedDate, 'yyyy년 M월 d일');
   const formattedInvestment = formatCurrency(investment, currency);

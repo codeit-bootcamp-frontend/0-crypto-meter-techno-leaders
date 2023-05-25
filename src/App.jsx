@@ -267,7 +267,7 @@ function App() {
     <>
       <GNB onRestore={handleRestore} data={history} setHistory={setHistory} />
       <div className={cn('main-container')}>
-        <InputBoard values={values} onChange={handleChange} />
+        <InputBoard onChange={setValues} defaultValues={DEFAULT_VALUES} />
         <div className={cn('col')}>
           <MainBoard />
           <MarketPriceTable />

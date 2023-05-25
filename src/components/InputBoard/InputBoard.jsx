@@ -11,25 +11,61 @@ import CoinSelect from '/src/components/InputBoard/CoinSelect';
 import 'react-spring-bottom-sheet/dist/style.css';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 
-function InputBoard({ values, onChange }) {
+function InputBoard({ onChange, defaultValues }) {
   const isMobile = useMediaQuery({ query: '(max-width: 1199px)' });
   const [open, setOpen] = useState(false);
-  const { selectedDate, investment, coinInfo } = values;
+  // const { selectedDate, investment, coinInfo } = values;
+
+  // const DEFAULT_VALUES = {
+  //   currentDate: TODAY,
+  //   selectedDate: ONE_YEAR_AGO,
+  //   investment: 15000,
+  //   coinInfo: {
+  //     value: 'bitcoin',
+  //     label: 'Bitcoin',
+  //     image:
+  //       'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
+  //   },
+  // };
+
+  const {
+    selectedDate: defaultSelectedDate,
+    investment: defaultInvestment,
+    coinInfo: defaultCoinInfo,
+  } = defaultValues;
+  const [selectedDate, setSelectedDate] = useState(defaultSelectedDate);
+  const [investment, setInvestment] = useState(defaultInvestment);
+  const [coinInfo, setCoinInfo] = useState(defaultCoinInfo);
 
   const handleDateChange = (date) => {
-    onChange('selectedDate', date);
+    // onChange('selectedDate', date);
+    setSelectedDate(date);
   };
 
   const handleInvestmentChange = (value) => {
-    onChange('investment', value);
+    // onChange('investment', value);
+    setInvestment(value);
   };
 
   const handleCoinInfoChange = (selectedOption) => {
-    onChange('coinInfo', selectedOption);
+    // onChange('coinInfo', selectedOption);
+    setCoinInfo(selectedOption);
   };
 
   const handleSubmit = (e) => {
-    console.log(values);
+    // console.log(values);
+    console.log({
+      currentDate: defaultValues.currentDate,
+      investment,
+      selectedDate,
+      coinInfo,
+    });
+    onChange({
+      currentDate: defaultValues.currentDate,
+      investment,
+      selectedDate,
+      coinInfo,
+    });
   };
 
   const openBottomSheet = () => {
@@ -38,7 +74,11 @@ function InputBoard({ values, onChange }) {
 
   return (
     <div className={styles.inputBoardWrapper} onClick={openBottomSheet}>
-      <InputBoardTitle values={values} />
+      <InputBoardTitle
+        selectedDate={selectedDate}
+        investment={investment}
+        coinInfo={coinInfo}
+      />
 
       {isMobile ? (
         <BottomSheet open={open}>
