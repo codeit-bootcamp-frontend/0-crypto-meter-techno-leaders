@@ -27,13 +27,17 @@ const DEFAULT_VALUES = {
 function App() {
   const [values, setValues] = useState(DEFAULT_VALUES);
 
+  const handleRestore = () => {
+    setValues(DEFAULT_VALUES);
+  };
+
   const handleChange = (name, value) => {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
   return (
     <CurrencyProvider defaultValue={'krw'}>
-      <GNB />
+      <GNB onRestore={handleRestore} />
       <InputBoard values={values} onChange={handleChange} />
       <MainBoard />
       <MarketPriceTable />

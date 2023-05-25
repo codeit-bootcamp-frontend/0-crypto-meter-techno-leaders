@@ -8,20 +8,15 @@
   position: relative;
   box-sizing: border-box;
   margin: 0;
-}
-
-.gnb-container-mobile {
-  padding: 0 2.9rem 0 2.4rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .button-container {
   display: flex;
   justify-content: space-between;
   width: 32.9rem;
-}
-
-.button-container-mobile {
-  width: 20.8rem;
 }
 
 .select-currency {
@@ -37,6 +32,22 @@
     1.12rem center;
 }
 
-.select-currency-mobile {
-  width: 5.9rem;
+@media (max-width: 1199px) {
+  .gnb-container {
+    background-color: white;
+  }
+}
+
+@media (max-width: 767px) {
+  .gnb-container {
+    padding: 0 2.9rem;
+  }
+
+  .button-container {
+    width: 20.8rem;
+  }
+
+  .select-currency {
+    width: 5.9rem;
+  }
 }
