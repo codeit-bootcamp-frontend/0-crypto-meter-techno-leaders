@@ -8,9 +8,10 @@ export async function getCoinsMarkets(
   page = 1,
   perPage = 100,
   vsCurrency = 'krw',
-  order = 'market_cap_desc'
+  order = 'market_cap_desc',
+  priceChangePercentage = '1h%2C24h%2C7d'
 ) {
-  const query = `${API_KEY_QUERY}&vs_currency=${vsCurrency}&order=${order}&per_page=${perPage}&page=${page}`;
+  const query = `${API_KEY_QUERY}&vs_currency=${vsCurrency}&order=${order}&per_page=${perPage}&page=${page}&price_change_percentage=${priceChangePercentage}`;
   const response = await fetch(
     `${BASE_URL}/coins/markets?${query}&sparkline=false&locale=en`
   );

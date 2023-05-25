@@ -8,6 +8,7 @@ import styles from '/src/components/InputBoard/CoinSelect.module.css';
 const PER_PAGE = 100;
 const VS_CURRENCY = 'krw';
 const ORDER = 'market_cap_desc';
+const PRICE_CHANGE_PERCENTAGE = '1h%2C24h%2C7d';
 
 function CustomOption({ innerProps, label, data }) {
   return (
@@ -62,6 +63,7 @@ function CoinSelect({ coinInfo, onChange }) {
       perPage: PER_PAGE,
       vsCurrency: VS_CURRENCY,
       order: ORDER,
+      priceChangePercentage: PRICE_CHANGE_PERCENTAGE,
     });
   };
 
@@ -71,6 +73,7 @@ function CoinSelect({ coinInfo, onChange }) {
       perPage: PER_PAGE,
       vsCurrency: VS_CURRENCY,
       order: ORDER,
+      priceChangePercentage: PRICE_CHANGE_PERCENTAGE,
     });
   }, [page, handleLoad]);
 
