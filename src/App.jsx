@@ -60,12 +60,6 @@ function App() {
     [getCoinHistoryAsync]
   );
 
-  // 초기 로딩용 사이드 이펙트
-  useEffect(() => {}, []);
-
-  // 로컬 스토리지 저장용 사이드이펙트
-  useEffect();
-
   return (
     <CurrencyProvider defaultValue={'krw'}>
       <GNB onRestore={handleRestore} />
