@@ -33,5 +33,10 @@ export async function getCoinHistory(coinId, date) {
   }
 
   const body = await response.json();
-  return body;
+  const { market_data: marketData } = body;
+  const { current_price: currentPrice } = marketData;
+  const { krw, usd } = currentPrice;
+
+  const priceData = { krw, usd };
+  return priceData;
 }
