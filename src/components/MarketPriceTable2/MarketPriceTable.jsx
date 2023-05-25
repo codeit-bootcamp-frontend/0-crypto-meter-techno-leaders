@@ -11,7 +11,6 @@ import orderAsc from '/src/assets/images/orderAscending.svg';
 import orderDes from '/src/assets/images/orderDesending.svg';
 import orderNone from '/src/assets/images/orderNone.svg';
 import CoinTotalVolume from '/src/components/MarketPriceTable2/CoinTotalVolume';
-// import Pagination from '/src/components/MarketPriceTable2/Pagenation.jsx';
 
 const cn = classNames.bind(styles);
 
@@ -20,7 +19,7 @@ function MarketPriceTable() {
   const [marketData, setMarketData] = useState(null);
   const [fetchingData, setFetchingData] = useState(false);
   const nextPage = useRef(0);
-  const [currentPage, setCurrentPage] = useState(0); //현재 선택된 페이지
+  const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 20;
   const [sortConfig, setSortConfig] = useState({
     column: '',
@@ -116,21 +115,16 @@ function MarketPriceTable() {
     loadPageData();
   }, []);
 
-  // 현재 페이지에 해당하는 데이터 추출
   const getDataForCurrentPage = () => {
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return marketData[currency].slice(startIndex, endIndex);
   };
 
-  // 페이지 변경될 때마다 호출(+1 = 지금 선택된 페이지)
   const handlePageChange = (selected) => {
     setCurrentPage(selected.selected);
     console.log(selected);
   };
-
-  // console.log(Math.ceil(marketData[currency].length / 10));
-  // console.log(marketData);
 
   return (
     <div className={cn('market-price-table-wrapper')}>
@@ -299,7 +293,6 @@ function MarketPriceTable() {
                         currency={currency}
                       />
                     ) : (
-                      // ? formatPrice(item.total_volume, currency)
                       '-'
                     )}
                   </td>
@@ -327,7 +320,7 @@ function MarketPriceTable() {
         pageCount={
           marketData && Math.ceil(marketData[currency].length / itemsPerPage)
         }
-        pageRangeDisplayed={10}
+        pageRangeDisplayed={6}
         marginPagesDisplayed={0}
         breakLabel={''}
         previousLabel={'<'}

@@ -1,3 +1,32 @@
+.pagination-ul li {
+  border-radius: 0.5rem;
+}
+
+.pagination-ul li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+}
+
+.current-page {
+  color: white;
+  background-color: #00a661;
+}
+
+.pagination-ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
 .market-price-table-wrapper {
   background-color: white;
   border-radius: 2.5rem;
@@ -11,6 +40,7 @@
   display: flex;
   flex-direction: column;
   border-top: 1px solid #161c2f;
+  margin-bottom: 3.2rem;
 }
 
 .market-price-table {
@@ -90,26 +120,6 @@
 .market-price-table td:nth-child(8) {
   width: 13.5rem;
   text-align: right;
-}
-
-.current-page {
-  color: white;
-  width: 2rem;
-  height: 2rem;
-  background-color: #00a661;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.3rem;
-  cursor: pointer;
-}
-
-.pagination-ul {
-  list-style-type: none;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  align-items: center;
 }
 
 .market-price-table-container::-webkit-scrollbar {
