@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
+import { getCoinHistory } from '/src/api/api';
 import { CurrencyProvider } from '/src/contexts/CurrencyContext';
 import useAsync from '/src/hooks/useAsync';
 import GNB from '/src/components/GNB/GNB';
@@ -8,7 +9,6 @@ import InputBoard from '/src/components/InputBoard/InputBoard';
 import MainBoard from '/src/components/MainBoard/MainBoard';
 import MarketPriceTable from '/src/components/MarketPriceTable/MarketPriceTable_api.jsx';
 import '/src/App.css';
-import { getCoinHistory } from '/src/api/api';
 
 registerLocale('ko', ko);
 
@@ -33,7 +33,7 @@ const DEFAULT_VALUES = {
 
 function App() {
   const [values, setValues] = useState(DEFAULT_VALUES);
-  const [localStorage, setLocalStorage] = useState([]);
+  const [history, setHistory] = useState([]);
   const [isLoading, loadingError, getCoinHistoryAsync] =
     useAsync(getCoinHistory);
 
@@ -48,29 +48,16 @@ function App() {
       const result = await getCoinHistoryAsync(queryOptions);
       if (!result) return;
 
-      const { market_data: marketData } = result;
-      const { current_price: currentPrice } = marketData;
-      const { krw, usd } = currentPrice;
-
-      if (queryOptions.date === selectedDate) {
-        setValues();
-      } else {
-        setValues();
-      }
+      // 뭔가를 더 만들것임
     },
     [getCoinHistoryAsync]
   );
 
-  handleLoad(coinInfo.value, currentDate);
-  handleLoad(coinInfo.value);
+  // 초기 로딩용 사이드 이펙트
+  useEffect(() => {}, []);
 
-  useEffect(async () => {
-    const result = await getCoinHistoryAsync(coinInfo.value, currentDate);
-
-    const { market_data: marketData } = result;
-    const { current_price: currentPrice } = marketData;
-    const { krw: currentKrw, usd: currentUsd } = currentPrice;
-  }, [currentDate]);
+  // 로컬 스토리지 저장용 사이드이펙트
+  useEffect();
 
   return (
     <CurrencyProvider defaultValue={'krw'}>
