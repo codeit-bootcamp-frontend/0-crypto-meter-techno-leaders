@@ -44,3 +44,15 @@
   top: 2.5rem;
   right: 2rem;
 }
+
+@media (max-width: 1199px) {
+  .input {
+    color: #161c2f;
+    border-color: #ced2dd;
+  }
+
+  .input:focus {
+    outline-style: none;
+    border-color: #161c2f;
+  }
+}
