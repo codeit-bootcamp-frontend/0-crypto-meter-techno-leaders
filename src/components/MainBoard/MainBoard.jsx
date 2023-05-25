@@ -106,6 +106,12 @@ function MainBoard({
     }
   };
 
+  const handleShareFacebook = () => {
+    const url = encodeURI(window.location.href);
+
+    window.open('http://www.facebook.com/sharer/sharer.php?u=' + url);
+  };
+
   return (
     <>
       <div className={cn('mainboard-container')}>
@@ -116,7 +122,7 @@ function MainBoard({
           </div>
           <div className={cn('share-link-container')}>
             <img src={kakaotalk} />
-            <img src={facebook} />
+            <img onClick={handleShareFacebook} src={facebook} />
             <img onClick={handleCopyUrl} src={share} />
           </div>
           {toastOpen && (
