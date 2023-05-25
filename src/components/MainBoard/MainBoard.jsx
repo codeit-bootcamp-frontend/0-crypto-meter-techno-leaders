@@ -5,7 +5,8 @@ import share from '/src/assets/images/share.svg';
 import CoinChart from '/src/components/MainBoard/CoinChart';
 import Divider from '/src/components/Divider';
 import { useCurrency } from '/src/contexts/CurrencyContext';
-import '/src/components/MainBoard/MainBoard.css';
+import styles from '/src/components/MainBoard/MainBoard.module.css';
+import classNames from 'classnames/bind';
 
 const PREV_DATE = new Date('2022-05-12');
 
@@ -91,28 +92,30 @@ function MainBoard({
       ? 'increase'
       : 'decrease';
 
+  const cn = classNames.bind(styles);
+
   return (
     <>
-      <div className="mainboard-container">
-        <div className="top-area">
-          <div className="crypto-info">
-            <img className="crypto-image" src={values.imageUrl} />
-            <span className="crypto-name">{values.name}</span>
+      <div className={cn('mainboard-container')}>
+        <div className={cn('top-area')}>
+          <div className={cn('crypto-info')}>
+            <img className={cn('crypto-image')} src={values.imageUrl} />
+            <span className={cn('crypto-name')}>{values.name}</span>
           </div>
-          <div className="share-link-container">
+          <div className={cn('share-link-container')}>
             <img src={kakaotalk} />
             <img src={facebook} />
             <img src={share} />
           </div>
         </div>
         <Divider />
-        <div className="title-container">
-          <h1 className="precondition">
+        <div className={cn('title-container')}>
+          <h1 className={cn('precondition')}>
             {format(values.selectedDate, 'yyyy년 M월 d일')}에{' '}
             {formatResultPrice(values.investment, currency)}으로 샀다면 오늘
           </h1>
-          <h1 className="result">
-            <span className={`${fluctuation}-emphasize`}>
+          <h1 className={cn('result')}>
+            <span className={cn(`${fluctuation}-emphasize`)}>
               {formatResultPrice(
                 resultPrices[priceIndexMapper[currency]],
                 currency
@@ -120,9 +123,9 @@ function MainBoard({
             </span>{' '}
             입니다.
           </h1>
-          <p className="base-date">({formatTimeStampNow()})</p>
+          <p className={cn('base-date')}>({formatTimeStampNow()})</p>
         </div>
-        <div className="chart-wrapper">
+        <div className={cn('chart-wrapper')}>
           <CoinChart
             id={values.id}
             currency={currency}
