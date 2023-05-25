@@ -13,7 +13,6 @@ function HistoryPopover({ data, setHistory }) {
   }, []);
 
   const handleHistoryDelete = () => {
-    // localStorage.removeItem('history');
     setHistory([]);
   };
 
