@@ -11,3 +11,9 @@ body {
   background-color: #f5f8f9;
   margin: 0;
 }
+
+@media (max-width: 1199px) {
+  body {
+    background-color: #ffffff;
+  }
+}

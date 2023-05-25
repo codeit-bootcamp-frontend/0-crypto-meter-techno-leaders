@@ -23,6 +23,16 @@
   gap: 1rem;
 }
 
+.crypto-image {
+  width: 3rem;
+  height: 3rem;
+}
+
+.crypto-name {
+  font-size: 2.6rem;
+  font-weight: bold;
+}
+
 .share-link-container {
   display: flex;
   gap: 2rem;
@@ -30,6 +40,8 @@
 
 .share-link-container > img {
   cursor: pointer;
+  width: 2.4rem;
+  height: 2.4rem;
 }
 
 .title-container {
@@ -39,12 +51,12 @@
   margin: 3.6rem 0 2.8rem;
 }
 
-.precondition {
+.precondition-title {
   font-size: 1.8rem;
   font-weight: 600;
 }
 
-.result {
+.result-title {
   font-size: 4.8rem;
   font-weight: bold;
 }
@@ -63,17 +75,58 @@
   color: #616575;
 }
 
-.crypto-image {
-  width: 3rem;
-  height: 3rem;
-}
-
-.crypto-name {
-  font-size: 2.6rem;
-  font-weight: bold;
-}
-
 .chart-wrapper {
   aspect-ratio: 2;
   max-width: 91rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.6rem;
+}
+
+@media (max-width: 1199px) {
+  .mainboard-container {
+    padding: 0;
+    background-color: inherit;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .crypto-info {
+    gap: 0.8rem;
+  }
+
+  .crypto-name {
+    font-size: 2rem;
+  }
+
+  .crypto-image {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .share-link-container > img {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .title-container {
+    margin: 3.2rem 0 4.8rem;
+  }
+
+  .precondition-title {
+    font-size: 1.5rem;
+  }
+
+  .result-title {
+    font-size: 3.2rem;
+  }
+
+  .base-date {
+    font-size: 1.3rem;
+  }
+
+  .chart-wrapper {
+    gap: 3rem;
+  }
 }
