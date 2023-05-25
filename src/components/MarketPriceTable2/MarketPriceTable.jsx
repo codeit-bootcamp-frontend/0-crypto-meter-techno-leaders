@@ -11,15 +11,17 @@ import orderAsc from '/src/assets/images/orderAscending.svg';
 import orderDes from '/src/assets/images/orderDesending.svg';
 import orderNone from '/src/assets/images/orderNone.svg';
 import CoinTotalVolume from '/src/components/MarketPriceTable2/CoinTotalVolume';
+import { useMediaQuery } from 'react-responsive';
 
 const cn = classNames.bind(styles);
 
 function MarketPriceTable() {
-  const currency = useCurrency();
   const [marketData, setMarketData] = useState(null);
   const [fetchingData, setFetchingData] = useState(false);
-  const nextPage = useRef(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const isSmallScreen = useMediaQuery({ maxWidth: 570 });
+  const currency = useCurrency();
+  const nextPage = useRef(0);
   const itemsPerPage = 20;
   const [sortConfig, setSortConfig] = useState({
     column: '',
@@ -317,10 +319,8 @@ function MarketPriceTable() {
         </table>
       </div>
       <ReactPaginate
-        pageCount={
-          marketData && Math.ceil(marketData[currency].length / itemsPerPage)
-        }
-        pageRangeDisplayed={6}
+        pageCount={300}
+        pageRangeDisplayed={isSmallScreen ? 5 : 6}
         marginPagesDisplayed={0}
         breakLabel={''}
         previousLabel={'<'}
