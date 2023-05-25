@@ -118,7 +118,7 @@ function MainBoard({
     window.Kakao.Link.sendDefault({
       objectType: 'feed',
       content: {
-        title: '눈 떠보니 코인 부자가 되었습니다.',
+        title: '눈 떠보니 코인 부자인데요?',
         description: '1년 전 내가 10만원으로 비트코인을 샀다면?',
         imageUrl: window.location.href + '/asset/images/imgLogo.svg',
         link: {
