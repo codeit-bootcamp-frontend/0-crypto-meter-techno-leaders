@@ -8,12 +8,11 @@ export async function getCoinsMarkets(
   page = 1,
   perPage = 100,
   vsCurrency = 'krw',
-  order = 'market_cap_desc',
-  priceChangePercentage = '1h%2C24h%2C7d'
+  order = 'market_cap_desc'
 ) {
-  const query = `${API_KEY_QUERY}&vs_currency=${vsCurrency}&order=${order}&per_page=${perPage}&page=${page}&price_change_percentage=${priceChangePercentage}`;
+  const query = `${API_KEY_QUERY}&vs_currency=${vsCurrency}&order=${order}&per_page=${perPage}&page=${page}`;
   const response = await fetch(
-    `${BASE_URL}/coins/markets?${query}&sparkline=false&locale=en`
+    `${BASE_URL}/coins/markets?${query}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
   );
 
   if (!response.ok) {
@@ -24,11 +23,9 @@ export async function getCoinsMarkets(
   return body;
 }
 
-export async function getCoinHistory({ coinId, date }) {
-  console.log(coinId, date);
+export async function getCoinHistory(coinId, date) {
   const formattedDate = format(date, 'dd-M-yyyy');
   const query = `${API_KEY_QUERY}&date=${formattedDate}`;
-  console.log(`${BASE_URL}/coins/${coinId}/history?${query}`);
   const response = await fetch(`${BASE_URL}/coins/${coinId}/history?${query}`);
 
   if (!response.ok) {
@@ -36,12 +33,7 @@ export async function getCoinHistory({ coinId, date }) {
   }
 
   const body = await response.json();
-  const { market_data: marketData } = body;
-  const { current_price: currentPrice } = marketData;
-  const { krw, usd } = currentPrice;
-
-  const priceData = { krw, usd };
-  return priceData;
+  return body;
 }
 
 export async function getCoinsGlobal() {

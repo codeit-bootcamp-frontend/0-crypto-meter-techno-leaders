@@ -6,7 +6,7 @@ import useAsync from '/src/hooks/useAsync';
 import GNB from '/src/components/GNB/GNB';
 import InputBoard from '/src/components/InputBoard/InputBoard';
 import MainBoard from '/src/components/MainBoard/MainBoard';
-import MarketPriceTable from '/src/components/MarketPriceTable/MarketPriceTable_api.jsx';
+import MarketPriceTable from '/src/components/MarketPriceTable2/MarketPriceTable.jsx';
 import styles from '/src/App.module.css';
 import classNames from 'classnames/bind';
 import { useCurrency } from '/src/contexts/CurrencyContext';
