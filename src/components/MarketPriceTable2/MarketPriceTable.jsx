@@ -10,9 +10,9 @@ import orderDes from '/src/assets/images/orderDesending.svg';
 import orderNone from '/src/assets/images/orderNone.svg';
 import CoinTotalVolume from '/src/components/MarketPriceTable2/CoinTotalVolume';
 import { useMediaQuery } from 'react-responsive';
-import { getCoinsMarkets } from '/src/api/api2';
+import { getCoinsMarkets } from '/src/api/api';
+import { getCoinsGlobal } from '/src/api/api';
 import Pagination from 'react-js-pagination';
-import { getCoinsGlobal } from '/src/api/api2';
 
 const cn = classNames.bind(styles);
 
@@ -24,7 +24,7 @@ function MarketPriceTable() {
   const PER_PAGE = 20;
   const [totalData, setTotalData] = useState(0);
   const [sortConfig, setSortConfig] = useState({
-    column: '',
+    column: 'id',
     direction: 'asc',
   });
 
@@ -118,6 +118,30 @@ function MarketPriceTable() {
     await updateMarketData(selected);
   };
 
+  const getIDSortIcon = () => {
+    if (sortConfig?.column === 'id') {
+      if (sortConfig.direction === 'asc') {
+        return orderAsc;
+      } else {
+        return orderDes;
+      }
+    } else {
+      return orderNone;
+    }
+  };
+
+  const getColumnSortIcon = (columnName) => {
+    if (sortConfig?.column === columnName) {
+      if (sortConfig.direction === 'asc') {
+        return orderAsc;
+      } else {
+        return orderDes;
+      }
+    } else {
+      return orderNone;
+    }
+  };
+
   return (
     <div className={cn('market-price-table-wrapper')}>
       <h2 className={cn('header-title')}>전체 암호화폐 시세</h2>
@@ -128,13 +152,7 @@ function MarketPriceTable() {
               <th onClick={() => handleSort('id')}>
                 #
                 <img
-                  src={
-                    sortConfig?.column === 'id'
-                      ? sortConfig.direction === 'asc'
-                        ? orderAsc
-                        : orderDes
-                      : orderNone
-                  }
+                  src={getIDSortIcon()}
                   className={cn('order-img')}
                   alt="Sort Icon"
                 />
@@ -142,13 +160,7 @@ function MarketPriceTable() {
               <th onClick={() => handleSort('name')}>
                 화폐 이름
                 <img
-                  src={
-                    sortConfig?.column === 'name'
-                      ? sortConfig?.direction === 'asc'
-                        ? orderAsc
-                        : orderDes
-                      : orderNone
-                  }
+                  src={getColumnSortIcon('name')}
                   className={cn('order-img')}
                   alt="Sort Icon"
                 />
@@ -156,13 +168,7 @@ function MarketPriceTable() {
               <th onClick={() => handleSort('current_price')}>
                 가격
                 <img
-                  src={
-                    sortConfig?.column === 'current_price'
-                      ? sortConfig?.direction === 'asc'
-                        ? orderAsc
-                        : orderDes
-                      : orderNone
-                  }
+                  src={getColumnSortIcon('current_price')}
                   className={cn('order-img')}
                   alt="Sort Icon"
                 />
@@ -170,13 +176,7 @@ function MarketPriceTable() {
               <th onClick={() => handleSort('market_cap')}>
                 총 시가
                 <img
-                  src={
-                    sortConfig?.column === 'market_cap'
-                      ? sortConfig?.direction === 'asc'
-                        ? orderAsc
-                        : orderDes
-                      : orderNone
-                  }
+                  src={getColumnSortIcon('market_cap')}
                   className={cn('order-img')}
                   alt="Sort Icon"
                 />
@@ -184,13 +184,7 @@ function MarketPriceTable() {
               <th onClick={() => handleSort('total_volume')}>
                 24시간 거래량
                 <img
-                  src={
-                    sortConfig?.column === 'total_volume'
-                      ? sortConfig?.direction === 'asc'
-                        ? orderAsc
-                        : orderDes
-                      : orderNone
-                  }
+                  src={getColumnSortIcon('total_volume')}
                   className={cn('order-img')}
                   alt="Sort Icon"
                 />
@@ -202,14 +196,9 @@ function MarketPriceTable() {
               >
                 1시간 변동폭
                 <img
-                  src={
-                    sortConfig?.column ===
+                  src={getColumnSortIcon(
                     'price_change_percentage_1h_in_currency'
-                      ? sortConfig?.direction === 'asc'
-                        ? orderAsc
-                        : orderDes
-                      : orderNone
-                  }
+                  )}
                   className={cn('order-img')}
                   alt="Sort Icon"
                 />
@@ -221,14 +210,9 @@ function MarketPriceTable() {
               >
                 24시간 변동폭
                 <img
-                  src={
-                    sortConfig?.column ===
+                  src={getColumnSortIcon(
                     'price_change_percentage_24h_in_currency'
-                      ? sortConfig?.direction === 'asc'
-                        ? orderAsc
-                        : orderDes
-                      : orderNone
-                  }
+                  )}
                   className={cn('order-img')}
                   alt="Sort Icon"
                 />
@@ -240,14 +224,9 @@ function MarketPriceTable() {
               >
                 7일 변동폭
                 <img
-                  src={
-                    sortConfig?.column ===
+                  src={getColumnSortIcon(
                     'price_change_percentage_7d_in_currency'
-                      ? sortConfig?.direction === 'asc'
-                        ? orderAsc
-                        : orderDes
-                      : orderNone
-                  }
+                  )}
                   className={cn('order-img')}
                   alt="Sort Icon"
                 />
