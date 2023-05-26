@@ -2,8 +2,7 @@ import { format } from 'date-fns';
 
 const BASE_URL = 'https://pro-api.coingecko.com/api/v3';
 const API_KEY = import.meta.env.VITE_COINGECKO_KEY;
-// const API_KEY_QUERY = `x_cg_pro_api_key=${API_KEY}`;
-const API_KEY_QUERY = 'x_cg_pro_api_key=CG-ReEFUZC8FpbDTSJ6AmbKy3m1';
+const API_KEY_QUERY = `x_cg_pro_api_key=${API_KEY}`;
 
 export async function getCoinsMarkets(
   page = 1,

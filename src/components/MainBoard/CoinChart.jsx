@@ -15,7 +15,6 @@ import { useMediaQuery } from 'react-responsive';
 import { Line } from 'react-chartjs-2';
 import { format } from 'date-fns';
 import ChipBox from '/src/components/MainBoard/ChipBox';
-import { isMonday } from 'date-fns';
 
 const apiKey = import.meta.env.VITE_COINGECKO_KEY;
 
