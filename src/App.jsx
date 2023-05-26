@@ -119,12 +119,6 @@ const ONE_YEAR_AGO = new Date(
   TODAY.getDate()
 );
 
-const YESTERDAY = new Date(
-  TODAY.getFullYear(),
-  TODAY.getMonth(),
-  TODAY.getDate() - 1
-);
-
 const DEFAULT_VALUES = {
   currentDate: TODAY,
   selectedDate: ONE_YEAR_AGO,
@@ -137,37 +131,17 @@ const DEFAULT_VALUES = {
   },
 };
 
-const NEW_VALUES = {
-  currentDate: TODAY,
-  selectedDate: ONE_YEAR_AGO,
-  investment: 16000,
-  coinInfo: {
-    value: 'bitcoin',
-    label: 'Bitcoin',
-    image:
-      'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-  },
-};
-
 function App() {
   const [values, setValues] = useState(DEFAULT_VALUES);
+  const [mainBoardValues, setMainBoardValues] = useState(null);
   const [history, setHistory] = useState([]);
   const [isLoading, loadingError, getCoinHistoryAsync] =
     useAsync(getCoinHistory);
-  const { currentDate, selectedDate, investment, coinInfo } = values;
   const currency = useCurrency();
   const cn = classNames.bind(styles);
 
   const handleRestore = () => {
     setValues(DEFAULT_VALUES);
-  };
-
-  const handleChange = (name, value) => {
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
-  };
-
-  const handleTest = () => {
-    setValues(NEW_VALUES);
   };
 
   function calcPrices(
@@ -211,7 +185,7 @@ function App() {
 
     const { krw: todayKrw, usd: todayUsd } = await getCoinHistoryAsync({
       coinId,
-      date: YESTERDAY,
+      date: TODAY,
     });
     if (loadingError) {
       console.log(loadingError);
@@ -238,9 +212,11 @@ function App() {
         history.pop();
       }
       history.unshift(newItem);
+      setMainBoardValues(history[0]);
       const copyHistory = JSON.parse(JSON.stringify(history));
       return copyHistory;
     });
+    // setMainBoardValues(history[0]);
   }; // values(inputBoard에서 확인 버튼을 누르면 바뀌게 되므로)를 디펜던시에 추가
 
   if (window.Kakao) {
@@ -269,11 +245,10 @@ function App() {
       <div className={cn('main-container')}>
         <InputBoard onChange={setValues} defaultValues={DEFAULT_VALUES} />
         <div className={cn('col')}>
-          {history[0] && <MainBoard values={history[0]} />}
+          {mainBoardValues && <MainBoard values={mainBoardValues} />}
           <MarketPriceTable />
         </div>
       </div>
-      <button onClick={handleTest}>클릭!</button>
     </>
   );
 }
