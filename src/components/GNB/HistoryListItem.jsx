@@ -18,6 +18,9 @@ function HistoryItem({ datas }) {
   const currentDateWithoutTime = format(current, 'yyyy년 M월 d일');
   const selectedDateWithoutTime = format(selected, 'yyyy년 M월 d일');
 
+  const dollarInvestment = investment / 1000;
+  const fluctuation = resultPrices['krw'] >= investment;
+
   const isMobile = useMediaQuery({
     query: '(max-width: 620px)',
   });
@@ -30,25 +33,37 @@ function HistoryItem({ datas }) {
       <div className={cn('content-container')}>
         <div>
           <p className={cn('history-info', 'past', 'gray')}>
-            만약 {selectedDateWithoutTime}에{' '}
-            <span className={cn('bold')}>{investment}</span>원으로
+            만약 {selectedDateWithoutTime}에 {currency == 'usd' && '$'}
+            <span className={cn('bold')}>
+              {currency === 'krw' ? investment : dollarInvestment}
+            </span>
+            {currency === 'krw' && '원'}으로
           </p>
         </div>
         <div>
           {!isMobile && (
             <p className={cn('history-info', 'current', 'black')}>
               {coinInfo.label} 코인을 샀다면, {currentDateWithoutTime}
-              에는 <span className={cn('bold')}>{resultPrices[currency]}</span>
-              원입니다.
+              에는 {currency == 'usd' && '$'}
+              <span
+                className={cn(
+                  'bold',
+                  { increase: fluctuation },
+                  { decrease: !fluctuation }
+                )}
+              >
+                {resultPrices[currency]}
+              </span>
+              {currency === 'krw' && '원'}입니다.
             </p>
           )}
           {isMobile && (
             <p className={cn('history-info', 'current', 'black')}>
               {coinInfo.label} 코인을 샀다면,
               <br />
-              {currentDateWithoutTime}에는{' '}
+              {currentDateWithoutTime}에는 {currency == 'usd' && '$'}
               <span className={cn('bold')}>{resultPrices[currency]}</span>
-              원입니다.
+              {currency === 'krw' && '원'}입니다.
             </p>
           )}
         </div>
