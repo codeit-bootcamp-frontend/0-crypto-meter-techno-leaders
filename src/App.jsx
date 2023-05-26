@@ -269,7 +269,7 @@ function App() {
       <div className={cn('main-container')}>
         <InputBoard onChange={setValues} defaultValues={DEFAULT_VALUES} />
         <div className={cn('col')}>
-          <MainBoard />
+          {history[0] && <MainBoard values={history[0]} />}
           <MarketPriceTable />
         </div>
       </div>
