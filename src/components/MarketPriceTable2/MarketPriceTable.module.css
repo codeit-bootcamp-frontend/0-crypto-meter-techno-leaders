@@ -61,6 +61,7 @@
   display: inline-block;
   font-size: 2.6rem;
   margin-bottom: 4.7rem;
+  margin-top: 3rem;
 }
 
 .market-price-table th,
@@ -139,7 +140,7 @@
 
 .market-price-table-container::-webkit-scrollbar {
   width: 0.4rem;
-  height: 1.4rem;
+  height: 1rem;
 }
 
 .market-price-table-container::-webkit-scrollbar-thumb {
@@ -345,16 +346,16 @@
     width: 1.7rem;
   }
 
-  .market-price-table th:nth-child(2)::after,
-  .market-price-table td:nth-child(2)::after {
+  .market-price-table th:nth-child(2)::before,
+  .market-price-table td:nth-child(2)::before {
     content: '';
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
     width: 5px;
-    box-shadow: 5px 0 5px rgb(229, 229, 229); 
-    filter: blend-mode(multiply);
+    box-shadow: 5px 0 10px rgb(230, 230, 235);
+    mix-blend-mode: multiply;
   }
 
   .coin-name,
