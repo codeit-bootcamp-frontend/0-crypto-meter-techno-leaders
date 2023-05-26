@@ -41,3 +41,14 @@ export async function getCoinHistory(coinId, date) {
   const priceData = { krw, usd };
   return priceData;
 }
+
+export async function getCoinsGlobal() {
+  const response = await fetch(`${BASE_URL}/global?${API_KEY_QUERY}`);
+
+  if (!response.ok) {
+    throw new Error('암호화폐의 시세를 불러오지 못 했습니다');
+  }
+
+  const body = await response.json();
+  return body;
+}
