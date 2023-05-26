@@ -4,12 +4,12 @@ import styles from '/src/components/GNB/HistoryListComponents.module.css';
 
 const cn = classNames.bind(styles);
 
-function HistoryList({ historyData }) {
+function HistoryList({ data }) {
   return (
     <ul className={cn('history-list')}>
-      {historyData && // historyData가 있을 때만 렌더링 하도록 처리해 주었습니다.
-        historyData.map((item) => (
-          <HistoryListItem key={item.id} datas={item} />
+      {data && // data가 있을 때만 렌더링 하도록 처리해 주었습니다.
+        data.map((item) => (
+          <HistoryListItem key={item.coinInfo.value} datas={item} />
         ))}
     </ul>
   );

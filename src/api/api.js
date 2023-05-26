@@ -24,7 +24,7 @@ export async function getCoinsMarkets(
   return body;
 }
 
-export async function getCoinHistory(coinId, date) {
+export async function getCoinHistory({ coinId, date }) {
   const formattedDate = format(date, 'dd-M-yyyy');
   const query = `${API_KEY_QUERY}&date=${formattedDate}`;
   const response = await fetch(`${BASE_URL}/coins/${coinId}/history?${query}`);

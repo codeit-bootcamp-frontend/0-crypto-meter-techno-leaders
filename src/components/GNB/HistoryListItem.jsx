@@ -1,18 +1,22 @@
 import { useMediaQuery } from 'react-responsive';
 import classNames from 'classnames/bind';
 import styles from '/src/components/GNB/HistoryListComponents.module.css';
+import { useCurrency } from '/src/contexts/CurrencyContext';
+import { format } from 'date-fns';
 
 const cn = classNames.bind(styles);
 
 function HistoryItem({ datas }) {
-  const {
-    purchaseDate,
-    investment,
-    coinName,
-    coinLogoURL,
-    currentDate,
-    currentValue,
-  } = datas;
+  const currency = useCurrency();
+
+  const { coinInfo, currentDate, investment, resultPrices, selectedDate } =
+    datas;
+
+  const current = new Date(currentDate);
+  const selected = new Date(selectedDate);
+
+  const currentDateWithoutTime = format(current, 'yyyy년 M월 d일');
+  const selectedDateWithoutTime = format(selected, 'yyyy년 M월 d일');
 
   const isMobile = useMediaQuery({
     query: '(max-width: 620px)',
@@ -21,29 +25,29 @@ function HistoryItem({ datas }) {
   return (
     <li className={cn('history-item')}>
       <div className={cn('image-wrapper')}>
-        <img className={cn('coin-logo')} src={coinLogoURL} />
+        <img className={cn('coin-logo')} src={coinInfo.image} />
       </div>
       <div className={cn('content-container')}>
         <div>
           <p className={cn('history-info', 'past', 'gray')}>
-            만약 {purchaseDate}에{' '}
+            만약 {selectedDateWithoutTime}에{' '}
             <span className={cn('bold')}>{investment}</span>원으로
           </p>
         </div>
         <div>
           {!isMobile && (
             <p className={cn('history-info', 'current', 'black')}>
-              {coinName} 코인을 샀다면, {currentDate}에는{' '}
-              <span className={cn('bold')}>{currentValue}</span>
+              {coinInfo.label} 코인을 샀다면, {currentDateWithoutTime}
+              에는 <span className={cn('bold')}>{resultPrices[currency]}</span>
               원입니다.
             </p>
           )}
           {isMobile && (
             <p className={cn('history-info', 'current', 'black')}>
-              {coinName} 코인을 샀다면,
+              {coinInfo.label} 코인을 샀다면,
               <br />
-              {currentDate}에는{' '}
-              <span className={cn('bold')}>{currentValue}</span>
+              {currentDateWithoutTime}에는{' '}
+              <span className={cn('bold')}>{resultPrices[currency]}</span>
               원입니다.
             </p>
           )}

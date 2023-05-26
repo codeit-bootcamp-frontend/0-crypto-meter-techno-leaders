@@ -11,7 +11,7 @@ import classNames from 'classnames/bind';
 
 const cn = classNames.bind(styles);
 
-function GNB({ onRestore }) {
+function GNB({ onRestore, data, setHistory }) {
   const currency = useCurrency();
   const setCurrency = useSetCurrency();
 
@@ -52,7 +52,7 @@ function GNB({ onRestore }) {
             <option value="usd">USD ($)</option>
           </TabletAbove>
         </select>
-        <HistoryPopover />
+        <HistoryPopover data={data} setHistory={setHistory} />
       </div>
     </div>
   );

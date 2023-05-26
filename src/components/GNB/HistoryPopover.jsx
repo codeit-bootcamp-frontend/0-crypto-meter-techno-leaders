@@ -7,10 +7,14 @@ import styles from '/src/components/GNB/HistoryPopover.module.css';
 
 const cn = classNames.bind(styles);
 
-function HistoryPopover() {
+function HistoryPopover({ data, setHistory }) {
   const handlePopoverOpenClose = useCallback(() => {
     !open;
   }, []);
+
+  const handleHistoryDelete = () => {
+    setHistory([]);
+  };
 
   return (
     <Popover as="div">
@@ -36,11 +40,12 @@ function HistoryPopover() {
                     width: '9.5rem',
                     color: '#474B58',
                   }}
+                  handleClick={handleHistoryDelete}
                 >
                   기록 모두 지우기
                 </Button>
               </div>
-              <HistoryList />
+              <HistoryList data={data} />
             </Popover.Panel>
           )}
         </>

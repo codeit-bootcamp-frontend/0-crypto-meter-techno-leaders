@@ -45,55 +45,12 @@ function formatResultPrice(price, currency) {
   }
 }
 
-function calculateResultPrices(
-  investment,
-  currency,
-  prevKrw,
-  todayKrw,
-  prevUsd,
-  todayUsd
-) {
-  const resultPricesByCurrency = [];
-  let purchasedCoinCnt;
-
-  if (currency === 'krw') {
-    purchasedCoinCnt = investment / prevKrw;
-  } else {
-    purchasedCoinCnt = investment / prevUsd;
-  }
-
-  resultPricesByCurrency.push(+(purchasedCoinCnt * todayKrw).toFixed(2));
-  resultPricesByCurrency.push(+(purchasedCoinCnt * todayUsd).toFixed(2));
-
-  return resultPricesByCurrency;
-}
-
-const priceIndexMapper = {
-  krw: 0,
-  usd: 1,
-};
-
-function MainBoard({
-  values = DEFAULT_VALUES,
-  prevKrw = DEFAULT_MARKET_PRICES.prevKrw,
-  todayKrw = DEFAULT_MARKET_PRICES.todayKrw,
-  prevUsd = DEFAULT_MARKET_PRICES.prevUsd,
-  todayUsd = DEFAULT_MARKET_PRICES.todayUsd,
-}) {
+function MainBoard({ values = DEFAULT_VALUES }) {
   const [toastOpen, setToastOpen] = useState(false);
   const currency = useCurrency();
-  const resultPrices = calculateResultPrices(
-    values.investment,
-    currency,
-    prevKrw,
-    todayKrw,
-    prevUsd,
-    todayUsd
-  );
+  const { coinInfo, investment, selectedDate, resultPrices } = values;
   const fluctuation =
-    resultPrices[priceIndexMapper[currency]] - values.investment > 0
-      ? 'increase'
-      : 'decrease';
+    resultPrices[currency] - investment > 0 ? 'increase' : 'decrease';
 
   const cn = classNames.bind(styles);
 
@@ -144,8 +101,8 @@ function MainBoard({
       <div className={cn('mainboard-container')}>
         <div className={cn('top-area')}>
           <div className={cn('crypto-info')}>
-            <img className={cn('crypto-image')} src={values.imageUrl} />
-            <span className={cn('crypto-name')}>{values.name}</span>
+            <img className={cn('crypto-image')} src={coinInfo.image} />
+            <span className={cn('crypto-name')}>{coinInfo.label}</span>
           </div>
           <div className={cn('share-link-container')}>
             <img onClick={handleShareKakao} src={kakaotalk} />
@@ -162,15 +119,12 @@ function MainBoard({
         <Divider />
         <div className={cn('title-container')}>
           <h1 className={cn('precondition-title')}>
-            {format(values.selectedDate, 'yyyy년 M월 d일')}에{' '}
-            {formatResultPrice(values.investment, currency)}으로 샀다면 오늘
+            {format(new Date(selectedDate), 'yyyy년 M월 d일')}에{' '}
+            {formatResultPrice(investment, currency)}으로 샀다면 오늘
           </h1>
           <h1 className={cn('result-title')}>
             <span className={cn(`${fluctuation}-emphasize`)}>
-              {formatResultPrice(
-                resultPrices[priceIndexMapper[currency]],
-                currency
-              )}
+              {formatResultPrice(resultPrices[currency], currency)}
             </span>{' '}
             입니다.
           </h1>
@@ -178,7 +132,7 @@ function MainBoard({
         </div>
         <div className={cn('chart-wrapper')}>
           <CoinChart
-            id={values.id}
+            id={coinInfo.value}
             currency={currency}
             fluctuation={fluctuation}
           />
