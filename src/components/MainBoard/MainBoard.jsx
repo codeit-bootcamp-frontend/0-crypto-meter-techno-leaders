@@ -46,7 +46,6 @@ function formatResultPrice(price, currency) {
 }
 
 function MainBoard({ values = DEFAULT_VALUES }) {
-  console.log(values);
   const [toastOpen, setToastOpen] = useState(false);
   const currency = useCurrency();
   const { coinInfo, investment, selectedDate, resultPrices } = values;

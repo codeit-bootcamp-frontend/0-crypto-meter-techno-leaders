@@ -55,12 +55,6 @@ function InputBoard({ onChange, defaultValues }) {
 
   const handleSubmit = (e) => {
     // console.log(values);
-    console.log({
-      currentDate: defaultValues.currentDate,
-      investment,
-      selectedDate,
-      coinInfo,
-    });
     onChange({
       currentDate: defaultValues.currentDate,
       investment,
