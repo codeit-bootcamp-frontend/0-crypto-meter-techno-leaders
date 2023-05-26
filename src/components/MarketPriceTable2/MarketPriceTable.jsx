@@ -47,16 +47,12 @@ function MarketPriceTable() {
   };
 
   const updateMarketData = async (page) => {
-    const pageData_krw = await getCoinsMarkets(page, PER_PAGE, 'krw');
-    const pageData_usd = await getCoinsMarkets(page, PER_PAGE, 'usd');
-    const formatedPageData_krw = formatMarketData(pageData_krw, page);
-    const formatedPageData_usd = formatMarketData(pageData_usd, page);
+    const pageData = await getCoinsMarkets(page, PER_PAGE, currency);
+    const formatedPageData = formatMarketData(pageData, page);
 
     setMarketData((prevMarketData) => {
       const updatedData = { ...prevMarketData };
-      updatedData['krw'][page - 1] = formatedPageData_krw;
-      updatedData['usd'][page - 1] = formatedPageData_usd;
-      console.log(updatedData);
+      updatedData[currency][page - 1] = formatedPageData;
       return updatedData;
     });
   };
@@ -75,7 +71,13 @@ function MarketPriceTable() {
     setMarketData({ krw: initArray(totalPage), usd: initArray(totalPage) });
   }, [totalData]);
 
-  console.log(marketData);
+  useEffect(() => {
+    const fetchData = async () => {
+      await updateMarketData(currentPage);
+    };
+
+    fetchData();
+  }, [currency]);
 
   const handleSort = (columnName) => {
     setSortConfig((prevSortConfig) => {
