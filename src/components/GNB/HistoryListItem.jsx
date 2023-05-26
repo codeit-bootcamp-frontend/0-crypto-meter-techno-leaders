@@ -44,7 +44,7 @@ function HistoryItem({ datas }) {
           {!isMobile && (
             <p className={cn('history-info', 'current', 'black')}>
               {coinInfo.label} 코인을 샀다면, {currentDateWithoutTime}
-              에는 {currency == 'usd' && '$'}
+              에는{' '}
               <span
                 className={cn(
                   'bold',
@@ -52,18 +52,32 @@ function HistoryItem({ datas }) {
                   { decrease: !fluctuation }
                 )}
               >
-                {resultPrices[currency]}
+                {currency == 'usd' && '$'}
+                {Math.floor(resultPrices[currency])}
+                {currency == 'usd' && ' '}
+                {currency === 'krw' && '원 '}
               </span>
-              {currency === 'krw' && '원'}입니다.
+              입니다.
             </p>
           )}
           {isMobile && (
             <p className={cn('history-info', 'current', 'black')}>
               {coinInfo.label} 코인을 샀다면,
               <br />
-              {currentDateWithoutTime}에는 {currency == 'usd' && '$'}
-              <span className={cn('bold')}>{resultPrices[currency]}</span>
-              {currency === 'krw' && '원'}입니다.
+              {currentDateWithoutTime}에는
+              <span
+                className={cn(
+                  'bold',
+                  { increase: fluctuation },
+                  { decrease: !fluctuation }
+                )}
+              >
+                {' '}
+                {currency == 'usd' && '$'}
+                {resultPrices[currency]}
+                {currency === 'krw' && '원'}
+              </span>
+              입니다.
             </p>
           )}
         </div>
