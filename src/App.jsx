@@ -10,6 +10,7 @@ import MarketPriceTable from '/src/components/MarketPriceTable2/MarketPriceTable
 import styles from '/src/App.module.css';
 import classNames from 'classnames/bind';
 import { useCurrency } from '/src/contexts/CurrencyContext';
+import calculateDays from './utils/calculateDays';
 
 registerLocale('ko', ko);
 
@@ -36,8 +37,8 @@ function App() {
   const [values, setValues] = useState(DEFAULT_VALUES);
   const [mainBoardValues, setMainBoardValues] = useState(null);
   const [history, setHistory] = useState([]);
-  const [isLoading, loadingError, getCoinHistoryAsync] =
-    useAsync(getCoinHistory);
+  // const [isLoading, loadingError, getCoinHistoryAsync] =
+  //   useAsync(getCoinHistory);
   const currency = useCurrency();
   const cn = classNames.bind(styles);
 
@@ -73,23 +74,37 @@ function App() {
     const { investment } = values;
 
     // 1. 과거/오늘 시세 리퀘스트
-    const { krw: prevKrw, usd: prevUsd } = await getCoinHistoryAsync(
-      queryOptions
-    );
-    if (loadingError) {
-      return;
-    }
+    // const { krw: prevKrw, usd: prevUsd } = await getCoinHistoryAsync(
+    //   queryOptions
+    // );
+    // if (loadingError) {
+    //   return;
+    // }
 
-    const { krw: todayKrw, usd: todayUsd } = await getCoinHistoryAsync({
-      coinId,
-      date: TODAY,
-    });
-    if (loadingError) {
-      console.log(loadingError);
-      return;
-    }
+    // const { krw: todayKrw, usd: todayUsd } = await getCoinHistoryAsync({
+    //   coinId,
+    //   date: TODAY,
+    // });
+    // if (loadingError) {
+    //   console.log(loadingError);
+    //   return;
+    // }
 
-    // 2. 결과 금액 계산
+    // 1. 과거/오늘 시세 리퀘스트 (mock data)
+    const res = await fetch('/src/assets/market_chart_bitcoin.json');
+    const marketChart = await res.json();
+
+    const { krw, usd } = marketChart;
+    const krwPrices = krw.year.prices;
+    const usdPrices = usd.year.prices;
+
+    const todayKrw = krwPrices[krwPrices.length - 1][1];
+    const todayUsd = usdPrices[usdPrices.length - 1][1];
+
+    const prevKrw = krwPrices[calculateDays(values.selectedDate)][1];
+    const prevUsd = usdPrices[calculateDays(values.selectedDate)][1];
+
+    // // 2. 결과 금액 계산
     const resultPrices = calcPrices(
       investment,
       currency,
@@ -99,7 +114,7 @@ function App() {
       todayUsd
     );
 
-    // 3. history item으로 저장하기 위한 새로운 객체 생성
+    // // 3. history item으로 저장하기 위한 새로운 객체 생성
     const valuesCopy = JSON.parse(JSON.stringify(values));
     const newItem = { ...valuesCopy, resultPrices }; // input 값들이 담긴 values와 result prices를 합친 새로운 객체
 
