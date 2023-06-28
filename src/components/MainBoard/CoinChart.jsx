@@ -58,39 +58,43 @@ function millisecondsToDate(milliseconds, type) {
 }
 
 async function getMarketChartData(id, currency, period) {
-  const periodMapper = {
-    all: {
-      days: 'max',
-      interval: 'daily',
-    },
-    year: {
-      days: 365,
-      interval: 'daily',
-    },
-    month: {
-      days: 30,
-      interval: 'daily',
-    },
-    week: {
-      days: 7,
-      interval: 'hourly',
-    },
-    day: {
-      days: 1,
-      interval: 'auto', // 5 minutes
-    },
-  };
+  // const periodMapper = {
+  //   all: {
+  //     days: 'max',
+  //     interval: 'daily',
+  //   },
+  //   year: {
+  //     days: 365,
+  //     interval: 'daily',
+  //   },
+  //   month: {
+  //     days: 30,
+  //     interval: 'daily',
+  //   },
+  //   week: {
+  //     days: 7,
+  //     interval: 'hourly',
+  //   },
+  //   day: {
+  //     days: 1,
+  //     interval: 'auto', // 5 minutes
+  //   },
+  // };
 
-  try {
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${periodMapper[period].days}&interval=${periodMapper[period].interval}`
-    );
-    const marketChartData = await response.json();
-    return marketChartData;
-  } catch (error) {
-    console.log(error);
-    throw new Error();
-  }
+  // try {
+  //   const response = await fetch(
+  //     `https://api.coingecko.com/api/v3/coins/${id}/market_chart?x_cg_pro_api_key=${apiKey}&vs_currency=${currency}&days=${periodMapper[period].days}&interval=${periodMapper[period].interval}`
+  //   );
+  //   const marketChartData = await response.json();
+  //   return marketChartData;
+  // } catch (error) {
+  //   console.log(error);
+  //   throw new Error();
+  // }
+
+  const res = await fetch('/src/assets/market_chart_bitcoin.json');
+  const result = await res.json();
+  return result[currency][period];
 }
 
 ChartJS.register(
@@ -260,6 +264,7 @@ function CoinChart({ id, currency, fluctuation }) {
       return;
     }
     const { prices } = result;
+    console.log(prices);
     setCoinData(prices);
   }, []);
 
