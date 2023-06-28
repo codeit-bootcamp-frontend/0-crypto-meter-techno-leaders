@@ -117,6 +117,7 @@ function App() {
     // // 3. history item으로 저장하기 위한 새로운 객체 생성
     const valuesCopy = JSON.parse(JSON.stringify(values));
     const newItem = { ...valuesCopy, resultPrices }; // input 값들이 담긴 values와 result prices를 합친 새로운 객체
+    console.log('코인 결과 추가', newItem);
 
     // 기존 history 배열이 길이 30 이상인지 확인한 뒤, 새로 만든 item 객체를 unshift하여 return
     setHistory(() => {
