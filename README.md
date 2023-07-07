@@ -1,4 +1,4 @@
-# Thecno Leaders
+# Techno Leaders
 [🐯 Alice](https://github.com/hayoung-99) | [🕺 Andy](https://github.com/Andy-Shin99) | [💗 Sally](https://github.com/09sally) | [🍵 Tina](https://github.com/redcoin96) 
 | ----------------------------------------- | ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
 <br>
